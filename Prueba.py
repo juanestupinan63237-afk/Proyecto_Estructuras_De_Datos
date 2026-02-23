@@ -48,3 +48,5 @@ for i in range (0 , 20):
 
 print (arbol.IniciarRecorrido())
 
+arbol.InsertarNodo (5)
+
