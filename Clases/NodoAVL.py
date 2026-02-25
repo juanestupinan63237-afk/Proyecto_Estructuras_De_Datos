@@ -4,6 +4,7 @@ class Node:
         self.father = None
         self.leftSon = None
         self.rightSon = None
+        self.height = 1
 
     def getValue(self):
         return self.value
@@ -28,3 +29,6 @@ class Node:
 
     def setRightSon(self, node):
         self.rightSon = node
+
+    def getHeight(self):
+        return self.height
