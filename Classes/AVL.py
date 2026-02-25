@@ -1,4 +1,4 @@
-from Clases.NodeAVL import Node
+from Classes.NodeAVL import Node
 
 class ArbolAVL:
     def __init__(self):
@@ -12,10 +12,10 @@ class ArbolAVL:
             node = Node(value)
             return node
 
-        if value < node.getValue():
+        if value.getCode() < node.getFlightCode():
             node.leftSon = self.__insertNode(node.getLeftSon(), value)
-        elif value > node.getValue():
+        elif value.getCode() > node.getFlightCode():
             node.rightSon = self.__insertNode(node.getRightSon(), value)
         else:
-            raise Exception(f"El Nodo ya existe es el árbol")
+            raise Exception(f"This Node already exists in our AVL. Thanks for your attention")
         return node
