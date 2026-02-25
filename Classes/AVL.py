@@ -60,3 +60,17 @@ class AVLTree:
         self.__postOrderTour(node.getLeftSon())
         self.__postOrderTour(node.getRightSon())
         print(node.getFlightCode())
+
+    def searchNode(self, code):
+        nodeFound = self.__searchNode(self.root, code)
+        return nodeFound
+
+    def __searchNode(self, node, code):
+        if node is None:
+            return False
+        if code < node.getFlightCode():
+            return self.__searchNode(node.getLeftSon(), code)
+        elif code > node.getFlightCode():
+            return self.__searchNode(node.getRightSon(), code)
+        else:
+            return True
