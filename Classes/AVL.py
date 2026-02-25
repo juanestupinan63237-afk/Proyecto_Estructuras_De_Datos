@@ -31,6 +31,12 @@ class AVLTree:
             return 1
         return self.__countLeaves(node.getLeftSon())+ self.__countLeaves(node.getRightSon())
 
+    def showRoot(self):
+        if self.root:
+            print(f"The code for the first Flight we have registered in our database is: {self.root.getFlightCode()}")
+        else:
+            print(f"We currently have no flights registered in our database.\nPlease try again later or enter a Flight")
+
     def preorderTour(self):
         self.__preorderTour(self.root)
 
@@ -41,15 +47,15 @@ class AVLTree:
         self.__preorderTour(node.getLeftSon())
         self.__preorderTour(node.getRightSon())
 
-    def unorderedTour(self):
-        self.__unorderedTour(self.root)
+    def inOrderTour(self):
+        self.__inOrderTour(self.root)
 
-    def __unorderedTour(self, node):
+    def __inOrderTour(self, node):
         if node is None:
             return
-        self.__unorderedTour(node.getLeftSon())
+        self.__inOrderTour(node.getLeftSon())
         print(node.getFlightCode())
-        self.__unorderedTour(node.getRightSon())
+        self.__inOrderTour(node.getRightSon())
 
     def postOrderTour(self):
         self.__postOrderTour(self.root)
