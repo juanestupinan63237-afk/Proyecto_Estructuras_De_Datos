@@ -21,7 +21,18 @@ def RecibirVuelo ():
     numberPassengers = data.get ("numberPassengers")
     temp = Flight (code , origin , destination , departureTime , basePrice , numberPassengers , priority= False , promotion = False , alert= False)
     print (f"Hecho... Se ha agregado el vuelo {temp.code}")
+    tree.insertNode (temp)
+    print (f"Se ha ingresado el nodo")
     return jsonify ({"message": f"Vuelo {temp.code} agregado exitosamente"})
+
+@app.route ("/Print" , methods = ['POST'])
+def PrintPreOrder ():
+    data = request.get_json ()
+    print (data.get ("Hecho"))
+    result = tree.preorderTour()
+    print (result)
+    return jsonify({"preorder": result})
+
 
 if __name__ == '__main__':
     app.run(debug=True)

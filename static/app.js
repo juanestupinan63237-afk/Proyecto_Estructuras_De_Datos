@@ -23,3 +23,15 @@ async function GetVuelo() {
         console.log ("Nodo Insertado con exito");
     }
 }
+
+async function PrintPreOrderTour() {
+    let respuesta = await fetch ("/Print" , {
+        method : "POST",
+        headers : {
+            "Content-Type" : "application/json"
+        },
+        body : JSON.stringify ({
+            "Hecho" : true
+        })
+    });
+}
