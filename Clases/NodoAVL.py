@@ -1,6 +1,7 @@
-class Nodo:
-    def __init__(self, valor):
-        self.valor = valor
-        self.hijoIzquierdo = None
-        self.hijoDerecho = None
-        self.altura = 1
+class Node:
+    def __init__(self, flight):
+        self.flight = flight
+        self.father = None
+        self.leftSon = None
+        self.rightSon = None
+
