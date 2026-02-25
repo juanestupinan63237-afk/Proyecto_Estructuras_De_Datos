@@ -1,6 +1,6 @@
 from Classes.NodeAVL import Node
 
-class ArbolAVL:
+class AVLTree:
     def __init__(self):
         self.root = None
 
@@ -19,3 +19,14 @@ class ArbolAVL:
         else:
             raise Exception(f"This Node already exists in our AVL. Thanks for your attention")
         return node
+
+    def countLeaves(self):
+        numberLeaves = self.__countLeaves(self.root)
+        return numberLeaves
+
+    def __countLeaves(self, node):
+        if node is None:
+            return 0
+        if node.getLeftSon() is None and node.getRightSon() is None:
+            return 1
+        return self.__countLeaves(node.getLeftSon())+ self.__countLeaves(node.getRightSon())
