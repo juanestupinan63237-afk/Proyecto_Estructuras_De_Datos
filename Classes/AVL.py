@@ -1,13 +1,14 @@
 from Classes.NodeAVL import Node
+from Classes.FlightSB import Flight
 
 class AVLTree:
     def __init__(self):
         self.root = None
 
-    def insertNode(self, value):
+    def insertNode(self, value: Flight):
         self.root = self.__insertNode(self.root, value)
 
-    def __insertNode(self, node, value):
+    def __insertNode(self, node : Node, value: Flight):
         if node is None:
             node = Node(value)
             return node
@@ -24,7 +25,7 @@ class AVLTree:
         numberLeaves = self.__countLeaves(self.root)
         return numberLeaves
 
-    def __countLeaves(self, node):
+    def __countLeaves(self, node: Node):
         if node is None:
             return 0
         if node.getLeftSon() is None and node.getRightSon() is None:
