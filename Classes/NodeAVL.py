@@ -1,22 +1,15 @@
 class Node:
-    def __init__(self, value):
-        self.value = value
-        self.father = None
+    def __init__(self, flight):
+        self.flight = flight
         self.leftSon = None
         self.rightSon = None
         self.height = 1
 
-    def getValue(self):
-        return self.value
+    def getFlightCode(self):
+        return self.flight.getCode()
 
     def setValue(self, node):
         self.value = node
-
-    def getFather(self):
-        return self.father
-
-    def setFather(self, node):
-        self.father = node
 
     def getLeftSon(self):
         return self.leftSon
