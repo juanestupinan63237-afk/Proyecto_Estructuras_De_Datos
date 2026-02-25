@@ -2,20 +2,20 @@ from Clases.NodoAVL import Nodo
 
 class ArbolAVL:
     def __init__(self):
-        self.raiz = None
+        self.root = None
 
-    def insertar(self, valor):
-        self.raiz = self.__insertar(self.raiz, valor)
+    def insertNode(self, value):
+        self.root = self.__insertNode(self.root, value)
 
-    def __insertar(self, nodo, valor):
-        if nodo is None:
-            nodo = Nodo(valor)
-            return nodo
+    def __insertNode(self, node, value):
+        if node is None:
+            node = Nodo(value)
+            return node
 
-        if nodo.valor < valor:
-            nodo.hijoIzquierdo = self.__insertar(nodo.hijoIzquierdo, valor)
-        elif nodo.valor > valor:
-            nodo.hijoDerecho = self.__insertar(nodo.hijoDerecho, valor)
+        if node.value < value:
+            node.leftSon = self.__insertNode(node.leftSon, value)
+        elif node.value > value:
+            node.rightSon = self.__insertNode(node.rightSon, value)
         else:
-            return nodo
-        return nodo
+            return node
+        return node
