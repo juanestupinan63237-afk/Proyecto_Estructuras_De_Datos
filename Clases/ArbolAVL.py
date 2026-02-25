@@ -1,4 +1,4 @@
-from Clases.NodoAVL import Nodo
+from Clases.NodoAVL import Node
 
 class ArbolAVL:
     def __init__(self):
@@ -9,7 +9,7 @@ class ArbolAVL:
 
     def __insertNode(self, node, value):
         if node is None:
-            node = Nodo(value)
+            node = Node(value)
             return node
 
         if node.value < value:
