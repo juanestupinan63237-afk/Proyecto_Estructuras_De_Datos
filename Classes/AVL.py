@@ -31,3 +31,33 @@ class AVLTree:
         if node.getLeftSon() is None and node.getRightSon() is None:
             return 1
         return self.__countLeaves(node.getLeftSon())+ self.__countLeaves(node.getRightSon())
+
+    def preorderTour(self):
+        self.__preorderTour(self.root)
+
+    def __preorderTour(self, node):
+        if node is None:
+            return
+        print(node.getFlightCode())
+        self.__preorderTour(node.getLeftSon())
+        self.__preorderTour(node.getRightSon())
+
+    def unorderedTour(self):
+        self.__unorderedTour(self.root)
+
+    def __unorderedTour(self, node):
+        if node is None:
+            return
+        self.__unorderedTour(node.getLeftSon())
+        print(node.getFlightCode())
+        self.__unorderedTour(node.getRightSon())
+
+    def postOrderTour(self):
+        self.__postOrderTour(self.root)
+
+    def __postOrderTour(self, node):
+        if node is None:
+            return
+        self.__postOrderTour(node.getLeftSon())
+        self.__postOrderTour(node.getRightSon())
+        print(node.getFlightCode())
