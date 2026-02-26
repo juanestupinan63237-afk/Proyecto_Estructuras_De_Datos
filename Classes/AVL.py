@@ -1,6 +1,7 @@
 from Classes.NodeAVL import Node
 from Classes.FlightSB import Flight
 from graphviz import Digraph
+import json
 
 class AVLTree:
     def __init__(self):
