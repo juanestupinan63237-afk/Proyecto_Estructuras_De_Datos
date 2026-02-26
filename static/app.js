@@ -21,6 +21,7 @@ async function GetVuelo() {
     });
     if (respuesta.ok){
         console.log ("Nodo Insertado con exito");
+        RefreshTree();
     }
 }
 
@@ -35,3 +36,18 @@ async function PrintPreOrderTour() {
         })
     });
 }
+
+async function RefreshTree(){
+    let respuesta = await fetch('/Render/Tree',{
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'}
+    });
+        if (respuesta.ok){
+            let svg = await respuesta.text();
+            document.getElementById('treeContainer').innerHTML = svg;
+        }
+    }
+
+window.addEventListener('load', function(){
+    RefreshTree();
+});

@@ -1,14 +1,19 @@
 from Classes.AVL import AVLTree
-from Classes.NodeAVL import Node
 from Classes.FlightSB import Flight
-from flask import Flask , jsonify , render_template , request
+from flask import Flask , jsonify , render_template , request, Response
+from graphviz import Digraph
 
 app = Flask (__name__)
 tree = AVLTree ()
 
 @app.route ("/")
 def home ():
-    return render_template ("index.html")
+    try:
+        grafico_svg = tree.RenderTree()
+    except Exception as e:
+        print(f"Error generating initial SVG: {e}")
+        grafico_svg = ""
+    return render_template ("index.html" , grafico = grafico_svg)
 
 @app.route ("/Sent/Node" , methods=['POST'])
 def RecibirVuelo ():
@@ -33,6 +38,10 @@ def PrintPreOrder ():
     print (result)
     return jsonify({"preorder": result})
 
+@app.route ("/Render/Tree" , methods=['POST','GET'])
+def RenderTree ():
+    svg = tree.RenderTree()
+    return Response(svg, mimetype='image/svg+xml')
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)

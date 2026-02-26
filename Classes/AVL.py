@@ -1,5 +1,6 @@
 from Classes.NodeAVL import Node
 from Classes.FlightSB import Flight
+from graphviz import Digraph
 
 class AVLTree:
     def __init__(self):
@@ -81,3 +82,23 @@ class AVLTree:
             return self.__searchNode(node.getRightSon(), code)
         else:
             return True
+        
+    def RenderTree(self):
+        dot = Digraph(comment='Árbol Binario')
+        dot.attr('graph', size='6,6', ratio='compress')
+        dot.attr('node', shape='circle', fixedsize='true', width='0.4', height='0.4', fontsize='6')
+        dot.attr(ranksep='0.3', nodesep='0.3')
+        dot.attr('edge', arrowsize='0.5')
+        def AddNode(node: Node):
+            if node:
+                dot.node(str(id(node)), str(node.flight.code))
+                if node.getLeftSon():
+                    dot.edge(str(id(node)), str(id(node.getLeftSon())))
+                    AddNode(node.getLeftSon())
+                if node.getRightSon():
+                    dot.edge(str(id(node)), str(id(node.getRightSon())))
+                    AddNode(node.getRightSon())
+        AddNode(self.root)
+        svg = dot.pipe(format='svg').decode("utf-8")
+        svg = svg.replace('<svg ', '<svg width="100%" height="100%" preserveAspectRatio="xMidYMid meet" ')
+        return svg

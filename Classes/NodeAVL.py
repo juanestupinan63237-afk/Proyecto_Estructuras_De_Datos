@@ -1,5 +1,7 @@
+from Classes.FlightSB import Flight
+
 class Node:
-    def __init__(self, flight):
+    def __init__(self, flight: Flight):
         self.flight = flight
         self.leftSon = None
         self.rightSon = None

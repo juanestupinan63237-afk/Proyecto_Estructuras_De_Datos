@@ -7,18 +7,23 @@
     <title>SkyBalance</title>
 </head>
 <body>
-    <div class = "addNode">
-        <form> 
-            <h2>Code </h2><input type = "text" id = "Code"> </input> <br>
-            <h2>Origin </h2><input type = "text" id = "Origin"> </input><br>
-            <h2>Destination </h2><input type = "text" id = "destination"> </input><br>
-            <h2>Departure Time </h2><input type = "datetime" id = "departureTime"> </input><br>
-            <h2>Base Price </h2><input type = "text" id = "basePrice"> </input><br>
-            <h2>Number Passengers </h2><input type= "text" id = "numberPassengers"> </input><br>
-        </form>
-        <br>
-        <button type = "button" onclick="GetVuelo()"> <div class="textButtom">Create Vuelo </div></button>
-        <button type = "button" onclick="PrintPreOrderTour()"> <div class="textButtom">Print PreOrderTour </div></button>
+    <div class="main-layout">
+        <div class = "addNode">
+            <form> 
+                <h2>Code </h2><input type = "text" id = "Code"> </input> <br>
+                <h2>Origin </h2><input type = "text" id = "Origin"> </input><br>
+                <h2>Destination </h2><input type = "text" id = "destination"> </input><br>
+                <h2>Departure Time </h2><input type = "datetime" id = "departureTime"> </input><br>
+                <h2>Base Price </h2><input type = "text" id = "basePrice"> </input><br>
+                <h2>Number Passengers </h2><input type= "text" id = "numberPassengers"> </input><br>
+            </form>
+            <br>
+            <button type = "button" onclick="GetVuelo()"> <div class="textButtom">Create Vuelo </div></button>
+            <button type = "button" onclick="PrintPreOrderTour()"> <div class="textButtom">Print PreOrderTour </div></button>
+        </div>
+        <div id="treeContainer" class="tree-content">
+            {{ grafico|safe }}
+        </div>
     </div>
 </body>
 <script src = "static/app.js"> </script>

@@ -1,9 +1,11 @@
 .addNode {
-
     background-color: black;
     border: 2px solid #333;
     border-radius: 10px;
     width: 300px;
+    padding: 12px;
+    box-sizing: border-box;
+    z-index: 2;
 }
 
 h2 {
@@ -21,4 +23,52 @@ button {
 .textButtom {
     font-family: Arial, Helvetica, sans-serif;
     color: black;
+}
+ 
+#treeContainer svg {
+    width: 100%;
+    height: auto;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+
+.main-layout {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 20px;
+    height: 90vh; /* occupy 90% of viewport height */
+    box-sizing: border-box;
+}
+
+.addNode {
+    flex: 0 0 300px; 
+}
+
+.tree-content {
+    flex: 1 1 auto; /* take remaining space on right */
+    min-width: 300px;
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    overflow: auto;
+    max-height: 100%; /* don't grow past parent */
+}
+
+@media (max-width: 700px) {
+    body {
+        flex-direction: column;
+    }
+    .addNode {
+        width: 100%;
+    }
+    .tree-content {
+        max-width: 100%;
+        max-height: 25vh; /* reduce height on small screens */
+    }
 }
