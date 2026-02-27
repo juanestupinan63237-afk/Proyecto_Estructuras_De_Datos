@@ -83,7 +83,7 @@ class AVLTree:
             return self.__searchNode(node.getRightSon(), code)
         else:
             return True
-        
+
     def RenderTree(self):
         dot = Digraph(comment='Árbol Binario')
         dot.attr('graph', size='6,6', ratio='compress')
