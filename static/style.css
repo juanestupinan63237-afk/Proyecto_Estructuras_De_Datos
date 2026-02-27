@@ -28,6 +28,9 @@ button {
 #treeContainer svg {
     width: 100%;
     height: auto;
+    max-height: 300px;
+    object-fit: contain;
+    display: block;
 }
 
 html, body {
@@ -50,14 +53,14 @@ html, body {
 }
 
 .tree-content {
-    flex: 1 1 auto; /* take remaining space on right */
+    flex: 1 1 auto; 
     min-width: 300px;
     background: white;
     padding: 10px;
     border-radius: 8px;
     box-sizing: border-box;
     overflow: auto;
-    max-height: 100%; /* don't grow past parent */
+    max-height: 100%; 
 }
 
 @media (max-width: 700px) {
@@ -69,6 +72,6 @@ html, body {
     }
     .tree-content {
         max-width: 100%;
-        max-height: 25vh; /* reduce height on small screens */
+        max-height: 25vh; 
     }
 }
