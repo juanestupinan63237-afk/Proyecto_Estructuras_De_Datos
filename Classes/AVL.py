@@ -1,7 +1,6 @@
 from Classes.NodeAVL import Node
 from Classes.FlightSB import Flight
 from graphviz import Digraph
-import json
 
 class AVLTree:
     def __init__(self):
@@ -77,7 +76,7 @@ class AVLTree:
     def __searchNode(self, node, code):
         if node is None:
             return False
-        if code < node.getFlightCode():
+        if code < (node.getFlightCode()):
             return self.__searchNode(node.getLeftSon(), code)
         elif code > node.getFlightCode():
             return self.__searchNode(node.getRightSon(), code)
@@ -85,10 +84,10 @@ class AVLTree:
             return True
         
     def RenderTree(self):
-        dot = Digraph(comment='Árbol Binario')
-        dot.attr('graph', size='6,6', ratio='compress')
-        dot.attr('node', shape='circle', fixedsize='true', width='0.4', height='0.4', fontsize='6')
-        dot.attr(ranksep='0.3', nodesep='0.3')
+        dot = Digraph(comment= "Tree")
+        dot.attr('graph', size='2,2', ratio='compress')
+        dot.attr('node', shape='circle', fixedsize='true', width='0.7', height='0.7', fontsize='10', penwidth='0.5')
+        dot.attr(ranksep='0.1', nodesep='0.3')
         dot.attr('edge', arrowsize='0.5')
         def AddNode(node: Node):
             if node:
@@ -101,5 +100,7 @@ class AVLTree:
                     AddNode(node.getRightSon())
         AddNode(self.root)
         svg = dot.pipe(format='svg').decode("utf-8")
-        svg = svg.replace('<svg ', '<svg width="100%" height="100%" preserveAspectRatio="xMidYMid meet" ')
+        svg = svg.replace('<svg ', '<svg width="40%" height="40%" style="max-width: 600px;" preserveAspectRatio="xMidYMid meet" ')
         return svg
+    
+    
