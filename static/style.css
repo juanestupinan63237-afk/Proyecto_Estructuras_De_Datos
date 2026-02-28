@@ -44,7 +44,7 @@ html, body {
     gap: 20px;
     align-items: flex-start;
     padding: 20px;
-    height: 90vh; /* occupy 90% of viewport height */
+    height: 90vh; 
     box-sizing: border-box;
 }
 
