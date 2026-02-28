@@ -102,5 +102,3 @@ class AVLTree:
         svg = dot.pipe(format='svg').decode("utf-8")
         svg = svg.replace('<svg ', '<svg width="40%" height="40%" style="max-width: 600px;" preserveAspectRatio="xMidYMid meet" ')
         return svg
-    
-    
