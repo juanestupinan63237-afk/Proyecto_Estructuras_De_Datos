@@ -84,21 +84,41 @@ class AVLTree:
             return True
 
     def RenderTree(self):
-        dot = Digraph(comment= "Tree")
-        dot.attr('graph', size='2,2', ratio='compress')
-        dot.attr('node', shape='circle', fixedsize='true', width='0.7', height='0.7', fontsize='10', penwidth='0.5')
-        dot.attr(ranksep='0.1', nodesep='0.3')
-        dot.attr('edge', arrowsize='0.5')
-        def AddNode(node: Node):
-            if node:
-                dot.node(str(id(node)), str(node.flight.code))
-                if node.getLeftSon():
-                    dot.edge(str(id(node)), str(id(node.getLeftSon())))
-                    AddNode(node.getLeftSon())
-                if node.getRightSon():
-                    dot.edge(str(id(node)), str(id(node.getRightSon())))
-                    AddNode(node.getRightSon())
-        AddNode(self.root)
+        dot = Digraph()
+        # Fondo transparente para integrarse con el CSS
+        dot.attr('graph', bgcolor='transparent', ranksep='0.6', nodesep='0.4')
+        # CONFIGURACIÓN DEL CÍRCULO NEÓN
+        dot.attr('node',
+                shape='circle',     # ¡Mantenemos los círculos!
+                style='filled',     # Rellenos
+                fillcolor='#1b212c',# Fondo oscuro interno del círculo
+                color='#00f2ff',    # Borde Cian Neón
+                fontcolor='#00f2ff',# Texto Cian Neón
+                fontname='Arial Bold',
+                fontsize='12',
+                penwidth='2',       # Borde más grueso para efecto neón
+                width='0.6',        # Tamaño uniforme
+                height='0.6')
+
+        # Flechas estilizadas
+        dot.attr('edge', color='#444d5e', penwidth='1.5', arrowhead='vee', arrowsize='0.8')
+
+        def AddNode(n):
+            if n:
+                # Usar id(n) para identificador único
+                node_id = str(id(n))
+                label_text = str(n.getFlightCode())
+                # Crear el nodo circular neón
+                dot.node(node_id, label=label_text)
+                if n.getLeftSon():
+                    dot.edge(node_id, str(id(n.getLeftSon())))
+                    AddNode(n.getLeftSon())
+                if n.getRightSon():
+                    dot.edge(node_id, str(id(n.getRightSon())))
+                    AddNode(n.getRightSon())
+
+        if self.root:
+            AddNode(self.root)
+        # Generar el SVG y hacerlo responsivo
         svg = dot.pipe(format='svg').decode("utf-8")
-        svg = svg.replace('<svg ', '<svg width="40%" height="40%" style="max-width: 600px;" preserveAspectRatio="xMidYMid meet" ')
-        return svg
+        return svg.replace('<svg ', '<svg width="100%" height="auto" ')

@@ -1,77 +1,80 @@
-.addNode {
-    background-color: black;
-    border: 2px solid #333;
-    border-radius: 10px;
-    width: 300px;
-    padding: 12px;
-    box-sizing: border-box;
-    z-index: 2;
+:root {
+    --bg: #0b1120;
+    --card: #161d31;
+    --accent: #7c7eff; /* Color del botón de la imagen */
+    --cyan: #00f2ff;
+    --text: #94a3b8;
 }
 
-h2 {
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-button {
-    width : 200px;
-    color: white;
-    border: 2px solid #333;
-    border-radius: 50px;
-}
-
-.textButtom {
-    font-family: Arial, Helvetica, sans-serif;
-    color: black;
-}
- 
-#treeContainer svg {
-    width: 100%;
-    height: auto;
-    max-height: 300px;
-    object-fit: contain;
-    display: block;
-}
-
-html, body {
-    height: 100%;
+body {
+    background-color: var(--bg);
     margin: 0;
-}
-
-
-.main-layout {
+    font-family: 'Segoe UI', sans-serif;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.glass-card {
+    background-color: var(--card);
+    display: flex;
+    width: 950px;
+    height: 600px;
+    border-radius: 20px;
+    padding: 30px;
     gap: 20px;
-    align-items: flex-start;
-    padding: 20px;
-    height: 90vh; 
-    box-sizing: border-box;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
-.addNode {
-    flex: 0 0 300px; 
-}
+.form-section { width: 300px; }
 
-.tree-content {
-    flex: 1 1 auto; 
-    min-width: 300px;
-    background: white;
+.logo { color: #4a86e8; font-size: 22px; margin-bottom: 20px; }
+
+.input-box { margin-bottom: 12px; }
+
+label { color: var(--text); font-size: 10px; letter-spacing: 1px; display: block; margin-bottom: 4px; }
+
+input {
+    width: 100%;
+    background: #1e2641;
+    border: 1px solid #2d3655;
     padding: 10px;
     border-radius: 8px;
+    color: white;
     box-sizing: border-box;
-    overflow: auto;
-    max-height: 100%; 
 }
 
-@media (max-width: 700px) {
-    body {
-        flex-direction: column;
-    }
-    .addNode {
-        width: 100%;
-    }
-    .tree-content {
-        max-width: 100%;
-        max-height: 25vh; 
-    }
+.btn-main {
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.btn-sub {
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.tree-viewer {
+    flex: 1;
+    background: #0f1425; /* Fondo oscuro interno del visualizador */
+    border-radius: 15px;
+    border: 1px dashed #2d3655;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
 }

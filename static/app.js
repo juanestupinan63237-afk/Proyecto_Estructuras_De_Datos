@@ -1,53 +1,33 @@
 async function GetVuelo() {
-    let code = document.getElementById("Code").value;
-    let origin = document.getElementById("Origin").value;
-    let destination = document.getElementById("destination").value;
-    let departureTime = document.getElementById("departureTime").value;
-    let basePrice = document.getElementById("basePrice").value;
-    let numberPassengers = document.getElementById("numberPassengers").value
-    let respuesta = await fetch ("/Sent/Node" , {
-        method : "POST" , 
-        headers : {
-            "Content-Type" : "application/json"
-        },
-        body : JSON.stringify ({
-            "code" : code,
-            "origin" : origin,
-            "destination" : destination,
-            "departureTime" : departureTime,
-            "basePrice" : basePrice,
-            "numberPassengers" : numberPassengers
-        })
+    const data = {
+        code: document.getElementById("Code").value,
+        origin: document.getElementById("Origin").value,
+        destination: document.getElementById("destination").value,
+        departureTime: document.getElementById("departureTime").value,
+        basePrice: document.getElementById("basePrice").value,
+        numberPassengers: document.getElementById("numberPassengers").value
+    };
+
+    const response = await fetch("/Sent/Node", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
     });
-    if (respuesta.ok){
-        console.log ("Nodo Insertado con exito");
+
+    if(response.ok) {
+        document.getElementById("vueloForm").reset();
         RefreshTree();
     }
 }
 
-async function PrintPreOrderTour() {
-    let respuesta = await fetch ("/Print" , {
-        method : "POST",
-        headers : {
-            "Content-Type" : "application/json"
-        },
-        body : JSON.stringify ({
-            "Hecho" : true
-        })
-    });
+async function RefreshTree() {
+    const res = await fetch('/Render/Tree');
+    const svg = await res.text();
+    document.getElementById('treeContainer').innerHTML = svg;
 }
 
-async function RefreshTree(){
-    let respuesta = await fetch('/Render/Tree',{
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'}
-    });
-        if (respuesta.ok){
-            let svg = await respuesta.text();
-            document.getElementById('treeContainer').innerHTML = svg;
-        }
-    }
-
-window.addEventListener('load', function(){
-    RefreshTree();
-});
+async function PrintPreOrderTour() {
+    const res = await fetch("/Print", { method: "POST" });
+    const data = await res.json();
+    alert("PreOrder: " + data.preorder.join(" -> "));
+}

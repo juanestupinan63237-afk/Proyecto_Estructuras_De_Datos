@@ -1,30 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/style.css">
-    <title>SkyBalance</title>
+    <title>SkyBalance | Flight System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="main-layout">
-        <div class = "addNode">
-            <form> 
-                <h2>Code </h2><input type = "text" id = "Code"> </input> <br>
-                <h2>Origin </h2><input type = "text" id = "Origin"> </input><br>
-                <h2>Destination </h2><input type = "text" id = "destination"> </input><br>
-                <h2>Departure Time </h2><input type = "datetime" id = "departureTime"> </input><br>
-                <h2>Base Price </h2><input type = "text" id = "basePrice"> </input><br>
-                <h2>Number Passengers </h2><input type= "text" id = "numberPassengers"> </input><br>
-            </form>
-            <br>
-            <button type = "button" onclick="GetVuelo()"> <div class="textButtom">Create Vuelo </div></button>
-            <button type = "button" onclick="PrintPreOrderTour()"> <div class="textButtom">Print PreOrderTour </div></button>
-        </div>
-        <div id="treeContainer" class="tree-content">
-            {{ grafico|safe }}
+    <div class="container">
+        <div class="glass-card">
+            <div class="form-section">
+                <h1 class="logo">SkyBalance</h1>
+                <form id="vueloForm">
+                    <div class="input-box">
+                        <label>CODE</label>
+                        <input type="number" id="Code" placeholder="Ej: 101">
+                    </div>
+                    <div class="input-box">
+                        <label>ORIGIN</label>
+                        <input type="text" id="Origin" placeholder="Cali">
+                    </div>
+                    <div class="input-box">
+                        <label>DESTINATION</label>
+                        <input type="text" id="destination" placeholder="Barranquilla">
+                    </div>
+                    <div class="input-box">
+                        <label>DEPARTURE TIME</label>
+                        <input type="time" id="departureTime">
+                    </div>
+                    <div class="input-box">
+                        <label>BASE PRICE</label>
+                        <input type="number" id="basePrice" placeholder="88000">
+                    </div>
+                    <div class="input-box">
+                        <label>PASSENGERS</label>
+                        <input type="number" id="numberPassengers" placeholder="100">
+                    </div>
+                    <button type="button" class="btn-main" onclick="GetVuelo()">Create Vuelo</button>
+                    <button type="button" class="btn-sub" onclick="PrintPreOrderTour()">Print PreOrder</button>
+                </form>
+            </div>
+
+            <div class="tree-viewer">
+                <div id="treeContainer">
+                    {{ grafico|safe }}
+                </div>
+            </div>
         </div>
     </div>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
-<script src = "static/app.js"> </script>
 </html>
