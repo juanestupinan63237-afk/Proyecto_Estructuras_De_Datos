@@ -1,6 +1,7 @@
 from Classes.NodeAVL import Node
 from Classes.FlightSB import Flight
 from graphviz import Digraph
+import json
 
 class BST:
     def __init__(self):
@@ -82,6 +83,40 @@ class BST:
             return self.__searchNode(node.getRightSon(), code)
         else:
             return True
+        
+    def _nodo_a_dicc(self, nodo):
+        if nodo is None:
+            return None
+
+        return {
+            "dato": nodo.dato,
+            "izq": self._nodo_a_dicc(nodo.izq),
+            "der": self._nodo_a_dicc(nodo.der)
+        }
+
+    
+    def converdicc(self , dicc: dict):
+        return self._nodo_a_dicc(self.root , dicc)
+    
+    def _dicc_a_nodo(self, dicc: dict):
+        if dicc is None:
+            return None
+
+        nodo = Node(Flight(int(dicc["dato"]) , 
+                           dicc["origen"] , 
+                           dicc["destino"] , 
+                           dicc ["horaSalida"] , 
+                           dicc["precioBase"] , 
+                           dicc["pasajeros"] ,
+                           promotion=dicc["promocion"],
+                           alert= dicc["alerta"]))
+
+        nodo.setLeftSon(self._dicc_a_nodo(dicc["izquierdo"]))
+        nodo.setRightSon(self._dicc_a_nodo(dicc["derecho"]))
+        return nodo
+
+    def cargar_desde_dicc(self, dicc):
+        self.raiz = self._dicc_a_nodo(dicc)
 
     def RenderTree(self):
         dot = Digraph()
