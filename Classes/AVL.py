@@ -64,9 +64,9 @@ class AVLTree:
             elif node.getLeftSon() is None:
                 return node.getRightSon()
             else:
-                succesorNode = self.__minValueNode(node)
-                node.setFlightCode(succesorNode.getFlightCode())
-                node.setRightSon(self.__deleteNode(node.getRightSon(), succesorNode.getFlightCode()))
+                successor = self.__minValueNode(node.getRightSon())
+                node.setFlight(successor.getFlight())
+                node.setRightSon(self.__deleteNode(node.getRightSon(), successor.getFlight().getCode()))
 
     def __minValueNode(self, node : Node):
         temporal = node
