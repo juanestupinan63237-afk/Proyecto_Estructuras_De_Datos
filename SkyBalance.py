@@ -1,58 +1,66 @@
+from flask import Flask, render_template, request, jsonify, Response
 from Classes.AVL import AVLTree
 from Classes.FlightSB import Flight
-from flask import Flask, jsonify, render_template, request, Response
-import json
 
 app = Flask(__name__)
 
 tree = AVLTree()
-with open ("Files/Topology.json" , "r" , encoding="utf-8") as f:
-    data = json.load (f)
-tree.cargar_desde_dicc(data)
 
+
+# ===============================
+# HOME
+# ===============================
 @app.route("/")
 def home():
-    grafico_svg = tree.RenderTree()
-    return render_template("index.html", grafico=grafico_svg)
+    return render_template("index.html")
 
-@app.route("/Sent/Node", methods=['POST'])
-def RecibirVuelo():
+
+# ===============================
+# INSERTAR NODO
+# ===============================
+@app.route("/Sent/Node", methods=["POST"])
+def insert_node():
+    data = request.json
+
     try:
-        data = request.get_json()
-
-        code = int(data.get("code"))
-        origin = data.get("origin")
-        destination = data.get("destination")
-        departureTime = data.get("departureTime")
-        basePrice = float(data.get("basePrice"))
-        numberPassengers = int(data.get("numberPassengers"))
-
-        nuevo_vuelo = Flight(
-            code,
-            origin,
-            destination,
-            departureTime,
-            basePrice,
-            numberPassengers,
-            priority=False,
-            promotion=False,
-            alert=False
+        # Crear objeto Flight correctamente
+        flight = Flight(
+            int(data["code"]),
+            data["origin"],
+            data["destination"],
+            data["departureTime"],
+            float(data["basePrice"]),
+            int(data["numberPassengers"])
         )
 
-        tree.insertNode(nuevo_vuelo)
+        # Insertar en AVL
+        tree.insertNodeAVL(flight)
 
-        return jsonify({
-            "status": "success",
-            "message": f"Vuelo {code} registrado correctamente"
-        }), 200
+        return jsonify({"message": "Vuelo insertado correctamente"})
 
     except Exception as e:
-        return jsonify({"status": "error", "message": str(e)}), 400
+        print("ERROR INSERT:", e)
+        return jsonify({"message": str(e)}), 400
 
-@app.route("/Render/Tree", methods=['GET'])
-def RenderTreeRoute():
+
+# ===============================
+# RENDER AVL
+# ===============================
+@app.route("/Render/Tree", methods=["GET"])
+def render_tree():
+    print("ROOT ACTUAL:", tree.root)  # Debug temporal
     svg = tree.RenderTree()
-    return Response(svg, mimetype='image/svg+xml')
+    return Response(svg, mimetype="image/svg+xml")
+
+
+# ===============================
+# PREORDER
+# ===============================
+@app.route("/Print", methods=["POST"])
+def print_preorder():
+    preorder = tree.preOrder() if hasattr(tree, "preOrder") else []
+    return jsonify({"preorder": preorder})
+
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+    app.run(debug=True)

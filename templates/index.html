@@ -8,44 +8,60 @@
 <body>
     <div class="container">
         <div class="glass-card">
+
             <div class="form-section">
                 <h1 class="logo">SkyBalance</h1>
+
                 <form id="vueloForm">
+
                     <div class="input-box">
                         <label>CODE</label>
-                        <input type="number" id="Code" placeholder="Ej: 101">
+                        <input type="number" id="Code" required>
                     </div>
+
                     <div class="input-box">
                         <label>ORIGIN</label>
-                        <input type="text" id="Origin" placeholder="Cali">
+                        <input type="text" id="Origin" required>
                     </div>
+
                     <div class="input-box">
                         <label>DESTINATION</label>
-                        <input type="text" id="destination" placeholder="Barranquilla">
+                        <input type="text" id="destination" required>
                     </div>
+
                     <div class="input-box">
                         <label>DEPARTURE TIME</label>
-                        <input type="time" id="departureTime">
+                        <input type="time" id="departureTime" required>
                     </div>
+
                     <div class="input-box">
                         <label>BASE PRICE</label>
-                        <input type="number" id="basePrice" placeholder="88000">
+                        <input type="number" id="basePrice" required>
                     </div>
+
                     <div class="input-box">
                         <label>PASSENGERS</label>
-                        <input type="number" id="numberPassengers" placeholder="100">
+                        <input type="number" id="numberPassengers" required>
                     </div>
-                    <button type="button" class="btn-main" onclick="GetVuelo()">Create Vuelo</button>
-                    <button type="button" class="btn-sub" onclick="PrintPreOrderTour()">Print PreOrder</button>
+
+                    <button type="button" class="btn-main" onclick="insertVuelo()">
+                        Create Vuelo
+                    </button>
+
+                    <button type="button" class="btn-sub" onclick="printPreOrder()">
+                        Print PreOrder
+                    </button>
+
                 </form>
             </div>
 
             <div class="tree-viewer">
-                <div id="treeContainer">
-                    {{ grafico|safe }}
-                </div>
+                <div id="treeContainer"></div>
             </div>
+
         </div>
+    </div>
+
     <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 </html>
