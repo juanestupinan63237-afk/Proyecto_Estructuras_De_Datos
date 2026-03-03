@@ -1,11 +1,11 @@
-from Classes.BSTTree import BST
+from Classes.AVL import AVLTree
 from Classes.FlightSB import Flight
 from flask import Flask, jsonify, render_template, request, Response
 import json
 
 app = Flask(__name__)
 
-tree = BST()
+tree = AVLTree()
 with open ("Files/Topology.json" , "r" , encoding="utf-8") as f:
     data = json.load (f)
 tree.cargar_desde_dicc(data)
