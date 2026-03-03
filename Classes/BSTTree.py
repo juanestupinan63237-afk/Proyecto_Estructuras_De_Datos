@@ -83,14 +83,21 @@ class BST:
         else:
             return True
         
-    def _nodo_a_dicc(self, nodo):
+    def _nodo_a_dicc(self, nodo: Node):
         if nodo is None:
             return None
 
         return {
-            "dato": nodo.dato,
-            "izq": self._nodo_a_dicc(nodo.izq),
-            "der": self._nodo_a_dicc(nodo.der)
+            "codigo": nodo.flight.code,
+            "origen" : nodo.flight.getOrigin (),
+            "destino" : nodo.flight.getDestination(),
+            "horaSalida" : nodo.flight.getDepartureTime(),
+            "precioBase" : nodo.flight.getBasePrice(),
+            "pasajeros" : nodo.flight.getNumberPassengers(),
+            "promocion" : nodo.flight.getPromotion,
+            "alerta" : nodo.flight.getAlert(),
+            "izquierdo": self._nodo_a_dicc(nodo.izq),
+            "derecho": self._nodo_a_dicc(nodo.der)
         }
 
     
