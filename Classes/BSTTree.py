@@ -19,7 +19,7 @@ class BST:
         elif value.getCode() > node.getFlightCode():
             node.rightSon = self.__insertNode(node.getRightSon(), value)
         else:
-            raise Exception(f"This Node already exists in our AVL. Thanks for your attention")
+            raise Exception(f"This Node already exists in our BST...")
         return node
 
     def countLeaves(self):
