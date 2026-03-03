@@ -1,10 +1,14 @@
 from Classes.BSTTree import BST
 from Classes.FlightSB import Flight
 from flask import Flask, jsonify, render_template, request, Response
+import json
 
 app = Flask(__name__)
 
 tree = BST()
+with open ("Files/Topology.json" , "r" , encoding="utf-8") as f:
+    data = json.load (f)
+tree.cargar_desde_dicc(data)
 
 @app.route("/")
 def home():
