@@ -96,27 +96,28 @@ class BST:
 
     
     def converdicc(self , dicc: dict):
-        return self._nodo_a_dicc(self.root , dicc)
+        return self._nodo_a_dicc(self.root)
     
     def _dicc_a_nodo(self, dicc: dict):
         if dicc is None:
             return None
 
-        nodo = Node(Flight(int(dicc["dato"]) , 
+        nodo = Node(Flight(int(dicc["codigo"]) , 
                            dicc["origen"] , 
                            dicc["destino"] , 
                            dicc ["horaSalida"] , 
                            dicc["precioBase"] , 
                            dicc["pasajeros"] ,
                            promotion=dicc["promocion"],
-                           alert= dicc["alerta"]))
+                           alert= dicc["alerta"],
+                           priority= False))
 
         nodo.setLeftSon(self._dicc_a_nodo(dicc["izquierdo"]))
         nodo.setRightSon(self._dicc_a_nodo(dicc["derecho"]))
         return nodo
 
     def cargar_desde_dicc(self, dicc):
-        self.raiz = self._dicc_a_nodo(dicc)
+        self.root = self._dicc_a_nodo(dicc)
 
     def RenderTree(self):
         dot = Digraph()

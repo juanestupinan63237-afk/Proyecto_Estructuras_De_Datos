@@ -8,7 +8,7 @@ app = Flask(__name__)
 tree = BST()
 with open ("Files/Topology.json" , "r" , encoding="utf-8") as f:
     data = json.load (f)
-tree.converdicc (data)
+tree.cargar_desde_dicc(data)
 
 @app.route("/")
 def home():
