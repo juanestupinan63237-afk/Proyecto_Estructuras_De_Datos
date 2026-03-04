@@ -21,6 +21,21 @@ class AVLTree:
             raise Exception("This Node already exists in our AVL Tree...")
 
         node.setHeight(1 + max(self.getHeight(node.getLeftSon()), self.getHeight(node.getRightSon())))
+        balance = self.getBalance(node)
+        if balance > 1 and value.getCode() < node.getLeftSon().getFlightCode():
+            return self.rightRotate(node)
+
+        if balance < -1 and value.getCode() > node.getRightSon().getFlightCode():
+            return self.leftRotate(node)
+
+        if balance > 1 and value.getCode() > node.getLeftSon().getFlightCode():
+            node.setLeftSon(self.leftRotate(node.getLeftSon()))
+            return self.rightRotate(node)
+
+        if balance < -1 and value.getCode() < node.getRightSon().getFlightCode():
+            node.setRightSon(self.rightRotate(node.getRightSon()))
+            return self.leftRotate(node)
+
         return node
 
     def getHeight(self, node):
@@ -52,32 +67,100 @@ class AVLTree:
     def __deleteNode(self, node : Node, code):
         if node is None:
             return node
+
         if code < node.getFlightCode():
             node.setLeftSon(self.__deleteNode(node.getLeftSon(), code))
+
         elif code > node.getFlightCode():
             node.setRightSon(self.__deleteNode(node.getRightSon(), code))
+
         else:
             if node.getLeftSon() is None and node.getRightSon() is None:
                 return None
+
             elif node.getRightSon() is None:
                 return node.getLeftSon()
+
             elif node.getLeftSon() is None:
                 return node.getRightSon()
+
             else:
                 successor = self.__minValueNode(node.getRightSon())
                 node.setFlight(successor.getFlight())
-                node.setRightSon(self.__deleteNode(node.getRightSon(), successor.getFlight().getCode()))
+                node.setRightSon(
+                    self.__deleteNode(
+                        node.getRightSon(),
+                        successor.getFlight().getCode()
+                    )
+                )
+        node.setHeight(1 + max(
+            self.getHeight(node.getLeftSon()),
+            self.getHeight(node.getRightSon())
+        ))
+        balance = self.getBalance(node)
+
+        if balance > 1 and self.getBalance(node.getLeftSon()) >= 0:
+            return self.rightRotate(node)
+
+        if balance > 1 and self.getBalance(node.getLeftSon()) < 0:
+            node.setLeftSon(self.leftRotate(node.getLeftSon()))
+            return self.rightRotate(node)
+
+        if balance < -1 and self.getBalance(node.getRightSon()) <= 0:
+            return self.leftRotate(node)
+
+        if balance < -1 and self.getBalance(node.getRightSon()) > 0:
+            node.setRightSon(self.rightRotate(node.getRightSon()))
+            return self.leftRotate(node)
+
+        return node
 
     def __minValueNode(self, node : Node):
         temporal = node
         while temporal.getLeftSon() is not None:
             temporal = temporal.getLeftSon()
         return temporal
-    
-    def getBalance(self, node):
+
+    def getBalance(self, node : Node):
         if node is None:
             return 0
-        return self.getHeight(node.getLeftSon())
+        return (self.getHeight(node.getLeftSon()) - self.getHeight(node.getRightSon()))
+
+    def rightRotate(self, node : Node):
+        temporal1 = node.getLeftSon()
+        temporal2 = temporal1.getRightSon()
+
+        temporal1.setRightSon(node)
+        node.setLeftSon(temporal2)
+        node.setHeight(1 + max(
+            self.getHeight(node.getLeftSon()),
+            self.getHeight(node.getRightSon())
+        ))
+
+        temporal1.setHeight(1 + max(
+            self.getHeight(temporal1.getLeftSon()),
+            self.getHeight(temporal1.getRightSon())
+        ))
+        return temporal1
+
+    def leftRotate(self, node : Node):
+        temporal1 = node.getRightSon()
+        temporal2 = temporal1.getLeftSon()
+
+        temporal1.setLeftSon(node)
+        node.setRightSon(temporal2)
+
+        node.setHeight(1 + max(
+            self.getHeight(node.getLeftSon()),
+            self.getHeight(node.getRightSon())
+        ))
+
+        temporal1.setHeight(1 + max(
+            self.getHeight(temporal1.getLeftSon()),
+            self.getHeight(temporal1.getRightSon())
+        ))
+
+        return temporal1
 
     def RenderTree(self):
         dot = Digraph()
