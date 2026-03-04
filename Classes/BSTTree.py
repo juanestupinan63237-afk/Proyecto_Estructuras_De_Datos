@@ -19,7 +19,7 @@ class BST:
         elif value.getCode() > node.getFlightCode():
             node.rightSon = self.__insertNode(node.getRightSon(), value)
         else:
-            raise Exception(f"This Node already exists in our BST...")
+            raise Exception(f"This Node already exists in our AVL. Thanks for your attention")
         return node
 
     def countLeaves(self):
@@ -96,12 +96,12 @@ class BST:
             "pasajeros" : nodo.flight.getNumberPassengers(),
             "promocion" : nodo.flight.getPromotion,
             "alerta" : nodo.flight.getAlert(),
-            "izquierdo": self._nodo_a_dicc(nodo.izq),
-            "derecho": self._nodo_a_dicc(nodo.der)
+            "izquierdo": self._nodo_a_dicc(nodo.leftSon),
+            "derecho": self._nodo_a_dicc(nodo.rightSon)
         }
 
     
-    def converdicc(self , dicc: dict):
+    def converdicc(self):
         return self._nodo_a_dicc(self.root)
     
     def _dicc_a_nodo(self, dicc: dict):

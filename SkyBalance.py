@@ -1,76 +1,59 @@
-from flask import Flask, render_template, request, jsonify, Response
+from Classes.BSTTree import BST
 from Classes.AVL import AVLTree
 from Classes.FlightSB import Flight
+from flask import Flask, jsonify, render_template, request, Response
 import json
 
 app = Flask(__name__)
 
 tree = AVLTree()
-with open ("Files/Topology.json" , "r" , encoding = "utf-8") as f:
+with open ("Files/Topology.json" , "r" , encoding="utf-8") as f:
     data = json.load (f)
-tree.cargar_desde_dicc (data)
+tree.cargar_desde_dicc(data)
 
-# ===============================
-# HOME
-# ===============================
 @app.route("/")
 def home():
-    return render_template("index.html")
+    grafico_svg = tree.RenderTree()
+    return render_template("index.html", grafico=grafico_svg)
 
-
-# ===============================
-# INSERTAR NODO
-# ===============================
-@app.route("/Sent/Node", methods=["POST"])
-def insert_node():
-    data = request.json
-
+@app.route("/Sent/Node", methods=['POST'])
+def RecibirVuelo():
     try:
-        # Crear objeto Flight correctamente
-        flight = Flight(
-            int(data["code"]),
-            data["origin"],
-            data["destination"],
-            data["departureTime"],
-            float(data["basePrice"]),
-            int(data["numberPassengers"])
+        data = request.get_json()
+
+        code = int(data.get("code"))
+        origin = data.get("origin")
+        destination = data.get("destination")
+        departureTime = data.get("departureTime")
+        basePrice = float(data.get("basePrice"))
+        numberPassengers = int(data.get("numberPassengers"))
+
+        nuevo_vuelo = Flight(
+            code,
+            origin,
+            destination,
+            departureTime,
+            basePrice,
+            numberPassengers,
+            priority=False,
+            promotion=False,
+            alert=False
         )
 
-        # Insertar en AVL
-        tree.insertNodeAVL(flight)
+        tree.insertNode(nuevo_vuelo)
 
-        return jsonify({"message": "Vuelo insertado correctamente"})
+        return jsonify({
+            "status": "success",
+            "message": f"Vuelo {code} registrado correctamente"
+        }), 200
 
     except Exception as e:
-        print("ERROR INSERT:", e)
-        return jsonify({"message": str(e)}), 400
+        return jsonify({"status": "error", "message": str(e)}), 400
 
-
-# ===============================
-# RENDER AVL
-# ===============================
-@app.route("/Render/AVL", methods=["GET"])
-def render_tree():
-    print("ROOT ACTUAL:", tree.root)  # Debug temporal
-    svg = tree.RenderTree ()
-    return Response(svg, mimetype="image/svg+xml")
-
-
-# ===============================
-# PREORDER
-# ===============================
-@app.route("/Print", methods=["POST"])
-def print_preorder():
-    preorder = tree.preOrder() if hasattr(tree, "preOrder") else []
-    return jsonify({"preorder": preorder})
-
+@app.route("/Render/Tree", methods=['GET'])
+def RenderTreeRoute():
+    svg = tree.RenderTree()
+    return Response(svg, mimetype='image/svg+xml')
 
 if __name__ == "__main__":
-<<<<<<< HEAD
-    app.run(debug=True)
-=======
     app.run(debug=True, port=5000)
-    with open ("Files/Typology.json" , "w" , encoding="utf-8") as f:
-        data = tree.converdicc ()
-        json.dump (data , f)
->>>>>>> parent of 2a9aa78 (fix: correct node attribute names in BST and update JSON formatting in Topology)

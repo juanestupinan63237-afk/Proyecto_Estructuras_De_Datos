@@ -10,9 +10,6 @@ class Node:
     def getFlightCode(self):
         return self.flight.getCode()
 
-    def setFlightCode(self, code):
-        self.flightCode = code
-
     def setValue(self, node):
         self.value = node
 

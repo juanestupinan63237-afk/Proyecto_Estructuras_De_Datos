@@ -73,6 +73,11 @@ class AVLTree:
         while temporal.getLeftSon() is not None:
             temporal = temporal.getLeftSon()
         return temporal
+    
+    def getBalance(self, node):
+        if node is None:
+            return 0
+        return self.getHeight(node.getLeftSon())
 
     def RenderTree(self):
         dot = Digraph()
@@ -132,11 +137,8 @@ class AVLTree:
         }
 
     
-    def converdicc(self, dicc: dict = None):
-        if dicc is None:
-            return self._nodo_a_dicc(self.root)
-        self.root = self._dicc_a_nodo(dicc)
-        return self.root
+    def converdicc(self):
+        return self._nodo_a_dicc(self.root)
     
     def _dicc_a_nodo(self, dicc: dict):
         if dicc is None:
@@ -155,6 +157,6 @@ class AVLTree:
         nodo.setLeftSon(self._dicc_a_nodo(dicc["izquierdo"]))
         nodo.setRightSon(self._dicc_a_nodo(dicc["derecho"]))
         return nodo
-    
+
     def cargar_desde_dicc(self, dicc):
         self.root = self._dicc_a_nodo(dicc)
