@@ -213,7 +213,7 @@ class AVLTree:
             "horaSalida" : nodo.flight.getDepartureTime(),
             "precioBase" : nodo.flight.getBasePrice(),
             "pasajeros" : nodo.flight.getNumberPassengers(),
-            "promocion" : nodo.flight.getPromotion,
+            "promocion" : nodo.flight.getPromotion(),
             "alerta" : nodo.flight.getAlert(),
             "izquierdo": self._nodo_a_dicc(nodo.leftSon),
             "derecho": self._nodo_a_dicc(nodo.rightSon)

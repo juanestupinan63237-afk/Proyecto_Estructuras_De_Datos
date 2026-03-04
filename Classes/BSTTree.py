@@ -94,8 +94,8 @@ class BST:
             "horaSalida" : nodo.flight.getDepartureTime(),
             "precioBase" : nodo.flight.getBasePrice(),
             "pasajeros" : nodo.flight.getNumberPassengers(),
-            "promocion" : nodo.flight.getPromotion,
-            "alerta" : nodo.flight.getAlert(),
+            "promocion" : (nodo.flight.getPromotion()),
+            "alerta" : (nodo.flight.getAlert()),
             "izquierdo": self._nodo_a_dicc(nodo.leftSon),
             "derecho": self._nodo_a_dicc(nodo.rightSon)
         }
@@ -114,8 +114,8 @@ class BST:
                            dicc ["horaSalida"] , 
                            dicc["precioBase"] , 
                            dicc["pasajeros"] ,
-                           promotion=dicc["promocion"],
-                           alert= dicc["alerta"],
+                           promotion=bool(dicc["promocion"]),
+                           alert= bool(dicc["alerta"]),
                            priority= False))
 
         nodo.setLeftSon(self._dicc_a_nodo(dicc["izquierdo"]))

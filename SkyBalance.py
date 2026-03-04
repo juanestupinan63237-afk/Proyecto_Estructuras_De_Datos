@@ -57,3 +57,6 @@ def RenderTreeRoute():
 
 if __name__ == "__main__":
     app.run(debug=True)
+    data = tree.converdicc ()
+    with open ("Files/Topology.json" , "w" , encoding= "utf-8") as f:
+        json.dump (data , f , indent= 4)
