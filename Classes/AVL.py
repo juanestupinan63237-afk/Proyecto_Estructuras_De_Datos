@@ -113,3 +113,48 @@ class AVLTree:
         # Generar el SVG y hacerlo responsivo
         svg = dot.pipe(format='svg').decode("utf-8")
         return svg.replace('<svg ', '<svg width="100%" height="auto" ')
+    
+    def _nodo_a_dicc(self, nodo: Node):
+        if nodo is None:
+            return None
+
+        return {
+            "codigo": nodo.flight.code,
+            "origen" : nodo.flight.getOrigin (),
+            "destino" : nodo.flight.getDestination(),
+            "horaSalida" : nodo.flight.getDepartureTime(),
+            "precioBase" : nodo.flight.getBasePrice(),
+            "pasajeros" : nodo.flight.getNumberPassengers(),
+            "promocion" : nodo.flight.getPromotion,
+            "alerta" : nodo.flight.getAlert(),
+            "izquierdo": self._nodo_a_dicc(nodo.leftSon),
+            "derecho": self._nodo_a_dicc(nodo.rightSon)
+        }
+
+    
+    def converdicc(self, dicc: dict = None):
+        if dicc is None:
+            return self._nodo_a_dicc(self.root)
+        self.root = self._dicc_a_nodo(dicc)
+        return self.root
+    
+    def _dicc_a_nodo(self, dicc: dict):
+        if dicc is None:
+            return None
+
+        nodo = Node(Flight(int(dicc["codigo"]) , 
+                           dicc["origen"] , 
+                           dicc["destino"] , 
+                           dicc ["horaSalida"] , 
+                           dicc["precioBase"] , 
+                           dicc["pasajeros"] ,
+                           promotion=dicc["promocion"],
+                           alert= dicc["alerta"],
+                           priority= False))
+
+        nodo.setLeftSon(self._dicc_a_nodo(dicc["izquierdo"]))
+        nodo.setRightSon(self._dicc_a_nodo(dicc["derecho"]))
+        return nodo
+    
+    def cargar_desde_dicc(self, dicc):
+        self.root = self._dicc_a_nodo(dicc)

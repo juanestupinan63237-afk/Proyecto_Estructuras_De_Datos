@@ -1,11 +1,14 @@
 from flask import Flask, render_template, request, jsonify, Response
 from Classes.AVL import AVLTree
 from Classes.FlightSB import Flight
+import json
 
 app = Flask(__name__)
 
 tree = AVLTree()
-
+with open ("Files/Topology.json" , "r" , encoding = "utf-8") as f:
+    data = json.load (f)
+tree.cargar_desde_dicc (data)
 
 # ===============================
 # HOME
@@ -46,10 +49,10 @@ def insert_node():
 # ===============================
 # RENDER AVL
 # ===============================
-@app.route("/Render/Tree", methods=["GET"])
+@app.route("/Render/AVL", methods=["GET"])
 def render_tree():
     print("ROOT ACTUAL:", tree.root)  # Debug temporal
-    svg = tree.RenderTree()
+    svg = tree.RenderTree ()
     return Response(svg, mimetype="image/svg+xml")
 
 

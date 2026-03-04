@@ -28,7 +28,6 @@ async function RefreshTree() {
 
 async function OpenBSTWindow() {
     const popup = window.open("", "BST Tree", "width=800,height=600");
-
     const res = await fetch("/Render/BST");
     const svg = await res.text();
 
