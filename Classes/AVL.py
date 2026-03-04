@@ -164,30 +164,25 @@ class AVLTree:
 
     def RenderTree(self):
         dot = Digraph()
-        # Fondo transparente para integrarse con el CSS
         dot.attr('graph', bgcolor='transparent', ranksep='0.6', nodesep='0.4')
-        # CONFIGURACIÓN DEL CÍRCULO NEÓN
         dot.attr('node',
-                shape='circle',     # ¡Mantenemos los círculos!
-                style='filled',     # Rellenos
-                fillcolor='#1b212c',# Fondo oscuro interno del círculo
-                color='#00f2ff',    # Borde Cian Neón
-                fontcolor='#00f2ff',# Texto Cian Neón
+                shape='circle',     
+                style='filled',     
+                fillcolor='#1b212c',
+                color='#00f2ff',    
+                fontcolor='#00f2ff',
                 fontname='Arial Bold',
                 fontsize='12',
-                penwidth='2',       # Borde más grueso para efecto neón
-                width='0.6',        # Tamaño uniforme
+                penwidth='2',       
+                width='0.6',        
                 height='0.6')
 
-        # Flechas estilizadas
         dot.attr('edge', color='#444d5e', penwidth='1.5', arrowhead='vee', arrowsize='0.8')
 
         def AddNode(n):
             if n:
-                # Usar id(n) para identificador único
                 node_id = str(id(n))
                 label_text = str(n.getFlightCode())
-                # Crear el nodo circular neón
                 dot.node(node_id, label=label_text)
                 if n.getLeftSon():
                     dot.edge(node_id, str(id(n.getLeftSon())))
@@ -198,7 +193,6 @@ class AVLTree:
 
         if self.root:
             AddNode(self.root)
-        # Generar el SVG y hacerlo responsivo
         svg = dot.pipe(format='svg').decode("utf-8")
         return svg.replace('<svg ', '<svg width="100%" height="auto" ')
     
