@@ -1,4 +1,3 @@
-from Classes.BSTTree import BST
 from Classes.AVL import AVLTree
 from Classes.FlightSB import Flight
 from flask import Flask, jsonify, render_template, request, Response
@@ -70,6 +69,11 @@ def RecibirVuelo():
 def RenderTreeRoute():
     svg = tree.RenderTree()
     return Response(svg, mimetype='image/svg+xml')
+
+@app.route ("/Descargar/Tree/Topology")
+def SendTree ():
+    data = tree.converdicc ()
+    return jsonify ({"Archivo" : data})
 
 if __name__ == "__main__":
     app.run(debug=True)
