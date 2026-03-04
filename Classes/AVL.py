@@ -6,6 +6,9 @@ class AVLTree:
     def __init__(self):
         self.root = None
 
+    def ResetTree (self):
+        self.root = None
+
     def insertNodeAVL(self, value: Flight):
         self.root = self.__insertNodeAVL(self.root, value)
 

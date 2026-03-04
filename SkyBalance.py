@@ -16,6 +16,22 @@ def home():
     grafico_svg = tree.RenderTree()
     return render_template("index.html", grafico=grafico_svg)
 
+@app.route ("/ImportarJSON" , methods = ["POST"])
+def LoadJSON ():
+    file = request.files.get("archivo")
+    if not file:
+        print ("Todavia no se ha ingresado un archvivo")
+        return jsonify ({"message" : "No cargado"})
+    contenido_binario = file.read()
+    contenido_texto = contenido_binario.decode("utf-8")
+    data = json.loads(contenido_texto)
+    tree.cargar_desde_dicc (data)
+    print ("Archivo cargado con exito...")
+    return jsonify ({"message" : "Exitoso"})
+
+
+
+
 @app.route("/Sent/Node", methods=['POST'])
 def RecibirVuelo():
     try:

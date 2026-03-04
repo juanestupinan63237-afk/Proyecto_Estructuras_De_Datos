@@ -31,3 +31,15 @@ async function PrintPreOrderTour() {
     const data = await res.json();
     alert("PreOrder: " + data.preorder.join(" -> "));
 }
+
+async function LoadJSON (){
+    const filesLoad = document.getElementById("file-upload");
+    const file = filesLoad.files[0];
+    const form = new FormData ();
+    form.append ("archivo" , file);
+
+    const envio = await fetch ("/ImportarJSON", {
+        method : "POST",
+        body : form
+    });
+}
