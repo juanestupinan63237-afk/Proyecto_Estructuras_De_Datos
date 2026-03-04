@@ -66,4 +66,11 @@ def print_preorder():
 
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     app.run(debug=True)
+=======
+    app.run(debug=True, port=5000)
+    with open ("Files/Typology.json" , "w" , encoding="utf-8") as f:
+        data = tree.converdicc ()
+        json.dump (data , f)
+>>>>>>> parent of 2a9aa78 (fix: correct node attribute names in BST and update JSON formatting in Topology)
