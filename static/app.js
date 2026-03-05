@@ -32,6 +32,11 @@ async function PrintPreOrderTour() {
     alert("PreOrder: " + data.preorder.join(" -> "));
 }
 
+async function ControlZ (){
+    const res = await fetch ("/Control/Pila");
+    console.log ("Control-z");
+}
+
 async function LoadJSON (){
     const filesLoad = document.getElementById("file-upload");
     const file = filesLoad.files[0];
