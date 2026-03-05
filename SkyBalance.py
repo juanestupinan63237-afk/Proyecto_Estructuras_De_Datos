@@ -1,4 +1,5 @@
 from Classes.AVL import AVLTree
+from Classes.BSTTree import BST
 from Classes.FlightSB import Flight
 from flask import Flask, jsonify, render_template, request, Response
 import json
@@ -78,6 +79,24 @@ def RecibirVuelo():
 def RenderTreeRoute():
     svg = tree.RenderTree()
     return Response(svg, mimetype='image/svg+xml')
+
+@app.route ("/ModoEstres/Activar")
+def ModoEstres ():
+    nodos = tree.converdicc ()
+    temp = AVLTree ()
+    temp.cargar_desde_dicc (nodos)
+    tree = temp
+    return jsonify ({"Modo estres" : False})
+
+
+
+@app.route ("/ModoEstres/Desactivar")
+def DesactivarModoEstres ():
+    nodos = tree.converdicc ()
+    temp = BST ()
+    temp.cargar_desde_dicc (nodos)
+    tree = temp
+    return jsonify ({"Modo estres" : True})
 
 @app.route ("/Descargar/Tree/Topology")
 def SendTree ():
