@@ -1,37 +1,45 @@
 async function GetVuelo() {
-    let code = document.getElementById("Code").value;
-    let origin = document.getElementById("Origin").value;
-    let destination = document.getElementById("destination").value;
-    let departureTime = document.getElementById("departureTime").value;
-    let basePrice = document.getElementById("basePrice").value;
-    let numberPassengers = document.getElementById("numberPassengers").value
-    let respuesta = await fetch ("/Sent/Node" , {
-        method : "POST" , 
-        headers : {
-            "Content-Type" : "application/json"
-        },
-        body : JSON.stringify ({
-            "code" : code,
-            "origin" : origin,
-            "destination" : destination,
-            "departureTime" : departureTime,
-            "basePrice" : basePrice,
-            "numberPassengers" : numberPassengers
-        })
+    const data = {
+        code: document.getElementById("Code").value,
+        origin: document.getElementById("Origin").value,
+        destination: document.getElementById("destination").value,
+        departureTime: document.getElementById("departureTime").value,
+        basePrice: document.getElementById("basePrice").value,
+        numberPassengers: document.getElementById("numberPassengers").value
+    };
+
+    const response = await fetch("/Sent/Node", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
     });
-    if (respuesta.ok){
-        console.log ("Nodo Insertado con exito");
+
+    if(response.ok) {
+        document.getElementById("vueloForm").reset();
+        RefreshTree();
     }
 }
 
+async function RefreshTree() {
+    const res = await fetch('/Render/Tree');
+    const svg = await res.text();
+    document.getElementById('treeContainer').innerHTML = svg;
+}
+
 async function PrintPreOrderTour() {
-    let respuesta = await fetch ("/Print" , {
+    const res = await fetch("/Print", { method: "POST" });
+    const data = await res.json();
+    alert("PreOrder: " + data.preorder.join(" -> "));
+}
+
+async function LoadJSON (){
+    const filesLoad = document.getElementById("file-upload");
+    const file = filesLoad.files[0];
+    const form = new FormData ();
+    form.append ("archivo" , file);
+
+    const envio = await fetch ("/ImportarJSON", {
         method : "POST",
-        headers : {
-            "Content-Type" : "application/json"
-        },
-        body : JSON.stringify ({
-            "Hecho" : true
-        })
+        body : form
     });
 }

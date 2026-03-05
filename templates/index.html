@@ -1,25 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/style.css">
-    <title>SkyBalance</title>
+    <title>SkyBalance | Flight System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class = "addNode">
-        <form> 
-            <h2>Code </h2><input type = "text" id = "Code"> </input> <br>
-            <h2>Origin </h2><input type = "text" id = "Origin"> </input><br>
-            <h2>Destination </h2><input type = "text" id = "destination"> </input><br>
-            <h2>Departure Time </h2><input type = "datetime" id = "departureTime"> </input><br>
-            <h2>Base Price </h2><input type = "text" id = "basePrice"> </input><br>
-            <h2>Number Passengers </h2><input type= "text" id = "numberPassengers"> </input><br>
-        </form>
-        <br>
-        <button type = "button" onclick="GetVuelo()"> <div class="textButtom">Create Vuelo </div></button>
-        <button type = "button" onclick="PrintPreOrderTour()"> <div class="textButtom">Print PreOrderTour </div></button>
-    </div>
+    <div class="container">
+        <div class="glass-card">
+            <div class="form-section">
+                <h1 class="logo">SkyBalance</h1>
+                <form id="vueloForm">
+                    <div class="input-box">
+                        <label>CODE</label>
+                        <input type="number" id="Code" placeholder="Ej: 101">
+                    </div>
+                    <div class="input-box">
+                        <label>ORIGIN</label>
+                        <input type="text" id="Origin" placeholder="Cali">
+                    </div>
+                    <div class="input-box">
+                        <label>DESTINATION</label>
+                        <input type="text" id="destination" placeholder="Barranquilla">
+                    </div>
+                    <div class="input-box">
+                        <label>DEPARTURE TIME</label>
+                        <input type="time" id="departureTime">
+                    </div>
+                    <div class="input-box">
+                        <label>BASE PRICE</label>
+                        <input type="number" id="basePrice" placeholder="88000">
+                    </div>
+                    <div class="input-box">
+                        <label>PASSENGERS</label>
+                        <input type="number" id="numberPassengers" placeholder="100">
+                    </div>
+                    <button type="button" class="btn-main" onclick="GetVuelo()">Create Vuelo</button>
+                    <button type="button" class="btn-sub" onclick="PrintPreOrderTour()">Print PreOrder</button>
+                    <div class="file-input-container">
+                        <label for="file-upload" class="custom-file-upload">
+                            <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                            </div>
+                            <div class="text-group">
+                            <span class="main-text">Seleccionar archivo</span>
+                            <span class="sub-text">Arrastra y suelta aquí o haz clic</span>
+                            </div>
+                        </label>
+                        <input id="file-upload" type="file" accept=".json" on />
+                        <button id = "btn-main"  onclick="LoadJSON()"> Cargar </button>
+                        </div>
+                </form>
+            </div>
+
+            <div class="tree-viewer">
+                <div id="treeContainer">
+                    {{ grafico|safe }}
+                </div>
+            </div>
+        </div>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
-<script src = "static/app.js"> </script>
 </html>

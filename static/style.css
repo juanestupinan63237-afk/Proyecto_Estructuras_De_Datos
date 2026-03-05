@@ -1,24 +1,140 @@
-.addNode {
+:root {
+    --bg: #0b1120;
+    --card: #161d31;
+    --accent: #7c7eff; 
+    --cyan: #00f2ff;
+    --text: #94a3b8;
+}
 
-    background-color: black;
-    border: 2px solid #333;
+body {
+    background-color: var(--bg);
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.glass-card {
+    background-color: var(--card);
+    display: flex;
+    width: 950px;
+    height: 600px;
+    border-radius: 20px;
+    padding: 30px;
+    gap: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.form-section { width: 300px; }
+
+.logo { color: #4a86e8; font-size: 22px; margin-bottom: 20px; }
+
+.input-box { margin-bottom: 12px; }
+
+label { color: var(--text); font-size: 10px; letter-spacing: 1px; display: block; margin-bottom: 4px; }
+
+input {
+    width: 100%;
+    background: #1e2641;
+    border: 1px solid #2d3655;
+    padding: 10px;
+    border-radius: 8px;
+    color: white;
+    box-sizing: border-box;
+}
+
+.btn-main {
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    padding: 12px;
     border-radius: 10px;
-    width: 300px;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+    margin-top: 10px;
 }
 
-h2 {
-    color: white;
-    font-family: Arial, Helvetica, sans-serif;
+.btn-sub {
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
+    margin-top: 10px;
+    cursor: pointer;
 }
 
-button {
-    width : 200px;
-    color: white;
-    border: 2px solid #333;
-    border-radius: 50px;
+.tree-viewer {
+    flex: 1;
+    background: #0f1425; /* Fondo oscuro interno del visualizador */
+    border-radius: 15px;
+    border: 1px dashed #2d3655;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
 }
 
-.textButtom {
-    font-family: Arial, Helvetica, sans-serif;
-    color: black;
+/* Contenedor principal */
+.file-input-container {
+  width: 100%;
+  max-width: 340px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Ocultamos el input real */
+#file-upload {
+  display: none;
+}
+
+/* El Label que actúa como botón/caja */
+.custom-file-upload {
+  display: flex;
+  align-items: center;
+  background-color: #7b86ff; /* El lila del botón "Create Vuelo" */
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Efecto Hover */
+.custom-file-upload:hover {
+  background-color: #6a74e6;
+  transform: translateY(-1px);
+}
+
+/* Icono a la izquierda */
+.icon {
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 8px;
+  border-radius: 6px;
+}
+
+/* Grupo de texto */
+.text-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-text {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.sub-text {
+  font-size: 11px;
+  opacity: 0.8;
+  margin-top: 2px;
 }
