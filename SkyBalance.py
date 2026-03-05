@@ -2,10 +2,12 @@ from Classes.AVL import AVLTree
 from Classes.FlightSB import Flight
 from flask import Flask, jsonify, render_template, request, Response
 import json
+from Classes.Pila import Pila
 
 app = Flask(__name__)
-
 tree = AVLTree()
+reversion = Pila ()
+
 with open ("Files/Topology.json" , "r" , encoding="utf-8") as f:
     data = json.load (f)
 tree.cargar_desde_dicc(data)
@@ -57,10 +59,17 @@ def RecibirVuelo():
 
         tree.insertNode(nuevo_vuelo)
 
+        reversion.Apilar ({
+            "tipo" : "REMOVE",
+            "codigo" : code
+        })
+
+
         return jsonify({
             "status": "success",
             "message": f"Vuelo {code} registrado correctamente"
         }), 200
+
 
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
@@ -74,6 +83,13 @@ def RenderTreeRoute():
 def SendTree ():
     data = tree.converdicc ()
     return jsonify ({"Archivo" : data})
+
+@app.route ("/Control/Pila")
+def ControlZ ():
+    if reversion.isEmpty() is False:
+        desapila = reversion.Desapilar()
+        if desapila ["tipo"] == "REMOVE":
+            tree.deleteNode(desapila["codigo"])
 
 if __name__ == "__main__":
     app.run(debug=True)
