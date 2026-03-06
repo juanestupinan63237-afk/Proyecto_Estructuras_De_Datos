@@ -27,3 +27,6 @@ class Node:
 
     def getHeight(self):
         return self.height
+    
+    def setHeight(self, value):
+        self.height = value
