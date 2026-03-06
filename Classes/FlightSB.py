@@ -63,3 +63,6 @@ class Flight:
 
     def setAlert(self, value):
         self.alert = value
+    
+    def getTotalPrice (self):
+        return self.basePrice * self.numberPassengers
