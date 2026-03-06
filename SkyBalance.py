@@ -58,7 +58,10 @@ def RecibirVuelo():
             alert=False
         )
 
-        tree.insertNode(nuevo_vuelo)
+        if type (tree) == BST:
+            tree.insertNode (nuevo_vuelo)
+        else:
+            tree.insertNodeAVL (nuevo_vuelo)
 
         reversion.Apilar ({
             "tipo" : "REMOVE",
