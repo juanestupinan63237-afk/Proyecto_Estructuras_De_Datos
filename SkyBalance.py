@@ -91,8 +91,6 @@ def ModoEstres ():
     tree = temp
     return jsonify ({"Modo estres" : False})
 
-
-
 @app.route ("/ModoEstres/Desactivar")
 def DesactivarModoEstres ():
     nodos = tree.converdicc ()
