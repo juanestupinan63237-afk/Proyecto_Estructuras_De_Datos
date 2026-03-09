@@ -5,6 +5,7 @@ from flask import Flask, jsonify, render_template, request, Response
 import json
 from Classes.Pila import Pila
 from Classes.RenderTree import RenderTree
+from Classes.SaveTreeTopology import SavetreeTopology
 
 app = Flask(__name__)
 tree = AVLTree()
@@ -16,7 +17,7 @@ tree.cargar_desde_dicc(data)
 
 @app.route("/")
 def home():
-    grafico_svg = tree.RenderTree()
+    grafico_svg = RenderTree(tree).Render()
     return render_template("index.html", grafico=grafico_svg)
 
 @app.route ("/ImportarJSON" , methods = ["POST"])
@@ -114,6 +115,7 @@ def ControlZ ():
 
 if __name__ == "__main__":
     app.run(debug=True)
-    data = tree.converdicc ()
+    data = SavetreeTopology (tree).SaveTree()
     with open ("Files/Topology.json" , "w" , encoding= "utf-8") as f:
         json.dump (data , f , indent= 4)
+    print ("Se ha guardado con exito")
