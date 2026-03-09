@@ -32,7 +32,7 @@ class RenderTree ():
                     dot.edge(node_id, str(id(n.getRightSon())))
                     AddNode(n.getRightSon())
 
-        if self.root:
-            AddNode(self.root)
+        if self.arbol.root:
+            AddNode(self.arbol.root)
         svg = dot.pipe(format='svg').decode("utf-8")
         return svg.replace('<svg ', '<svg width="100%" height="auto" ')
