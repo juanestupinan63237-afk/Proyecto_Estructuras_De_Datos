@@ -48,3 +48,11 @@ async function LoadJSON (){
         body : form
     });
 }
+
+async function ModoEstresActivar () {
+    let request = await fetch ("/ModoEstres/Activar");
+}
+
+async function ModoEstresDesactivar (){
+    let request = await fetch ("/ModoEstres/Desactivar");
+}
