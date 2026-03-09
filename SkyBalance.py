@@ -4,6 +4,7 @@ from Classes.FlightSB import Flight
 from flask import Flask, jsonify, render_template, request, Response
 import json
 from Classes.Pila import Pila
+from Classes.RenderTree import RenderTree
 
 app = Flask(__name__)
 tree = AVLTree()
@@ -80,8 +81,8 @@ def RecibirVuelo():
 
 @app.route("/Render/Tree", methods=['GET'])
 def RenderTreeRoute():
-    svg = tree.RenderTree()
-    return Response(svg, mimetype='image/svg+xml')
+    render = RenderTree (tree)
+    return Response(render.Render(), mimetype='image/svg+xml')
 
 @app.route ("/ModoEstres/Activar")
 def ModoEstres ():
