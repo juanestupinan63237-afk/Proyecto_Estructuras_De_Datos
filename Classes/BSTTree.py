@@ -81,24 +81,3 @@ class BST:
             return self.__searchNode(node.getRightSon(), code)
         else:
             return True
-    
-    def _dicc_a_nodo(self, dicc: dict):
-        if dicc is None:
-            return None
-
-        nodo = Node(Flight(int(dicc["codigo"]) , 
-                           dicc["origen"] , 
-                           dicc["destino"] , 
-                           dicc ["horaSalida"] , 
-                           dicc["precioBase"] , 
-                           dicc["pasajeros"] ,
-                           promotion=bool(dicc["promocion"]),
-                           alert= bool(dicc["alerta"]),
-                           priority= False))
-
-        nodo.setLeftSon(self._dicc_a_nodo(dicc["izquierdo"]))
-        nodo.setRightSon(self._dicc_a_nodo(dicc["derecho"]))
-        return nodo
-
-    def cargar_desde_dicc(self, dicc):
-        self.root = self._dicc_a_nodo(dicc)

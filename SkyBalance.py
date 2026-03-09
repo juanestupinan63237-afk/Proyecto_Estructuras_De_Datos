@@ -6,6 +6,7 @@ import json
 from Classes.Pila import Pila
 from Classes.RenderTree import RenderTree
 from Classes.SaveTreeTopology import SavetreeTopology
+from Classes.UploadFile import UploadFile
 
 app = Flask(__name__)
 tree = AVLTree()
@@ -13,7 +14,7 @@ reversion = Pila ()
 
 with open ("Files/Topology.json" , "r" , encoding="utf-8") as f:
     data = json.load (f)
-tree.cargar_desde_dicc(data)
+UploadFile(tree , data).cargar_desde_dicc()
 
 @app.route("/")
 def home():
@@ -29,7 +30,7 @@ def LoadJSON ():
     contenido_binario = file.read()
     contenido_texto = contenido_binario.decode("utf-8")
     data = json.loads(contenido_texto)
-    tree.cargar_desde_dicc (data)
+    UploadFile(tree,data).cargar_desde_dicc ()
     print ("Archivo cargado con exito...")
     return jsonify ({"message" : "Exitoso"})
 
