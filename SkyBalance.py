@@ -1,7 +1,8 @@
 from Classes.AVL import AVLTree
 from Classes.FlightSB import Flight
-from flask import Flask, jsonify, render_template, request, Response
+from flask import Flask, jsonify, render_template, request, Response , send_file
 import json
+from io import BytesIO
 
 app = Flask(__name__)
 
@@ -73,7 +74,14 @@ def RenderTreeRoute():
 @app.route ("/Descargar/Tree/Topology")
 def SendTree ():
     data = tree.converdicc ()
-    return jsonify ({"Archivo" : data})
+    json_bytes = json.dumps(data).encode('utf-8')
+    archivo_memoria = BytesIO(json_bytes)
+    return send_file(
+        archivo_memoria,
+        mimetype='application/json',
+        as_attachment=True,
+        download_name='Arbol.json' 
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)

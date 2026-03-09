@@ -43,3 +43,10 @@ async function LoadJSON (){
         body : form
     });
 }
+
+async function obtenerDatos() {
+    const respuesta = await fetch("/Descargar/Tree/Topology"); 
+    const data = await respuesta.json();
+    console.log(data.mensaje); 
+}
+
