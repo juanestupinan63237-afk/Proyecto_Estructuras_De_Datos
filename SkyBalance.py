@@ -128,7 +128,10 @@ def ControlZ ():
                 v["alert"]
 
             )
-            tree.insertNode(vuelo)
+        if type (tree) == BST:
+            tree.insertNode (vuelo)
+        else:
+            tree.insertNodeAVL (vuelo)
 
 if __name__ == "__main__":
     app.run(debug=True)
