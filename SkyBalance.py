@@ -88,24 +88,21 @@ def RenderTreeRoute():
 
 @app.route ("/ModoEstres/Activar")
 def ModoEstres ():
-    nodos = tree.converdicc ()
     temp = AVLTree ()
-    temp.cargar_desde_dicc (nodos)
+    UploadFile(temp , SavetreeTopology (tree).SaveTree())
     tree = temp
     return jsonify ({"Modo estres" : False})
 
 @app.route ("/ModoEstres/Desactivar")
 def DesactivarModoEstres ():
-    nodos = tree.converdicc ()
     temp = BST ()
-    temp.cargar_desde_dicc (nodos)
+    UploadFile(temp , SavetreeTopology (tree).SaveTree())
     tree = temp
     return jsonify ({"Modo estres" : True})
 
 @app.route ("/Descargar/Tree/Topology")
 def SendTree ():
-    data = tree.converdicc ()
-    return jsonify ({"Archivo" : data})
+    return jsonify ({"Archivo" : SavetreeTopology(tree).SaveTree()})
 
 @app.route ("/Control/Pila")
 def ControlZ ():
