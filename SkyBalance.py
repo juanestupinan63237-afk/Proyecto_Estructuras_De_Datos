@@ -113,6 +113,22 @@ def ControlZ ():
         desapila = reversion.Desapilar()
         if desapila ["tipo"] == "REMOVE":
             tree.deleteNode(desapila["codigo"])
+        elif desapila ["tipo"] == "ADD":
+            v = desapila["vuelo"]
+
+            vuelo = Flight(
+                v["code"],
+                v["origin"],
+                v["destination"],
+                v["departureTime"],
+                v["basePrice"],
+                v["numberPassengers"],
+                v["priority"],
+                v["promotion"],
+                v["alert"]
+
+            )
+            tree.insertNode(vuelo)
 
 if __name__ == "__main__":
     app.run(debug=True)
