@@ -21,7 +21,7 @@ def home():
     grafico_svg = RenderTree(tree).Render()
     return render_template("index.html", grafico=grafico_svg)
 
-@app.route ("/ImportarJSON" , methods = ["POST"])
+@app.route ("/ImportarJSON" , methods = ["POST"])                               
 def LoadJSON ():
     file = request.files.get("archivo")
     if not file:
