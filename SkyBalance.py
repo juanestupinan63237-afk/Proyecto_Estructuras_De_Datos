@@ -4,9 +4,7 @@ from Classes.FlightSB import Flight
 from flask import Flask, jsonify, render_template, request, Response
 import json
 from Classes.Pila import Pila
-from Classes.RenderTree import RenderTree
-from Classes.SaveTreeTopology import SavetreeTopology
-from Classes.UploadFile import UploadFile
+
 
 app = Flask(__name__)
 tree = AVLTree()
@@ -14,11 +12,11 @@ reversion = Pila ()
 
 with open ("Files/Topology.json" , "r" , encoding="utf-8") as f:
     data = json.load (f)
-UploadFile(tree , data).cargar_desde_dicc()
+tree.cargar_desde_dicc (data)
 
 @app.route("/")
 def home():
-    grafico_svg = RenderTree(tree).Render()
+    grafico_svg = tree.Render ()
     return render_template("index.html", grafico=grafico_svg)
 
 @app.route ("/ImportarJSON" , methods = ["POST"])                               
@@ -30,7 +28,7 @@ def LoadJSON ():
     contenido_binario = file.read()
     contenido_texto = contenido_binario.decode("utf-8")
     data = json.loads(contenido_texto)
-    UploadFile(tree,data).cargar_desde_dicc ()
+    tree.cargar_desde_dicc (data)
     print ("Archivo cargado con exito...")
     return jsonify ({"message" : "Exitoso"})
 
@@ -83,26 +81,12 @@ def RecibirVuelo():
 
 @app.route("/Render/Tree", methods=['GET'])
 def RenderTreeRoute():
-    render = RenderTree (tree)
-    return Response(render.Render(), mimetype='image/svg+xml')
-
-@app.route ("/ModoEstres/Activar")
-def ModoEstres ():
-    temp = AVLTree ()
-    UploadFile(temp , SavetreeTopology (tree).SaveTree())
-    tree = temp
-    return jsonify ({"Modo estres" : False})
-
-@app.route ("/ModoEstres/Desactivar")
-def DesactivarModoEstres ():
-    temp = BST ()
-    UploadFile(temp , SavetreeTopology (tree).SaveTree())
-    tree = temp
-    return jsonify ({"Modo estres" : True})
+    render = tree.Render ()
+    return Response(render, mimetype='image/svg+xml')
 
 @app.route ("/Descargar/Tree/Topology")
 def SendTree ():
-    return jsonify ({"Archivo" : SavetreeTopology(tree).SaveTree()})
+    return jsonify ({"Archivo" : tree.SaveTree()})
 
 @app.route ("/Control/Pila")
 def ControlZ ():
@@ -132,7 +116,7 @@ def ControlZ ():
 
 if __name__ == "__main__":
     app.run(debug=True)
-    data = SavetreeTopology (tree).SaveTree()
+    data = tree.SaveTree ()
     with open ("Files/Topology.json" , "w" , encoding= "utf-8") as f:
         json.dump (data , f , indent= 4)
     print ("Se ha guardado con exito")

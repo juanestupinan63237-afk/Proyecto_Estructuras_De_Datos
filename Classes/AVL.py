@@ -194,7 +194,11 @@ class AVLTree:
         }
 
     def SaveTree(self):
-        return self._nodo_a_dicc(self.root)
+        data = {
+            "tipo" : "Topology",
+            "arbol" : self._nodo_a_dicc (self.root)
+        }
+        return data
     
     def Render (self):
         dot = Digraph()
@@ -228,3 +232,42 @@ class AVLTree:
             AddNode(self.root)
         svg = dot.pipe(format='svg').decode("utf-8")
         return svg.replace('<svg ', '<svg width="100%" height="auto" ')
+    
+    def _dicc_a_nodo_topology(self, dicc: dict):
+        if dicc is None:
+            return None
+
+        nodo = Node(Flight(int(dicc["codigo"]) , 
+                           dicc["origen"] , 
+                           dicc["destino"] , 
+                           dicc ["horaSalida"] , 
+                           dicc["precioBase"] , 
+                           dicc["pasajeros"] ,
+                           promotion=bool(dicc["promocion"]),
+                           alert= bool(dicc["alerta"]),
+                           priority= False))
+
+        nodo.setLeftSon(self._dicc_a_nodo_topology(dicc["izquierdo"]))
+        nodo.setRightSon(self._dicc_a_nodo_topology(dicc["derecho"]))
+        return nodo
+
+    def cargar_desde_dicc(self , dicc):
+        self.root = None
+        if dicc["tipo"] == "Topology":
+            self.root = self._dicc_a_nodo_topology(dicc["arbol"])
+        elif dicc["tipo"] == "INSERCION":
+            nodos = dicc["vuelos"]
+            self.cargar_desde_dicc_inserccion (nodos)
+
+    def cargar_desde_dicc_inserccion (self ,vuelos: list ):
+        for i in vuelos:
+            codigo = int(i["codigo"])
+            origen = i["origen"]
+            destino = i["destino"]
+            horaSalida = i ["horaSalida"]
+            precioBase = int(i["precioBase"])
+            pasajeros = int(i["pasajeros"])
+            prioridad = int(i["prioridad"])
+            promocion = i["promocion"]
+            alerta = i["alerta"]
+            self.insertNodeAVL (Flight (codigo , origen , destino , horaSalida , precioBase , pasajeros , prioridad , promocion , alerta))
