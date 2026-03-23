@@ -271,3 +271,14 @@ class AVLTree:
             promocion = i["promocion"]
             alerta = i["alerta"]
             self.insertNodeAVL (Flight (codigo , origen , destino , horaSalida , precioBase , pasajeros , prioridad , promocion , alerta))
+
+    def tourPreOrden (self):
+        resultado = []
+        self.__tourPreOrden (self.root , resultado)
+        return resultado
+    
+    def __tourPreOrden (self , current_root: Node , resultado: list):
+        if current_root:
+            resultado.append (current_root.getFlight())
+            self.__tourPreOrden (current_root.getLeftSon())
+            self.__tourPreOrden (current_root.getRightSon())

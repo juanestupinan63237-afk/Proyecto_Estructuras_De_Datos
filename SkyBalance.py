@@ -10,7 +10,7 @@ app = Flask(__name__)
 tree = AVLTree()
 reversion = Pila ()
 
-with open ("Files/Topology.json" , "r" , encoding="utf-8") as f:
+with open ("static/Files/Topology.json" , "r" , encoding="utf-8") as f:
     data = json.load (f)
 tree.cargar_desde_dicc (data)
 
@@ -82,6 +82,8 @@ def RecibirVuelo():
 @app.route("/Render/Tree", methods=['GET'])
 def RenderTreeRoute():
     render = tree.Render ()
+    with open ("static/Files/Topology.json" , "w" , encoding= "utf-8") as f:
+        json.dump (data , f , indent= 4)
     return Response(render, mimetype='image/svg+xml')
 
 @app.route ("/Descargar/Tree/Topology")
@@ -117,6 +119,6 @@ def ControlZ ():
 if __name__ == "__main__":
     app.run(debug=True)
     data = tree.SaveTree ()
-    with open ("Files/Topology.json" , "w" , encoding= "utf-8") as f:
+    with open ("static/Files/Topology.json" , "w" , encoding= "utf-8") as f:
         json.dump (data , f , indent= 4)
     print ("Se ha guardado con exito")

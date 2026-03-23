@@ -30,3 +30,6 @@ class Node:
     
     def setHeight(self, value):
         self.height = value
+
+    def getFlight (self):
+        return self.flight
