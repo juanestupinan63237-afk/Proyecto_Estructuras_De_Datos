@@ -1,22 +1,25 @@
 from Classes.AVL import AVLTree
+from Classes.BSTTree import BST
 from Classes.FlightSB import Flight
-from flask import Flask, jsonify, render_template, request, Response , send_file
+from flask import Flask, jsonify, render_template, request, Response
 import json
-from io import BytesIO
+from Classes.Pila import Pila
+
 
 app = Flask(__name__)
-
 tree = AVLTree()
-with open ("Files/Topology.json" , "r" , encoding="utf-8") as f:
+reversion = Pila ()
+
+with open ("static/Files/Topology.json" , "r" , encoding="utf-8") as f:
     data = json.load (f)
-tree.cargar_desde_dicc(data)
+tree.cargar_desde_dicc (data)
 
 @app.route("/")
 def home():
-    grafico_svg = tree.RenderTree()
+    grafico_svg = tree.Render ()
     return render_template("index.html", grafico=grafico_svg)
 
-@app.route ("/ImportarJSON" , methods = ["POST"])
+@app.route ("/ImportarJSON" , methods = ["POST"])                               
 def LoadJSON ():
     file = request.files.get("archivo")
     if not file:
@@ -56,35 +59,66 @@ def RecibirVuelo():
             alert=False
         )
 
-        tree.insertNode(nuevo_vuelo)
+        if type (tree) == BST:
+            tree.insertNode (nuevo_vuelo)
+        else:
+            tree.insertNodeAVL (nuevo_vuelo)
+
+        reversion.Apilar ({
+            "tipo" : "REMOVE",
+            "codigo" : code
+        })
+
 
         return jsonify({
             "status": "success",
             "message": f"Vuelo {code} registrado correctamente"
         }), 200
 
+
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
 
 @app.route("/Render/Tree", methods=['GET'])
 def RenderTreeRoute():
-    svg = tree.RenderTree()
-    return Response(svg, mimetype='image/svg+xml')
+    render = tree.Render ()
+    with open ("static/Files/Topology.json" , "w" , encoding= "utf-8") as f:
+        json.dump (data , f , indent= 4)
+    return Response(render, mimetype='image/svg+xml')
 
 @app.route ("/Descargar/Tree/Topology")
 def SendTree ():
-    data = tree.converdicc ()
-    json_bytes = json.dumps(data).encode('utf-8')
-    archivo_memoria = BytesIO(json_bytes)
-    return send_file(
-        archivo_memoria,
-        mimetype='application/json',
-        as_attachment=True,
-        download_name='Arbol.json' 
-    )
+    return jsonify ({"Archivo" : tree.SaveTree()})
+
+@app.route ("/Control/Pila")
+def ControlZ ():
+    if reversion.isEmpty() is False:
+        desapila = reversion.Desapilar()
+        if desapila ["tipo"] == "REMOVE":
+            tree.deleteNode(desapila["codigo"])
+        elif desapila ["tipo"] == "ADD":
+            v = desapila["vuelo"]
+
+            vuelo = Flight(
+                v["code"],
+                v["origin"],
+                v["destination"],
+                v["departureTime"],
+                v["basePrice"],
+                v["numberPassengers"],
+                v["priority"],
+                v["promotion"],
+                v["alert"]
+
+            )
+        if type (tree) == BST:
+            tree.insertNode (vuelo)
+        else:
+            tree.insertNodeAVL (vuelo)
 
 if __name__ == "__main__":
     app.run(debug=True)
-    data = tree.converdicc ()
-    with open ("Files/Topology.json" , "w" , encoding= "utf-8") as f:
+    data = tree.SaveTree ()
+    with open ("static/Files/Topology.json" , "w" , encoding= "utf-8") as f:
         json.dump (data , f , indent= 4)
+    print ("Se ha guardado con exito")

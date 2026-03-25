@@ -20,7 +20,7 @@ body {
     background-color: var(--card);
     display: flex;
     width: 950px;
-    height: 600px;
+    height: flex;
     border-radius: 20px;
     padding: 30px;
     gap: 20px;

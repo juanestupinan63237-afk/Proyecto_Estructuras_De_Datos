@@ -83,10 +83,10 @@ class BST:
         else:
             return True
         
-    def _nodo_a_dicc(self, nodo: Node):
+
+    def _nodo_a_dicc (self , nodo: Node):
         if nodo is None:
             return None
-
         return {
             "codigo": nodo.flight.code,
             "origen" : nodo.flight.getOrigin (),
@@ -94,14 +94,13 @@ class BST:
             "horaSalida" : nodo.flight.getDepartureTime(),
             "precioBase" : nodo.flight.getBasePrice(),
             "pasajeros" : nodo.flight.getNumberPassengers(),
-            "promocion" : (nodo.flight.getPromotion()),
-            "alerta" : (nodo.flight.getAlert()),
+            "promocion" : nodo.flight.getPromotion(),
+            "alerta" : nodo.flight.getAlert(),
             "izquierdo": self._nodo_a_dicc(nodo.leftSon),
             "derecho": self._nodo_a_dicc(nodo.rightSon)
         }
 
-    
-    def converdicc(self):
+    def SaveTree(self):
         return self._nodo_a_dicc(self.root)
     
     def _dicc_a_nodo(self, dicc: dict):
@@ -122,35 +121,29 @@ class BST:
         nodo.setRightSon(self._dicc_a_nodo(dicc["derecho"]))
         return nodo
 
-    def cargar_desde_dicc(self, dicc):
+    def cargar_desde_dicc(self , dicc):
         self.root = self._dicc_a_nodo(dicc)
 
-    def RenderTree(self):
+    def Render (self):
         dot = Digraph()
-        # Fondo transparente para integrarse con el CSS
         dot.attr('graph', bgcolor='transparent', ranksep='0.6', nodesep='0.4')
-        # CONFIGURACIÓN DEL CÍRCULO NEÓN
         dot.attr('node',
-                shape='circle',     # ¡Mantenemos los círculos!
-                style='filled',     # Rellenos
-                fillcolor='#1b212c',# Fondo oscuro interno del círculo
-                color='#00f2ff',    # Borde Cian Neón
-                fontcolor='#00f2ff',# Texto Cian Neón
+                shape='circle',     
+                style='filled',     
+                fillcolor='#1b212c',
+                color='#00f2ff',    
+                fontcolor='#00f2ff',
                 fontname='Arial Bold',
                 fontsize='12',
-                penwidth='2',       # Borde más grueso para efecto neón
-                width='0.6',        # Tamaño uniforme
+                penwidth='2',     
+                width='0.6',        
                 height='0.6')
-
-        # Flechas estilizadas
         dot.attr('edge', color='#444d5e', penwidth='1.5', arrowhead='vee', arrowsize='0.8')
 
         def AddNode(n):
             if n:
-                # Usar id(n) para identificador único
                 node_id = str(id(n))
                 label_text = str(n.getFlightCode())
-                # Crear el nodo circular neón
                 dot.node(node_id, label=label_text)
                 if n.getLeftSon():
                     dot.edge(node_id, str(id(n.getLeftSon())))
@@ -161,6 +154,5 @@ class BST:
 
         if self.root:
             AddNode(self.root)
-        # Generar el SVG y hacerlo responsivo
         svg = dot.pipe(format='svg').decode("utf-8")
         return svg.replace('<svg ', '<svg width="100%" height="auto" ')

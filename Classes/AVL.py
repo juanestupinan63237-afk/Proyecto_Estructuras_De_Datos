@@ -165,7 +165,42 @@ class AVLTree:
 
         return temporal1
 
-    def RenderTree(self):
+    def FindNodeLessProfitable (self):
+        FLIGTH: Node = None
+        def Find (temp_root: Node):
+            nonlocal FLIGTH
+            if temp_root is not None:
+                if temp_root.flight.getTotalPrice () < FLIGTH.flight.getTotalPrice():
+                    FLIGTH = temp_root
+            Find (temp_root.getLeftSon())
+            Find (temp_root.getRightSon())
+        Find (self.root)
+        return FLIGTH
+
+    def _nodo_a_dicc (self , nodo: Node):
+        if nodo is None:
+            return None
+        return {
+            "codigo": nodo.flight.code,
+            "origen" : nodo.flight.getOrigin (),
+            "destino" : nodo.flight.getDestination(),
+            "horaSalida" : nodo.flight.getDepartureTime(),
+            "precioBase" : nodo.flight.getBasePrice(),
+            "pasajeros" : nodo.flight.getNumberPassengers(),
+            "promocion" : nodo.flight.getPromotion(),
+            "alerta" : nodo.flight.getAlert(),
+            "izquierdo": self._nodo_a_dicc(nodo.leftSon),
+            "derecho": self._nodo_a_dicc(nodo.rightSon)
+        }
+
+    def SaveTree(self):
+        data = {
+            "tipo" : "Topology",
+            "arbol" : self._nodo_a_dicc (self.root)
+        }
+        return data
+    
+    def Render (self):
         dot = Digraph()
         dot.attr('graph', bgcolor='transparent', ranksep='0.6', nodesep='0.4')
         dot.attr('node',
@@ -176,10 +211,9 @@ class AVLTree:
                 fontcolor='#00f2ff',
                 fontname='Arial Bold',
                 fontsize='12',
-                penwidth='2',       
+                penwidth='2',     
                 width='0.6',        
                 height='0.6')
-
         dot.attr('edge', color='#444d5e', penwidth='1.5', arrowhead='vee', arrowsize='0.8')
 
         def AddNode(n):
@@ -199,28 +233,7 @@ class AVLTree:
         svg = dot.pipe(format='svg').decode("utf-8")
         return svg.replace('<svg ', '<svg width="100%" height="auto" ')
     
-    def _nodo_a_dicc(self, nodo: Node):
-        if nodo is None:
-            return None
-
-        return {
-            "codigo": nodo.flight.code,
-            "origen" : nodo.flight.getOrigin (),
-            "destino" : nodo.flight.getDestination(),
-            "horaSalida" : nodo.flight.getDepartureTime(),
-            "precioBase" : nodo.flight.getBasePrice(),
-            "pasajeros" : nodo.flight.getNumberPassengers(),
-            "promocion" : nodo.flight.getPromotion(),
-            "alerta" : nodo.flight.getAlert(),
-            "izquierdo": self._nodo_a_dicc(nodo.leftSon),
-            "derecho": self._nodo_a_dicc(nodo.rightSon)
-        }
-
-    
-    def converdicc(self):
-        return self._nodo_a_dicc(self.root)
-    
-    def _dicc_a_nodo(self, dicc: dict):
+    def _dicc_a_nodo_topology(self, dicc: dict):
         if dicc is None:
             return None
 
@@ -230,13 +243,42 @@ class AVLTree:
                            dicc ["horaSalida"] , 
                            dicc["precioBase"] , 
                            dicc["pasajeros"] ,
-                           promotion=dicc["promocion"],
-                           alert= dicc["alerta"],
+                           promotion=bool(dicc["promocion"]),
+                           alert= bool(dicc["alerta"]),
                            priority= False))
 
-        nodo.setLeftSon(self._dicc_a_nodo(dicc["izquierdo"]))
-        nodo.setRightSon(self._dicc_a_nodo(dicc["derecho"]))
+        nodo.setLeftSon(self._dicc_a_nodo_topology(dicc["izquierdo"]))
+        nodo.setRightSon(self._dicc_a_nodo_topology(dicc["derecho"]))
         return nodo
 
-    def cargar_desde_dicc(self, dicc):
-        self.root = self._dicc_a_nodo(dicc)
+    def cargar_desde_dicc(self , dicc):
+        self.root = None
+        if dicc["tipo"] == "Topology":
+            self.root = self._dicc_a_nodo_topology(dicc["arbol"])
+        elif dicc["tipo"] == "INSERCION":
+            nodos = dicc["vuelos"]
+            self.cargar_desde_dicc_inserccion (nodos)
+
+    def cargar_desde_dicc_inserccion (self ,vuelos: list ):
+        for i in vuelos:
+            codigo = int(i["codigo"])
+            origen = i["origen"]
+            destino = i["destino"]
+            horaSalida = i ["horaSalida"]
+            precioBase = int(i["precioBase"])
+            pasajeros = int(i["pasajeros"])
+            prioridad = int(i["prioridad"])
+            promocion = i["promocion"]
+            alerta = i["alerta"]
+            self.insertNodeAVL (Flight (codigo , origen , destino , horaSalida , precioBase , pasajeros , prioridad , promocion , alerta))
+
+    def tourPreOrden (self):
+        resultado = []
+        self.__tourPreOrden (self.root , resultado)
+        return resultado
+    
+    def __tourPreOrden (self , current_root: Node , resultado: list):
+        if current_root:
+            resultado.append (current_root.getFlight())
+            self.__tourPreOrden (current_root.getLeftSon())
+            self.__tourPreOrden (current_root.getRightSon())
