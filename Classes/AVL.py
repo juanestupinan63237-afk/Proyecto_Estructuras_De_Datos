@@ -166,7 +166,7 @@ class AVLTree:
         return temporal1
 
     def FindNodeLessProfitable (self):
-        FLIGTH: Node = None
+        FLIGTH: Node = self.root
         def Find (temp_root: Node):
             nonlocal FLIGTH
             if temp_root is not None:
@@ -181,7 +181,7 @@ class AVLTree:
         if nodo is None:
             return None
         return {
-            "codigo": nodo.flight.code,
+            "codigo": nodo.flight.getCode(),
             "origen" : nodo.flight.getOrigin (),
             "destino" : nodo.flight.getDestination(),
             "horaSalida" : nodo.flight.getDepartureTime(),

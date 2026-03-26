@@ -65,4 +65,7 @@ class Flight:
         self.alert = value
     
     def getTotalPrice (self):
-        return self.basePrice * self.numberPassengers
+        resultado = self.getBasePrice() * self.numberPassengers()
+        if self.alert ():
+            resultado += resultado*0.25
+        return resultado
