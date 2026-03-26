@@ -5,6 +5,7 @@ from graphviz import Digraph
 class AVLTree:
     def __init__(self):
         self.root = None
+        self.balanceo_activado = True
 
     def ResetTree (self):
         self.root = None
