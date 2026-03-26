@@ -10,9 +10,19 @@ class AVLTree:
     def SwitchModoEstres (self):
         self.balanceo_activado = not self.balanceo_activado
         if self.balanceo_activado:
-            self.root.setLeftSon (self.__BalanceNode__ (self.root.getLeftSon()))
-            self.root.setRightSon(self.__BalanceNode__ (self.root.getRightSon()))
-            self.root = self.__BalanceNode__ (self.root)
+            self.BalanceAll ()
+
+    def BalanceAll (self):
+        self.root = self.__RecursiveBalance__ (self.root)
+
+    def __RecursiveBalance__ (self , node: Node):
+        if node is None:
+            return None
+        node.setLeftSon(self.__RecursiveBalance__(node.getLeftSon()))
+        node.setRightSon(self.__RecursiveBalance__(node.getRightSon()))
+        node.setHeight(1 + max(self.getHeight(node.getLeftSon()), 
+                            self.getHeight(node.getRightSon())))
+        return self.__BalanceNode__(node)
 
     def ResetTree (self):
         self.root = None
@@ -38,20 +48,18 @@ class AVLTree:
         return node
     
     def __BalanceNode__ (self , node: Node):
-        balance = self.getBalance(node)
-        if balance > 1 and node.getFlight().getCode() < node.getLeftSon().getFlight().getCode():
-            return self.rightRotate(node)
-
-        if balance < -1 and node.getFlight().getCode() > node.getRightSon().getFlight().getCode():
-            return self.leftRotate(node)
-
-        if balance > 1 and node.getFlight().getCode() > node.getLeftSon().getFlight().getCode():
-            node.setLeftSon(self.leftRotate(node.getLeftSon()))
-            return self.rightRotate(node)
-
-        if balance < -1 and node.getFlight().getCode() < node.getRightSon().getFlight().getCode():
-            node.setRightSon(self.rightRotate(node.getRightSon()))
-            return self.leftRotate(node)
+            balance = self.getBalance(node)
+            if balance > 1 and self.getBalance(node.getLeftSon()) >= 0:
+                return self.rightRotate(node)
+            if balance < -1 and self.getBalance(node.getRightSon()) <= 0:
+                return self.leftRotate(node)
+            if balance > 1 and self.getBalance(node.getLeftSon()) < 0:
+                node.setLeftSon(self.leftRotate(node.getLeftSon()))
+                return self.rightRotate(node)
+            if balance < -1 and self.getBalance(node.getRightSon()) > 0:
+                node.setRightSon(self.rightRotate(node.getRightSon()))
+                return self.leftRotate(node)
+            return node
 
 
     def getHeight(self, node):
@@ -262,12 +270,15 @@ class AVLTree:
 
         nodo.setLeftSon(self._dicc_a_nodo_topology(dicc["izquierdo"]))
         nodo.setRightSon(self._dicc_a_nodo_topology(dicc["derecho"]))
+        nodo.setHeight(1 + max(self.getHeight(nodo.getLeftSon()), 
+                           self.getHeight(nodo.getRightSon())))
         return nodo
 
     def cargar_desde_dicc(self , dicc):
         self.root = None
         if dicc["tipo"] == "Topology":
             self.root = self._dicc_a_nodo_topology(dicc["arbol"])
+            self.BalanceAll ()
         elif dicc["tipo"] == "INSERCION":
             nodos = dicc["vuelos"]
             self.cargar_desde_dicc_inserccion (nodos)

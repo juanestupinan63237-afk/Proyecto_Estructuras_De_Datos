@@ -16,6 +16,8 @@ tree.cargar_desde_dicc (data)
 
 @app.route("/")
 def home():
+    if tree.root is None:
+        print ("el arbol esta vacio")
     grafico_svg = tree.Render ()
     return render_template("index.html", grafico=grafico_svg)
 
