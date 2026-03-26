@@ -32,11 +32,6 @@ async function PrintPreOrderTour() {
     alert("PreOrder: " + data.preorder.join(" -> "));
 }
 
-async function ControlZ (){
-    const res = await fetch ("/Control/Pila");
-    console.log ("Control-z");
-}
-
 async function LoadJSON (){
     const filesLoad = document.getElementById("file-upload");
     const file = filesLoad.files[0];
@@ -49,10 +44,9 @@ async function LoadJSON (){
     });
 }
 
-async function ModoEstresActivar () {
-    let request = await fetch ("/ModoEstres/Activar");
+async function obtenerDatos() {
+    const respuesta = await fetch("/Descargar/Tree/Topology"); 
+    const data = await respuesta.json();
+    console.log(data.mensaje); 
 }
 
-async function ModoEstresDesactivar (){
-    let request = await fetch ("/ModoEstres/Desactivar");
-}
