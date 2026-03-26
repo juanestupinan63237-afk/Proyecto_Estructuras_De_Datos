@@ -3,8 +3,8 @@ from Classes.FlightSB import Flight
 class Node:
     def __init__(self, flight: Flight):
         self.flight = flight
-        self.leftSon = None
-        self.rightSon = None
+        self.leftSon : Node = None
+        self.rightSon : Node = None
         self.height = 1
 
     def getFlightCode(self):

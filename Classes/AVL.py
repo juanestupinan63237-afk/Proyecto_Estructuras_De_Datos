@@ -7,6 +7,13 @@ class AVLTree:
         self.root = None
         self.balanceo_activado = True
 
+    def SwitchModoEstres (self):
+        self.balanceo_activado = not self.balanceo_activado
+        if self.balanceo_activado:
+            self.root.setLeftSon (self.__BalanceNode__ (self.root.getLeftSon()))
+            self.root.setRightSon(self.__BalanceNode__ (self.root.getRightSon()))
+            self.root = self.__BalanceNode__ (self.root)
+
     def ResetTree (self):
         self.root = None
 
@@ -25,22 +32,27 @@ class AVLTree:
             raise Exception("This Node already exists in our AVL Tree...")
 
         node.setHeight(1 + max(self.getHeight(node.getLeftSon()), self.getHeight(node.getRightSon())))
+
+        if self.balanceo_activado:
+            return self.__BalanceNode__ (node)
+        return node
+    
+    def __BalanceNode__ (self , node: Node):
         balance = self.getBalance(node)
-        if balance > 1 and value.getCode() < node.getLeftSon().getFlightCode():
+        if balance > 1 and node.getFlight().getCode() < node.getLeftSon().getFlight().getCode():
             return self.rightRotate(node)
 
-        if balance < -1 and value.getCode() > node.getRightSon().getFlightCode():
+        if balance < -1 and node.getFlight().getCode() > node.getRightSon().getFlight().getCode():
             return self.leftRotate(node)
 
-        if balance > 1 and value.getCode() > node.getLeftSon().getFlightCode():
+        if balance > 1 and node.getFlight().getCode() > node.getLeftSon().getFlight().getCode():
             node.setLeftSon(self.leftRotate(node.getLeftSon()))
             return self.rightRotate(node)
 
-        if balance < -1 and value.getCode() < node.getRightSon().getFlightCode():
+        if balance < -1 and node.getFlight().getCode() < node.getRightSon().getFlight().getCode():
             node.setRightSon(self.rightRotate(node.getRightSon()))
             return self.leftRotate(node)
 
-        return node
 
     def getHeight(self, node):
         if node is None:
