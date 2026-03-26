@@ -1,7 +1,13 @@
+from collections import deque
 class Cola:
     def __init__(self):
         self.__datos__ = []
+    def Encolar (self, datos):
+        self.queue.append(datos)
     def Desencolar (self):
-        return self.datos
-    def Encolar (self):
-        self.__datos__
+        if self.isEmpty():
+            return "Esta vacío"
+        return self.queue.pop()
+    def isEmpty(self):
+        return len(self.__datos__) == 0
+    
