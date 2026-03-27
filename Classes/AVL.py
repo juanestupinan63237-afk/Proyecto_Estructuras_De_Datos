@@ -7,6 +7,9 @@ class AVLTree:
         self.root = None
         self.balanceo_activado = True
 
+    def isBalanceActive (self):
+        return self.balanceo_activado
+
     def SwitchModoEstres (self):
         self.balanceo_activado = not self.balanceo_activado
         if self.balanceo_activado:

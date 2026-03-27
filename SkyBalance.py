@@ -79,6 +79,18 @@ def RenderTreeRoute():
         json.dump (data , f , indent= 4)
     return Response(render, mimetype='image/svg+xml')
 
+@app.route ("/Cola/DesencolarVuelo")
+def Desencolar ():
+    tree.insertNodeAVL (cola_vuelos.Desencolar())
+    return jsonify ({"meesage" : "Desencolado"})
+
+@app.route ("/ModoEstres")
+def ModoEstres ():
+    tree.SwitchModoEstres ()
+    if tree.isBalanceActive ():
+        return jsonify ({"message" : "Modo estres desactivado"})
+    return jsonify ({"message" : "Modo estres activado"})
+
 @app.route ("/Descargar/Tree/Topology")
 def SendTree ():
     return jsonify ({"Archivo" : tree.SaveTree()})
