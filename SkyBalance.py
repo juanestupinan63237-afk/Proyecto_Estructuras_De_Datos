@@ -4,11 +4,13 @@ from Classes.FlightSB import Flight
 from flask import Flask, jsonify, render_template, request, Response
 import json
 from Classes.Pila import Pila
+from Classes.Cola import Cola
 
 
 app = Flask(__name__)
 tree = AVLTree()
 reversion = Pila ()
+cola_vuelos = Cola()
 
 with open ("static/Files/Topology.json" , "r" , encoding="utf-8") as f:
     data = json.load (f)
@@ -58,16 +60,7 @@ def RecibirVuelo():
             promotion=False,
             alert=False
         )
-
-        if type (tree) == BST:
-            tree.insertNode (nuevo_vuelo)
-        else:
-            tree.insertNodeAVL (nuevo_vuelo)
-
-        reversion.Apilar ({
-            "tipo" : "REMOVE",
-            "codigo" : code
-        })
+        cola_vuelos.Encolar(nuevo_vuelo)
 
 
         return jsonify({
@@ -109,11 +102,7 @@ def ControlZ ():
                 v["priority"],
                 v["promotion"],
                 v["alert"]
-
             )
-        if type (tree) == BST:
-            tree.insertNode (vuelo)
-        else:
             tree.insertNodeAVL (vuelo)
 
 if __name__ == "__main__":
