@@ -10,4 +10,3 @@ class Cola:
         return self.__datos__.pop(0)
     def isEmpty(self):
         return len(self.__datos__) == 0
-    
