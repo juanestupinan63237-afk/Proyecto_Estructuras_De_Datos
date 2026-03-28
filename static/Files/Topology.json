@@ -7,8 +7,11 @@
         "horaSalida": "10:00",
         "precioBase": 150000,
         "pasajeros": 120,
+        "prioridad": false,
         "promocion": false,
         "alerta": false,
+        "altura": 2,
+        "balance": 0,
         "izquierdo": {
             "codigo": 50,
             "origen": "CLO",
@@ -16,8 +19,11 @@
             "horaSalida": "12:00",
             "precioBase": 200000,
             "pasajeros": 80,
+            "prioridad": false,
             "promocion": true,
             "alerta": false,
+            "altura": 1,
+            "balance": 0,
             "izquierdo": null,
             "derecho": null
         },
@@ -28,8 +34,11 @@
             "horaSalida": "15:00",
             "precioBase": 100000,
             "pasajeros": 50,
+            "prioridad": false,
             "promocion": false,
             "alerta": true,
+            "altura": 1,
+            "balance": 0,
             "izquierdo": null,
             "derecho": null
         }

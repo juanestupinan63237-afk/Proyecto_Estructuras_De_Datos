@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
-    <div class="container">
+    <div class="page-wrapper">
         <div class="glass-card">
             <div class="form-section">
                 <h1 class="logo">SkyBalance</h1>
@@ -35,36 +35,134 @@
                         <label>PASSENGERS</label>
                         <input type="number" id="numberPassengers" placeholder="100">
                     </div>
+ 
                     <button type="button" class="btn-main" onclick="GetVuelo()">Create Flight</button>
                     <button type="button" class="btn-sub" onclick="PrintPreOrderTour()">Print PreOrder</button>
+ 
                     <div class="file-input-container">
                         <label for="file-upload" class="custom-file-upload">
                             <div class="icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="17 8 12 3 7 8"/>
+                                    <line x1="12" y1="3" x2="12" y2="15"/>
+                                </svg>
                             </div>
-                            <br>
                             <div class="text-group">
-                            <span class="main-text">Seleccionar archivo</span>
-                            <span class="sub-text">Arrastra y suelta aquí o haz clic</span>
+                                <span class="main-text">Seleccionar archivo</span>
+                                <span class="sub-text">Arrastra y suelta aquí o haz clic</span>
                             </div>
                         </label>
-                        <input id="file-upload" type="file" accept=".json" on />
-                        <button class = "btn-main"  onclick="LoadJSON()"> Cargar </button>
-                        <a href="static/Files/Topology.json" download="Topology.json">Descargar Topology Arbol Guardado</a>
-                        </div>
+                        <input id="file-upload" type="file" accept=".json" />
+                        <button type="button" class="btn-main" onclick="LoadJSON()">Cargar</button>
+                        <a class="download-link" href="static/Files/Topology.json" download="Topology.json">
+                            ⬇ Descargar Topology guardada
+                        </a>
+                    </div>
                 </form>
             </div>
-
+ 
             <div class="tree-viewer">
                 <div id="treeContainer">
                     {{ grafico|safe }}
                 </div>
             </div>
         </div>
-        <br>
-        <div class = "container"> 
-            <input type="text"> </input>
+        <div class="bottom-row">
+            <div class="glass-card queue-panel">
+                <div class="panel-header">
+                    <div class="panel-title-group">
+                        <span class="panel-title">✈ Flight Queue</span>
+                        <span class="queue-badge" id="queue-size">0</span>
+                    </div>
+                    <button class="btn-sub panel-btn" onclick="RefreshQueue()">↻ Refresh</button>
+                </div>
+                <div class="queue-empty" id="queue-empty">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M17.8 19.2 16 11l3.5-3.5C21 6 21 4 19 4c-1 0-1.5.5-3.5 1.5l-11 4.5 2.2 1.8"/>
+                        <path d="m5 11 5 5"/>
+                        <path d="M2 2l20 20"/>
+                    </svg>
+                    <span>No flights in queue</span>
+                    <span class="queue-empty-sub">Use "Create Flight" to add flights to the queue</span>
+                </div>
+                <div class="queue-list" id="queue-list"></div>
+                <div class="queue-actions" id="queue-actions" style="display:none">
+                    <button class="btn-main queue-action-btn" onclick="DesencolarVuelo()">
+                        ▶ Insert Next into Tree
+                    </button>
+                    <button class="btn-sub queue-action-btn" onclick="ProcessAll()">
+                        ⏩ Process All
+                    </button>
+                </div>
+                <div class="queue-toast" id="queue-toast"></div>
+            </div>
+
+            <div class="glass-card metrics-panel">
+                <div class="panel-header">
+                    <span class="panel-title">📊 Analytical Metrics</span>
+                    <button class="btn-sub panel-btn" onclick="RefreshMetrics()">↻ Refresh</button>
+                </div>
+ 
+                <div class="metrics-row">
+                    <div class="metric-card">
+                        <span class="metric-label">Height</span>
+                        <span class="metric-value" id="m-height">—</span>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-label">Leaves</span>
+                        <span class="metric-value" id="m-leaves">—</span>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-label">Rotations</span>
+                        <span class="metric-value" id="m-rot-total">—</span>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-label">Cancellations</span>
+                        <span class="metric-value" id="m-mass">—</span>
+                    </div>
+                </div>
+ 
+                <div class="metrics-row">
+                    <div class="metric-card small">
+                        <span class="metric-label">Simple L</span>
+                        <span class="metric-value secondary" id="m-sl">—</span>
+                    </div>
+                    <div class="metric-card small">
+                        <span class="metric-label">Simple R</span>
+                        <span class="metric-value secondary" id="m-sr">—</span>
+                    </div>
+                    <div class="metric-card small">
+                        <span class="metric-label">Double L</span>
+                        <span class="metric-value secondary" id="m-dl">—</span>
+                    </div>
+                    <div class="metric-card small">
+                        <span class="metric-label">Double R</span>
+                        <span class="metric-value secondary" id="m-dr">—</span>
+                    </div>
+                </div>
+ 
+                <div class="traversal-section">
+                    <div class="traversal-tabs">
+                        <button class="tab-btn active" onclick="ShowTab('preorder', this)">PreOrder</button>
+                        <button class="tab-btn" onclick="ShowTab('inorder', this)">InOrder</button>
+                        <button class="tab-btn" onclick="ShowTab('postorder', this)">PostOrder</button>
+                        <button class="tab-btn" onclick="ShowTab('width', this)">BFS</button>
+                    </div>
+                    <div class="traversal-output" id="traversal-output">
+                        <span class="traversal-placeholder">Click Refresh to load traversals</span>
+                    </div>
+                </div>
+            </div>
+ 
         </div>
+ 
+    </div>
+ 
     <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
 </html>

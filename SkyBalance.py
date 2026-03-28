@@ -1,5 +1,5 @@
 from Classes.AVL import AVLTree
-from Classes.BSTTree import BST
+from Classes.BinaryTree import BST
 from Classes.FlightSB import Flight
 from flask import Flask, jsonify, render_template, request, Response
 import json
@@ -35,7 +35,31 @@ def LoadJSON ():
     return jsonify ({"message" : "Exitoso"})
 
 
+@app.route("/Metricas/Analiticas", methods=["GET"])
+def MetricasAnaliticas():
+    return jsonify(tree.getAnalyticalMetrics())
 
+@app.route("/Cola/Ver", methods=["GET"])
+def VerCola():
+    return jsonify({
+        "size":    cola_vuelos.Size(),
+        "vuelos":  cola_vuelos.GetAll()
+    })
+ 
+ 
+@app.route("/Cola/DesencolarVuelo", methods=["POST"])
+def Desencolar():
+    vuelo = cola_vuelos.Desencolar()
+    if vuelo is None:
+        return jsonify({"status": "empty", "message": "La cola está vacía"}), 200
+
+    tree.insertNodeAVL(vuelo)
+    return jsonify({
+        "status":  "success",
+        "message": f"Vuelo {vuelo.getCode()} insertado en el árbol",
+        "size":    cola_vuelos.Size(),
+        "vuelos":  cola_vuelos.GetAll()
+    })
 
 @app.route("/Sent/Node", methods=['POST'])
 def RecibirVuelo():
@@ -78,11 +102,6 @@ def RenderTreeRoute():
     with open ("static/Files/Topology.json" , "w" , encoding= "utf-8") as f:
         json.dump (data , f , indent= 4)
     return Response(render, mimetype='image/svg+xml')
-
-@app.route ("/Cola/DesencolarVuelo")
-def Desencolar ():
-    tree.insertNodeAVL (cola_vuelos.Desencolar())
-    return jsonify ({"meesage" : "Desencolado"})
 
 @app.route ("/ModoEstres")
 def ModoEstres ():
