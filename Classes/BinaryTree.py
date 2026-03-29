@@ -158,6 +158,29 @@ class BinaryTree:
             alerta = i["alerta"]
             self.insertNode (Flight (codigo , origen , destino , horaSalida , precioBase , pasajeros , prioridad , promocion , alerta))
 
+    def InsertionSave (self):
+        vuelos = []
+        self.__InsertionSave__ (self.root , vuelos)
+        return {"tipo" : "INSERCION",
+                "vuelos" : vuelos}
+
+    def __InsertionSave__ (self , current_root: Node , resultado: list[dict]):
+        if current_root:
+            vuelo = current_root.getFlight ()
+            resultado.append ({
+                "codigo" : vuelo.getCode(),
+                "origen" : vuelo.getOrigin(),
+                "destino" : vuelo.getDestination (),
+                "horaSalida" : vuelo.getDepartureTime(),
+                "precioBase" : vuelo.getBasePrice(),
+                "pasajeros" : vuelo.getNumberPassengers(),
+                "prioridad" : vuelo.getPriority(),
+                "promocion" : vuelo.getPromotion(),
+                "alerta" : vuelo.getAlert()              
+            })
+            self.__InsertionSave__ (current_root.getLeftSon() , resultado)
+            self.__InsertionSave__ (current_root.getRightSon() , resultado)
+
 class BST(BinaryTree):
     def __init__(self):
         super().__init__()

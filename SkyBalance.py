@@ -85,7 +85,8 @@ def RecibirVuelo():
             alert=False
         )
         cola_vuelos.Encolar(nuevo_vuelo)
-
+        reversion.Apilar ({"tipo" : "REMOVE",
+                           "codigo" : code})
 
         return jsonify({
             "status": "success",
@@ -110,9 +111,13 @@ def ModoEstres ():
         return jsonify ({"message" : "Modo estres desactivado"})
     return jsonify ({"message" : "Modo estres activado"})
 
-@app.route ("/Descargar/Tree/Topology")
+@app.route ("/Descargar/Tree")
 def SendTree ():
-    return jsonify ({"Archivo" : tree.SaveTree()})
+    with open ("static/Files/Topology.json" , "w" , encoding= "utf-8") as f:
+        json.dump (tree.SaveTree() , f , indent= 4)
+    with open ("static/Files/Insertion.json" , "w" , encoding="utf-8") as f:
+        json.dump (tree.InsertionSave() , f , indent= 4)
+    return jsonify ({"message" : "ok"})
 
 @app.route ("/Control/Pila")
 def ControlZ ():
@@ -135,10 +140,14 @@ def ControlZ ():
                 v["alert"]
             )
             tree.insertNodeAVL (vuelo)
+        return jsonify ({"message: ok"})
+    return jsonify ({"message" : "error"})
 
 if __name__ == "__main__":
     app.run(debug=True)
     data = tree.SaveTree ()
     with open ("static/Files/Topology.json" , "w" , encoding= "utf-8") as f:
         json.dump (data , f , indent= 4)
+    with open ("static/Files/Insertion.json" , "w" , encoding="utf-8") as f:
+        json.dump (tree.InsertionSave() , f , indent= 4)
     print ("Se ha guardado con exito")

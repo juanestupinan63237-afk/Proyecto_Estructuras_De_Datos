@@ -1,49 +1,38 @@
 {
-  "tipo": "INSERCION",
-  "vuelos": [
-    {
-      "codigo": 100,
-      "origen": "Bogotá",
-      "destino": "Miami",
-      "horaSalida": "08:00 AM",
-      "precioBase": 450,
-      "pasajeros": 150,
-      "prioridad": 1,
-      "promocion": false,
-      "alerta": false
-    },
-    {
-      "codigo": 50,
-      "origen": "Medellín",
-      "destino": "Madrid",
-      "horaSalida": "10:30 PM",
-      "precioBase": 850,
-      "pasajeros": 220,
-      "prioridad": 2,
-      "promocion": true,
-      "alerta": false
-    },
-    {
-      "codigo": 150,
-      "origen": "Cali",
-      "destino": "Lima",
-      "horaSalida": "02:15 PM",
-      "precioBase": 300,
-      "pasajeros": 95,
-      "prioridad": 3,
-      "promocion": false,
-      "alerta": true
-    },
-    {
-      "codigo": 200,
-      "origen": "Cartagena",
-      "destino": "Panamá",
-      "horaSalida": "11:00 AM",
-      "precioBase": 250,
-      "pasajeros": 80,
-      "prioridad": 1,
-      "promocion": true,
-      "alerta": false
-    }
-  ]
+    "tipo": "INSERCION",
+    "vuelos": [
+        {
+            "codigo": 100,
+            "origen": "BOG",
+            "destino": "MED",
+            "horaSalida": "10:00",
+            "precioBase": 150000,
+            "pasajeros": 120,
+            "prioridad": false,
+            "promocion": false,
+            "alerta": false
+        },
+        {
+            "codigo": 50,
+            "origen": "CLO",
+            "destino": "CTG",
+            "horaSalida": "12:00",
+            "precioBase": 200000,
+            "pasajeros": 80,
+            "prioridad": false,
+            "promocion": true,
+            "alerta": false
+        },
+        {
+            "codigo": 150,
+            "origen": "BOG",
+            "destino": "PEI",
+            "horaSalida": "15:00",
+            "precioBase": 100000,
+            "pasajeros": 50,
+            "prioridad": false,
+            "promocion": false,
+            "alerta": true
+        }
+    ]
 }

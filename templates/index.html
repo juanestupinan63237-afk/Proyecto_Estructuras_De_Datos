@@ -57,9 +57,13 @@
                         </label>
                         <input id="file-upload" type="file" accept=".json" />
                         <button type="button" class="btn-main" onclick="LoadJSON()">Cargar</button>
-                        <a class="download-link" href="static/Files/Topology.json" download="Topology.json">
-                            ⬇ Descargar Topology guardada
+                        <a class="download-link" href="static/Files/Topology.json" download="Topology.json" onclick="DonwloadTree()">
+                            Descargar Topology guardada
                         </a>
+                        <a class="download-link" href="static/Files/Insertion.json" download="Topology.json" onclick="DonwloadTree()">
+                            Descargar Inserccion guardada
+                        </a>
+                        <button type = "button" class="btn-sub" onclick="ControlZ()"> Control Z</button>
                     </div>
                 </form>
             </div>

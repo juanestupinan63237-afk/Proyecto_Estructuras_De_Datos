@@ -21,6 +21,11 @@ async function GetVuelo() {
         await RefreshMetrics();
     }
 }
+
+async function DonwloadTree() {
+    let request = await fetch ("/Descargar/Tree");
+    console.log (request["message"]);
+}
  
 async function RefreshTree() {
     const res = await fetch("/Render/Tree");
@@ -186,4 +191,11 @@ function _renderTraversal(key) {
     output.innerHTML = codes
         .map(c => `<span class="code-badge">${c}</span>`)
         .join("");
+}
+
+async function ControlZ() {
+    let request = await fetch ("/Control/Pila");
+    RefreshQueue();
+    RefreshMetrics ();
+    RefreshTree ();
 }
