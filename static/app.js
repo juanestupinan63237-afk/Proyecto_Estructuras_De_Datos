@@ -199,3 +199,9 @@ async function ControlZ() {
     RefreshMetrics ();
     RefreshTree ();
 }
+
+async function ModoEstres (){
+    let request = await fetch ("/ModoEstres");
+    console.log (request["message"])
+    RefreshTree ();
+}

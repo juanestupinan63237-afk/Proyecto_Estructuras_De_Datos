@@ -54,6 +54,8 @@ def Desencolar():
         return jsonify({"status": "empty", "message": "La cola está vacía"}), 200
 
     tree.insertNodeAVL(vuelo)
+    reversion.Apilar ({"tipo" : "REMOVE",
+                        "codigo" : vuelo.getCode()})
     return jsonify({
         "status":  "success",
         "message": f"Vuelo {vuelo.getCode()} insertado en el árbol",
@@ -85,9 +87,6 @@ def RecibirVuelo():
             alert=False
         )
         cola_vuelos.Encolar(nuevo_vuelo)
-        reversion.Apilar ({"tipo" : "REMOVE",
-                           "codigo" : code})
-
         return jsonify({
             "status": "success",
             "message": f"Vuelo {code} registrado correctamente"
