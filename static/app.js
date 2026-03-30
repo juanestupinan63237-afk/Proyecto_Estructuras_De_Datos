@@ -227,3 +227,9 @@ async function MassiveCancellation (){
     console.log (response["message"]);
     RefreshTree ();
 }
+
+async function DeleteFligthLessProfitable (){
+    let request = await fetch ("/DeleteFligthLessProfitable");
+    console.log (request["message"]);
+    RefreshTree ();
+}

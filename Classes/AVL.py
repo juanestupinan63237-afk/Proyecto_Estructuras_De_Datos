@@ -16,6 +16,19 @@ class AVLTree(BinaryTree):
             "doubleRight": 0,
             "massCancellations": 0
         }
+
+    def FindNode (self , code: int):
+        return self.__FindNode__ (self.root , code)
+
+    def __FindNode__ (self , current_root: Node , code: int):
+        if current_root:
+            if current_root.getFlightCode () == code:
+                return current_root
+            elif code < current_root.getFlightCode():
+                return self.__FindNode__ (current_root.getLeftSon() , code)
+            elif code > current_root.getFlightCode():
+                return self.__FindNode__ (current_root.getRightSon() , code)
+        raise Exception ("No se ha encontrado el nodo...")
  
     def isBalanceActive(self):
         return self.balanceo_activado
@@ -373,3 +386,45 @@ class AVLTree(BinaryTree):
             AddNode(self.root)
         svg = dot.pipe(format='svg').decode("utf-8")
         return svg.replace('<svg ', '<svg width="100%" height="auto" ')
+    
+    def FindNodeLessProfitable (self):
+        FLIGHT = self.root
+        PROFUNDIDAD = 0
+        def __Find__ (current_root: Node  , profundidad_actual = 0):
+            nonlocal FLIGHT
+            nonlocal PROFUNDIDAD
+            if current_root is not None:
+                if current_root.getFlight ().getTotalPrice () <= FLIGHT.getFlight().getTotalPrice():
+                    if current_root.getFlight ().getTotalPrice() == FLIGHT.getFlight().getTotalPrice():
+                        if profundidad_actual > PROFUNDIDAD:
+                            FLIGHT = current_root
+                            PROFUNDIDAD = profundidad_actual
+                        if profundidad_actual == PROFUNDIDAD:
+                            if current_root.getFlightCode () > FLIGHT.getFlightCode():
+                                FLIGHT = current_root
+                                PROFUNDIDAD = profundidad_actual
+                    else:
+                        FLIGHT = current_root
+                        PROFUNDIDAD = profundidad_actual 
+                __Find__ (current_root.getLeftSon() , profundidad_actual+1)
+                __Find__ (current_root.getRightSon(), profundidad_actual+1) 
+        __Find__ (self.root)
+        return FLIGHT
+    
+    def DeleteFligthLessProfitable (self):
+        code = self.FindNodeLessProfitable ().getFlightCode ()
+        self.deleteNode (code)
+
+    def TourInsertion (self , code: int):
+        nodo = self.FindNode (code)
+        return self.__TourInsertion__ (nodo)
+
+
+    def __TourInsertion__ (self, current_root: Node , resultado = []):
+        if resultado is None:
+            resultado = []
+        if current_root:
+            resultado.append (current_root.getFlight())
+            self.__TourInsertion__ (current_root.getLeftSon())
+            self.__TourInsertion__ (current_root.getRightSon())
+        return resultado

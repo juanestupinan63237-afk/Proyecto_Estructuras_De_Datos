@@ -145,14 +145,47 @@ def ControlZ ():
                 v["alert"]
             )
             tree.insertNodeAVL (vuelo)
+        elif desapila["tipo"] == "ADD_MULTIPLE":
+            vuelos = desapila["vuelos"]
+            for i in vuelos:
+                tree.insertNodeAVL (i)
         return jsonify ({"message": "ok"})
     return jsonify ({"message" : "error"})
 
 @app.route ("/MassiveCancellation" , methods = ["POST"])
 def MassiveCancellation ():
     id = request.get_json ()["id"]
+    reversion.Apilar ({"tipo":"ADD_MULTIPLE", 
+                       "vuelos" : tree.TourInsertion(int(id))})
     tree.massiveCancelation (int(id))
+    
+
     return jsonify({"message" : "ok"})
+
+@app.route ("/DeleteFligthLessProfitable")
+def DeleteFlgith ():
+    node = tree.FindNodeLessProfitable ()
+    flight = node.getFlight()
+    data = {
+        "code" : flight.getCode(),
+        "origin" : flight.getOrigin(),
+        "destination" : flight.getDestination(),
+        "departureTime" : flight.getDepartureTime(),
+        "basePrice" : flight.getBasePrice(),
+        "numberPassengers" : flight.getNumberPassengers(),
+        "priority" : flight.getPriority(),
+        "promotion" : flight.getPromotion(),
+        "alert" : flight.getAlert ()
+        }
+    
+    reversion.Apilar ({
+        "tipo" : "ADD",
+        "vuelo" : data
+    })
+    
+    tree.DeleteFligthLessProfitable ()
+    return jsonify ({"message" : "ok"})
+
 
 if __name__ == "__main__":
     app.run(debug=True)
