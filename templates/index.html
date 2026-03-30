@@ -169,6 +169,13 @@
                 <button type="button" class = "btn-main" onclick="Penalization ()">Send Penalization</button>
             </div>
         </div>
+        <div class="glass-card">
+            <div class = "form-section"> 
+                <label >Select Cancellations Flight</label>
+                <input type="number" id = "CancellationsID"> </input>
+                <button type="button" class = "btn-main" onclick="MassiveCancellation ()">Cancel Flights</button>
+            </div>
+        </div>
     </div>
  
     <script src="{{ url_for('static', filename='app.js') }}"></script>

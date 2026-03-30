@@ -130,10 +130,20 @@ class AVLTree(BinaryTree):
         elif flightCode > node.getFlightCode():
             node.setRightSon(self.__massiveCancelation(node.getRightSon(), flightCode))
         else:
-            self.analyticalMetrics["massCancellations"] += 1
+            self.analyticalMetrics["massCancellations"] += self.CountChilds (node)
             return None
         return self.__rebalance(node)
  
+    def CountChilds (self, current_root: Node):
+        return self.__CountChild__ (current_root) 
+
+    def __CountChild__ (self ,current_root: Node):
+        if current_root is not None:
+            izq = self.__CountChild__ (current_root.getLeftSon())
+            der = self.__CountChild__ (current_root.getRightSon())
+            return izq + der +1
+        return 0
+
     def __minValueNode(self, node: Node):
         temporal = node
         while temporal.getLeftSon() is not None:
@@ -363,4 +373,3 @@ class AVLTree(BinaryTree):
             AddNode(self.root)
         svg = dot.pipe(format='svg').decode("utf-8")
         return svg.replace('<svg ', '<svg width="100%" height="auto" ')
-    

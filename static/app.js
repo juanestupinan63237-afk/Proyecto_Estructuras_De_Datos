@@ -216,3 +216,14 @@ async function Penalization (){
     console.log (response["message"]);
     RefreshTree ();
 }
+
+async function MassiveCancellation (){
+    const id = document.getElementById("CancellationsID").value ;
+    const response = await fetch("/MassiveCancellation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({"id" : id})
+    });
+    console.log (response["message"]);
+    RefreshTree ();
+}

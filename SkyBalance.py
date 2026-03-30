@@ -148,6 +148,12 @@ def ControlZ ():
         return jsonify ({"message": "ok"})
     return jsonify ({"message" : "error"})
 
+@app.route ("/MassiveCancellation" , methods = ["POST"])
+def MassiveCancellation ():
+    id = request.get_json ()["id"]
+    tree.massiveCancelation (int(id))
+    return jsonify({"message" : "ok"})
+
 if __name__ == "__main__":
     app.run(debug=True)
     data = tree.SaveTree ()
