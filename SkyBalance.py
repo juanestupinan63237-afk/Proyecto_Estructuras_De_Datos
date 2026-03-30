@@ -105,8 +105,11 @@ def RecibirVuelo():
 @app.route("/Render/Tree", methods=['GET'])
 def RenderTreeRoute():
     render = tree.Render ()
+    data = tree.SaveTree ()
     with open ("static/Files/Topology.json" , "w" , encoding= "utf-8") as f:
         json.dump (data , f , indent= 4)
+    with open ("static/Files/Insertion.json" , "w" , encoding="utf-8") as f:
+        json.dump (tree.InsertionSave() , f , indent= 4)
     return Response(render, mimetype='image/svg+xml')
 
 @app.route ("/ModoEstres")
@@ -189,9 +192,5 @@ def DeleteFlgith ():
 
 if __name__ == "__main__":
     app.run(debug=True)
-    data = tree.SaveTree ()
-    with open ("static/Files/Topology.json" , "w" , encoding= "utf-8") as f:
-        json.dump (data , f , indent= 4)
-    with open ("static/Files/Insertion.json" , "w" , encoding="utf-8") as f:
-        json.dump (tree.InsertionSave() , f , indent= 4)
+
     print ("Se ha guardado con exito")

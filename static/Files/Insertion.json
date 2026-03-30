@@ -24,6 +24,17 @@
             "alerta": false
         },
         {
+            "codigo": 1,
+            "origen": "Madrid",
+            "destino": "Barcelona",
+            "horaSalida": "13:59",
+            "precioBase": 2000.0,
+            "pasajeros": 50,
+            "prioridad": false,
+            "promocion": false,
+            "alerta": false
+        },
+        {
             "codigo": 150,
             "origen": "BOG",
             "destino": "PEI",
