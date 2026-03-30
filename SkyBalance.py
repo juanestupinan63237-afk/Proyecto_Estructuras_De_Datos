@@ -139,7 +139,7 @@ def ControlZ ():
                 v["alert"]
             )
             tree.insertNodeAVL (vuelo)
-        return jsonify ({"message: ok"})
+        return jsonify ({"message": "ok"})
     return jsonify ({"message" : "error"})
 
 if __name__ == "__main__":
