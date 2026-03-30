@@ -171,10 +171,8 @@ class AVLTree(BinaryTree):
             return
         if depth >= limit:
             node.getFlight().setAlert(True)
-            node.getFlight().setTotalPrice(node.getFlight().getBasePrice() * 1.25)
         else:
             node.getFlight().setAlert(False)
-            node.getFlight().setTotalPrice(node.getFlight().getBasePrice())
         self.__depthPenalization(node.getLeftSon(), depth + 1, limit)
         self.__depthPenalization(node.getRightSon(), depth + 1, limit)
  

@@ -35,10 +35,7 @@
                         <label>PASSENGERS</label>
                         <input type="number" id="numberPassengers" placeholder="100">
                     </div>
- 
                     <button type="button" class="btn-main" onclick="GetVuelo()">Create Flight</button>
-                    <button type="button" class="btn-sub" onclick="PrintPreOrderTour()">Print PreOrder</button>
- 
                     <div class="file-input-container">
                         <label for="file-upload" class="custom-file-upload">
                             <div class="icon">
@@ -165,7 +162,13 @@
             </div>
  
         </div>
- 
+        <div class="glass-card">
+            <div class = "form-section"> 
+                <label >Select penalization Weigth</label>
+                <input type="number" id = "depthPenalization"> </input>
+                <button type="button" class = "btn-main" onclick="Penalization ()">Send Penalization</button>
+            </div>
+        </div>
     </div>
  
     <script src="{{ url_for('static', filename='app.js') }}"></script>

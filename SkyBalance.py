@@ -21,6 +21,12 @@ def home():
     grafico_svg = tree.Render ()
     return render_template("index.html", grafico=grafico_svg)
 
+@app.route ("/penalization" , methods= ["POST"])
+def penalization ():
+    limit = request.get_json ()
+    tree.depthPenalization (int(limit["limit"]))
+    return jsonify ({"message": "ok"})
+
 @app.route ("/ImportarJSON" , methods = ["POST"])                               
 def LoadJSON ():
     file = request.files.get("archivo")

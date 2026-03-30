@@ -205,3 +205,14 @@ async function ModoEstres (){
     console.log (request["message"])
     RefreshTree ();
 }
+
+async function Penalization (){
+    const limit = document.getElementById ("depthPenalization").value;
+    const response = await fetch("/penalization", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({"limit" : limit})
+    });
+    console.log (response["message"]);
+    RefreshTree ();
+}
