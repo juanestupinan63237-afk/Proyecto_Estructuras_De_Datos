@@ -9,7 +9,7 @@
         "pasajeros": 120,
         "prioridad": false,
         "promocion": false,
-        "alerta": false,
+        "alerta": true,
         "altura": 3,
         "balance": 1,
         "izquierdo": {
@@ -21,7 +21,7 @@
             "pasajeros": 80,
             "prioridad": false,
             "promocion": true,
-            "alerta": false,
+            "alerta": true,
             "altura": 2,
             "balance": 1,
             "izquierdo": {
@@ -50,7 +50,7 @@
             "pasajeros": 50,
             "prioridad": false,
             "promocion": false,
-            "alerta": false,
+            "alerta": true,
             "altura": 1,
             "balance": 0,
             "izquierdo": null,

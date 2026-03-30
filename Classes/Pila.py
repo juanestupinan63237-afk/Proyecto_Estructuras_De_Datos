@@ -7,3 +7,5 @@ class Pila:
         self.__datos__.append (dicc)
     def isEmpty (self):
         return len(self.__datos__) == 0
+    def resetPila (self):
+        self.__datos__ = []

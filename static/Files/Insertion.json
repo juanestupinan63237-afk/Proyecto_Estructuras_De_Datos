@@ -10,7 +10,7 @@
             "pasajeros": 120,
             "prioridad": false,
             "promocion": false,
-            "alerta": false
+            "alerta": true
         },
         {
             "codigo": 50,
@@ -21,7 +21,7 @@
             "pasajeros": 80,
             "prioridad": false,
             "promocion": true,
-            "alerta": false
+            "alerta": true
         },
         {
             "codigo": 1,
@@ -43,7 +43,7 @@
             "pasajeros": 50,
             "prioridad": false,
             "promocion": false,
-            "alerta": false
+            "alerta": true
         }
     ]
 }
