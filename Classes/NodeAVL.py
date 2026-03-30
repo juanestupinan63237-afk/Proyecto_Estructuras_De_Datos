@@ -33,3 +33,6 @@ class Node:
 
     def getFlight (self):
         return self.flight
+    
+    def setFlight(self, flight: Flight):
+        self.flight = flight
