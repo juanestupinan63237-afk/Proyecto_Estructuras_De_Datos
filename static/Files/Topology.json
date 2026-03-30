@@ -36,7 +36,7 @@
             "pasajeros": 50,
             "prioridad": false,
             "promocion": false,
-            "alerta": true,
+            "alerta": false,
             "altura": 1,
             "balance": 0,
             "izquierdo": null,

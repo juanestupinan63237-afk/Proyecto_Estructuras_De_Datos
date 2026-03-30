@@ -330,7 +330,13 @@ class AVLTree(BinaryTree):
                 if self.balanceo_activado is False:
                     node_id = str(id(n))
                     label_text = f"{n.getFlight().getCode()}\nBalance Factor : {self.getBalance(n)}"
-                    dot.node(node_id, label=label_text)
+                    if n.getFlight().getAlert () is False:
+                        dot.node(node_id, label=label_text)
+                    else:
+                        dot.node(node_id, label=label_text,
+                            fillcolor='#3d1f00',
+                            color='#ff8c00',
+                            fontcolor='#ff8c00')
                     if n.getLeftSon():
                         dot.edge(node_id, str(id(n.getLeftSon())))
                         AddNode(n.getLeftSon())
@@ -340,7 +346,13 @@ class AVLTree(BinaryTree):
                 else:
                     node_id = str(id(n))
                     label_text = f"{n.getFlight().getCode()}"
-                    dot.node(node_id, label=label_text)
+                    if n.getFlight().getAlert () is False:
+                        dot.node(node_id, label=label_text)
+                    else:
+                        dot.node(node_id, label=label_text,
+                            fillcolor='#3d1f00',
+                            color='#ff8c00',
+                            fontcolor='#ff8c00')
                     if n.getLeftSon():
                         dot.edge(node_id, str(id(n.getLeftSon())))
                         AddNode(n.getLeftSon())

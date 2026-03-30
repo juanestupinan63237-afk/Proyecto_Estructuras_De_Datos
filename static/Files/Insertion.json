@@ -32,7 +32,7 @@
             "pasajeros": 50,
             "prioridad": false,
             "promocion": false,
-            "alerta": true
+            "alerta": false
         }
     ]
 }
