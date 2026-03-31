@@ -209,7 +209,7 @@ class AVLTree(BinaryTree):
             self.__depthPenalizationAllFalse__ (current_root.getRightSon())
             self.__depthPenalizationAllFalse__ (current_root.getLeftSon())
 
-    def getAnalyticalMetrics(self) -> dict:
+    def getAnalyticalMetrics(self) :
         return {
             "height":            self.getHeight(self.root),
             "leaves":            self.countLeaves(),
@@ -234,7 +234,7 @@ class AVLTree(BinaryTree):
             }
         }
  
-    def __getPreorder(self, node: Node) -> list:
+    def __getPreorder(self, node: Node) :
         if node is None:
             return []
         result = [node.getFlightCode()]
@@ -242,7 +242,7 @@ class AVLTree(BinaryTree):
         result += self.__getPreorder(node.getRightSon())
         return result
  
-    def __getInorder(self, node: Node) -> list:
+    def __getInorder(self, node: Node) :
         if node is None:
             return []
         result = self.__getInorder(node.getLeftSon())
@@ -250,7 +250,7 @@ class AVLTree(BinaryTree):
         result += self.__getInorder(node.getRightSon())
         return result
  
-    def __getPostorder(self, node: Node) -> list:
+    def __getPostorder(self, node: Node) :
         if node is None:
             return []
         result = self.__getPostorder(node.getLeftSon())
@@ -258,7 +258,7 @@ class AVLTree(BinaryTree):
         result += [node.getFlightCode()]
         return result
  
-    def __getWidthTour(self) -> list:
+    def __getWidthTour(self) :
         if self.root is None:
             return []
         result = []
@@ -272,7 +272,7 @@ class AVLTree(BinaryTree):
                 queue.append(node.getRightSon())
         return result
  
-    def SaveTree(self) -> dict:
+    def SaveTree(self) :
         return {
             "tipo": "Topology",
             "arbol": self.__serializeNode(self.root)
