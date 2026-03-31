@@ -23,8 +23,10 @@ def home():
 
 @app.route ("/penalization" , methods= ["POST"])
 def penalization ():
+    reversion.Apilar ({"tipo" : "penalization" ,
+                       "limit" : tree.getLimit()})
     limit = request.get_json ()
-    tree.depthPenalization (int(limit["limit"]))
+    tree.setLimit (int(limit["limit"]))
     return jsonify ({"message": "ok"})
 
 @app.route ("/ImportarJSON" , methods = ["POST"])                               
@@ -63,6 +65,7 @@ def Desencolar():
     tree.insertNodeAVL(vuelo)
     reversion.Apilar ({"tipo" : "REMOVE",
                         "codigo" : vuelo.getCode()})
+    tree.depthPenalization ()
     return jsonify({
         "status":  "success",
         "message": f"Vuelo {vuelo.getCode()} insertado en el árbol",
@@ -115,6 +118,7 @@ def RenderTreeRoute():
 
 @app.route ("/ModoEstres")
 def ModoEstres ():
+    reversion.Apilar ({"tipo" : "ModoEstres"})
     tree.SwitchModoEstres ()
     if tree.isBalanceActive ():
         return jsonify ({"message" : "Modo estres desactivado"})
@@ -153,6 +157,11 @@ def ControlZ ():
             vuelos = desapila["vuelos"]
             for i in vuelos:
                 tree.insertNodeAVL (i)
+        elif desapila["tipo"] == "ModoEstres":
+            tree.SwitchModoEstres ()
+        elif desapila["tipo"] == "penalization":
+            tree.setLimit (desapila["limit"])
+        tree.depthPenalization ()
         return jsonify ({"message": "ok"})
     return jsonify ({"message" : "error"})
 

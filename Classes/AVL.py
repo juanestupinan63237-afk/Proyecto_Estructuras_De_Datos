@@ -16,6 +16,14 @@ class AVLTree(BinaryTree):
             "doubleRight": 0,
             "massCancellations": 0
         }
+        self.limit = None
+
+    def setLimit (self, limit: int):
+        self.limit = limit
+        self.depthPenalization ()
+
+    def getLimit (self):
+        return self.limit
 
     def FindNode (self , code: int):
         return self.__FindNode__ (self.root , code)
@@ -186,20 +194,28 @@ class AVLTree(BinaryTree):
         temporal1.setHeight(1 + max(self.__getHeight(temporal1.getLeftSon()), self.__getHeight(temporal1.getRightSon())))
         return temporal1
  
-    def depthPenalization(self, limit):
-        self.__depthPenalization(self.root, 0, limit)
+    def depthPenalization(self):
+        if self.limit is not None:
+            self.__depthPenalization(self.root, 0)
+        else:
+            self.__depthPenalizationAllFalse__ (self.root)
  
-    def __depthPenalization(self, node: Node, depth, limit):
+    def __depthPenalization(self, node: Node, depth):
         if node is None:
             return
-        if depth >= limit:
+        if depth >= self.limit:
             node.getFlight().setAlert(True)
         else:
             node.getFlight().setAlert(False)
-        self.__depthPenalization(node.getLeftSon(), depth + 1, limit)
-        self.__depthPenalization(node.getRightSon(), depth + 1, limit)
+        self.__depthPenalization(node.getLeftSon(), depth + 1)
+        self.__depthPenalization(node.getRightSon(), depth + 1)
  
- 
+    def __depthPenalizationAllFalse__ (self , current_root: Node):
+        if current_root is not None:
+            current_root.getFlight().setAlert(False)
+            self.__depthPenalizationAllFalse__ (current_root.getRightSon())
+            self.__depthPenalizationAllFalse__ (current_root.getLeftSon())
+
     def getAnalyticalMetrics(self) -> dict:
         return {
             "height":            self.getHeight(self.root),
