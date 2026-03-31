@@ -10,7 +10,7 @@
             "pasajeros": 120,
             "prioridad": false,
             "promocion": false,
-            "alerta": true
+            "alerta": false
         },
         {
             "codigo": 50,
@@ -21,17 +21,6 @@
             "pasajeros": 80,
             "prioridad": false,
             "promocion": true,
-            "alerta": true
-        },
-        {
-            "codigo": 1,
-            "origen": "Madrid",
-            "destino": "Barcelona",
-            "horaSalida": "13:59",
-            "precioBase": 2000.0,
-            "pasajeros": 50,
-            "prioridad": false,
-            "promocion": false,
             "alerta": false
         },
         {
@@ -43,7 +32,7 @@
             "pasajeros": 50,
             "prioridad": false,
             "promocion": false,
-            "alerta": true
+            "alerta": false
         }
     ]
 }
