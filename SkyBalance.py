@@ -37,6 +37,7 @@ def LoadJSON ():
     contenido_texto = contenido_binario.decode("utf-8")
     data = json.loads(contenido_texto)
     tree.cargar_desde_dicc (data)
+    reversion.resetPila()
     print ("Archivo cargado con exito...")
     return jsonify ({"message" : "Exitoso"})
 
