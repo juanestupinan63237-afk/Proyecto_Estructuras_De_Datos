@@ -64,13 +64,6 @@ class AVLTree(BinaryTree):
     def insertNodeAVL(self, value: Flight):
         self.root = self.__insertNodeAVL(self.root, value)
  
-    def getHeight(self, current_root: Node):
-        if current_root:
-            izq = self.getHeight(current_root.getLeftSon())
-            der = self.getHeight(current_root.getRightSon())
-            return max(izq, der) + 1
-        return 0
- 
     def __insertNodeAVL(self, node: Node, value: Flight):
         if node is None:
             return Node(value)
@@ -426,7 +419,7 @@ class AVLTree(BinaryTree):
                 __Find__ (current_root.getRightSon(), profundidad_actual+1) 
         __Find__ (self.root)
         return FLIGHT
-    
+
     def DeleteFligthLessProfitable (self):
         code = self.FindNodeLessProfitable ().getFlightCode ()
         self.deleteNode (code)

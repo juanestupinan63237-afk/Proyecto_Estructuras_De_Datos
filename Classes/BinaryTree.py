@@ -117,6 +117,13 @@ class BinaryTree:
         svg = dot.pipe(format='svg').decode("utf-8")
         return svg.replace('<svg ', '<svg width="100%" height="auto" ')
     
+    def getHeight(self, current_root: Node):
+        if current_root:
+            izq = self.getHeight(current_root.getLeftSon())
+            der = self.getHeight(current_root.getRightSon())
+            return max(izq, der) + 1
+        return 0
+    
     def _dicc_a_nodo_topology(self, dicc: dict):
         if dicc is None:
             return None

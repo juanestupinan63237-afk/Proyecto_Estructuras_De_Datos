@@ -14,7 +14,7 @@ class Cola:
         return len(self.__datos__) == 0
  
     def GetAll(self) -> list:
-        """Returns a list of dicts with all queued flights without removing them."""
+
         result = []
         for i, vuelo in enumerate(self.__datos__):
             result.append({
@@ -31,5 +31,5 @@ class Cola:
             })
         return result
  
-    def Size(self) -> int:
+    def Size(self):
         return len(self.__datos__)
