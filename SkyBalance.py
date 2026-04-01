@@ -43,7 +43,6 @@ def LoadJSON ():
     print ("Archivo cargado con exito...")
     return jsonify ({"message" : "Exitoso"})
 
-
 @app.route("/Metricas/Analiticas", methods=["GET"])
 def MetricasAnaliticas():
     return jsonify(tree.getAnalyticalMetrics())
@@ -54,7 +53,6 @@ def VerCola():
         "size":    cola_vuelos.Size(),
         "vuelos":  cola_vuelos.GetAll()
     })
- 
  
 @app.route("/Cola/DesencolarVuelo", methods=["POST"])
 def Desencolar():
@@ -198,7 +196,6 @@ def DeleteFlgith ():
     
     tree.DeleteFligthLessProfitable ()
     return jsonify ({"message" : "ok"})
-
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -10,8 +10,8 @@
         "prioridad": false,
         "promocion": true,
         "alerta": false,
-        "altura": 3,
-        "balance": 0,
+        "altura": 4,
+        "balance": 1,
         "izquierdo": {
             "codigo": 3,
             "origen": "Madrid",
@@ -22,8 +22,8 @@
             "prioridad": false,
             "promocion": false,
             "alerta": false,
-            "altura": 2,
-            "balance": 0,
+            "altura": 3,
+            "balance": -1,
             "izquierdo": {
                 "codigo": 1,
                 "origen": "Madrid",
@@ -49,10 +49,24 @@
                 "prioridad": false,
                 "promocion": false,
                 "alerta": false,
-                "altura": 1,
-                "balance": 0,
+                "altura": 2,
+                "balance": -1,
                 "izquierdo": null,
-                "derecho": null
+                "derecho": {
+                    "codigo": 7,
+                    "origen": "Madrid",
+                    "destino": "Barcelona",
+                    "horaSalida": "01:10",
+                    "precioBase": 2000.0,
+                    "pasajeros": 50,
+                    "prioridad": false,
+                    "promocion": false,
+                    "alerta": false,
+                    "altura": 1,
+                    "balance": 0,
+                    "izquierdo": null,
+                    "derecho": null
+                }
             }
         },
         "derecho": {

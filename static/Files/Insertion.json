@@ -46,6 +46,17 @@
             "alerta": false
         },
         {
+            "codigo": 7,
+            "origen": "Madrid",
+            "destino": "Barcelona",
+            "horaSalida": "01:10",
+            "precioBase": 2000.0,
+            "pasajeros": 50,
+            "prioridad": false,
+            "promocion": false,
+            "alerta": false
+        },
+        {
             "codigo": 100,
             "origen": "BOG",
             "destino": "MED",
