@@ -197,5 +197,31 @@ def DeleteFlgith ():
     tree.DeleteFligthLessProfitable ()
     return jsonify ({"message" : "ok"})
 
+@app.route ("/Edit/" , methods = ["POST"])
+def EditFligth ():
+        data = request.get_json()
+
+        code = int(data.get("code"))
+        origin = data.get("origin")
+        destination = data.get("destination")
+        departureTime = data.get("departureTime")
+        basePrice = float(data.get("basePrice"))
+        numberPassengers = int(data.get("numberPassengers"))
+
+        nuevo_vuelo = Flight(
+            code,
+            origin,
+            destination,
+            departureTime,
+            basePrice,
+            numberPassengers,
+            priority=False,
+            promotion=False,
+            alert=False
+        )
+        tree.EditFligth (code , nuevo_vuelo)
+        tree.depthPenalization()
+        return jsonify ({"message" : "ok"})
+
 if __name__ == "__main__":
     app.run(debug=True)

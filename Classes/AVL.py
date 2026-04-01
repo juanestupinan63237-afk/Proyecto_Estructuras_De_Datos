@@ -437,3 +437,19 @@ class AVLTree(BinaryTree):
             self.__TourInsertion__ (current_root.getLeftSon())
             self.__TourInsertion__ (current_root.getRightSon())
         return resultado
+    
+    def EditFligth (self , code: int , fligth: Flight):
+        self.__EditFligth__ (self.root , code , fligth)
+        
+
+    def __EditFligth__ (self ,current_root: Node , code: int , fligth : Flight):
+        if current_root:
+            if current_root.getFlightCode () == code:
+                current_root.setFlight (fligth)
+                return
+            
+            if code < current_root.getFlightCode():
+                self.__EditFligth__ (current_root.getLeftSon() , code , fligth)
+
+            if code > current_root.getFlightCode():
+                self.__EditFligth__ (current_root.getRightSon() , code , fligth)

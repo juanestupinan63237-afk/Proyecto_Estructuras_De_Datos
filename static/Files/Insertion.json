@@ -2,14 +2,14 @@
     "tipo": "INSERCION",
     "vuelos": [
         {
-            "codigo": 50,
-            "origen": "CLO",
-            "destino": "CTG",
-            "horaSalida": "12:00",
-            "precioBase": 200000,
-            "pasajeros": 80,
+            "codigo": 5,
+            "origen": "Madrid",
+            "destino": "Barcelona",
+            "horaSalida": "13:00",
+            "precioBase": 2000.0,
+            "pasajeros": 50,
             "prioridad": false,
-            "promocion": true,
+            "promocion": false,
             "alerta": false
         },
         {
@@ -35,12 +35,12 @@
             "alerta": false
         },
         {
-            "codigo": 5,
-            "origen": "Madrid",
-            "destino": "Barcelona",
-            "horaSalida": "13:00",
-            "precioBase": 2000.0,
-            "pasajeros": 50,
+            "codigo": 100,
+            "origen": "BOG",
+            "destino": "MED",
+            "horaSalida": "10:00",
+            "precioBase": 150000,
+            "pasajeros": 120,
             "prioridad": false,
             "promocion": false,
             "alerta": false
@@ -52,17 +52,6 @@
             "horaSalida": "01:10",
             "precioBase": 2000.0,
             "pasajeros": 50,
-            "prioridad": false,
-            "promocion": false,
-            "alerta": false
-        },
-        {
-            "codigo": 100,
-            "origen": "BOG",
-            "destino": "MED",
-            "horaSalida": "10:00",
-            "precioBase": 150000,
-            "pasajeros": 120,
             "prioridad": false,
             "promocion": false,
             "alerta": false

@@ -233,3 +233,27 @@ async function DeleteFligthLessProfitable (){
     console.log (request["message"]);
     RefreshTree ();
 }
+
+async function GetVueloEditado() {
+    const data = {
+        code:             document.getElementById("Code_edit").value,
+        origin:           document.getElementById("Origin_edit").value,
+        destination:      document.getElementById("destination_edit").value,
+        departureTime:    document.getElementById("departureTime_edit").value,
+        basePrice:        document.getElementById("basePrice_edit").value,
+        numberPassengers: document.getElementById("numberPassengers_edit").value
+    };
+ 
+    const response = await fetch("/Edit/" , {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+    });
+ 
+    if (response.ok) {
+        document.getElementById("vueloForm").reset();
+        await RefreshTree();
+        await RefreshQueue();
+        await RefreshMetrics();
+    }
+}
