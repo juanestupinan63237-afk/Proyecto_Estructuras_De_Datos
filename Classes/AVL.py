@@ -275,6 +275,7 @@ class AVLTree(BinaryTree):
     def SaveTree(self) :
         return {
             "tipo": "Topology",
+            "limit" : self.limit,
             "arbol": self.__serializeNode(self.root)
         }
  
@@ -325,6 +326,7 @@ class AVLTree(BinaryTree):
             self.BalanceAll()
         elif dicc["tipo"] == "INSERCION":
             self.cargar_desde_dicc_inserccion(dicc["vuelos"])
+        self.setLimit (dicc["limit"])
  
     def cargar_desde_dicc_inserccion(self, vuelos: list):
         for i in vuelos:
@@ -438,18 +440,26 @@ class AVLTree(BinaryTree):
             self.__TourInsertion__ (current_root.getRightSon())
         return resultado
     
-    def EditFligth (self , code: int , fligth: Flight):
-        self.__EditFligth__ (self.root , code , fligth)
-        
+    def InsertionSave (self):
+        vuelos = []
+        self.__InsertionSave__ (self.root , vuelos)
+        return {"tipo" : "INSERCION",
+                "limit:" : self.limit,
+                "vuelos" : vuelos}
 
-    def __EditFligth__ (self ,current_root: Node , code: int , fligth : Flight):
+    def __InsertionSave__ (self , current_root: Node , resultado: list[dict]):
         if current_root:
-            if current_root.getFlightCode () == code:
-                current_root.setFlight (fligth)
-                return
-            
-            if code < current_root.getFlightCode():
-                self.__EditFligth__ (current_root.getLeftSon() , code , fligth)
-
-            if code > current_root.getFlightCode():
-                self.__EditFligth__ (current_root.getRightSon() , code , fligth)
+            vuelo = current_root.getFlight ()
+            resultado.append ({
+                "codigo" : vuelo.getCode(),
+                "origen" : vuelo.getOrigin(),
+                "destino" : vuelo.getDestination (),
+                "horaSalida" : vuelo.getDepartureTime(),
+                "precioBase" : vuelo.getBasePrice(),
+                "pasajeros" : vuelo.getNumberPassengers(),
+                "prioridad" : vuelo.getPriority(),
+                "promocion" : vuelo.getPromotion(),
+                "alerta" : vuelo.getAlert()              
+            })
+            self.__InsertionSave__ (current_root.getLeftSon() , resultado)
+            self.__InsertionSave__ (current_root.getRightSon() , resultado)
