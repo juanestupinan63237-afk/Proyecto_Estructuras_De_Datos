@@ -1,5 +1,6 @@
 {
     "tipo": "Topology",
+    "limit": 1,
     "arbol": {
         "codigo": 5,
         "origen": "Madrid",
@@ -21,7 +22,7 @@
             "pasajeros": 50,
             "prioridad": false,
             "promocion": false,
-            "alerta": false,
+            "alerta": true,
             "altura": 2,
             "balance": 1,
             "izquierdo": {
@@ -33,7 +34,7 @@
                 "pasajeros": 50,
                 "prioridad": false,
                 "promocion": false,
-                "alerta": false,
+                "alerta": true,
                 "altura": 1,
                 "balance": 0,
                 "izquierdo": null,
@@ -50,7 +51,7 @@
             "pasajeros": 120,
             "prioridad": false,
             "promocion": false,
-            "alerta": false,
+            "alerta": true,
             "altura": 2,
             "balance": 0,
             "izquierdo": {
@@ -62,7 +63,7 @@
                 "pasajeros": 50,
                 "prioridad": false,
                 "promocion": false,
-                "alerta": false,
+                "alerta": true,
                 "altura": 1,
                 "balance": 0,
                 "izquierdo": null,
@@ -77,7 +78,7 @@
                 "pasajeros": 50,
                 "prioridad": false,
                 "promocion": false,
-                "alerta": false,
+                "alerta": true,
                 "altura": 1,
                 "balance": 0,
                 "izquierdo": null,
