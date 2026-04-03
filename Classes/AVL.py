@@ -410,7 +410,7 @@ class AVLTree(BinaryTree):
                         if profundidad_actual > PROFUNDIDAD:
                             FLIGHT = current_root
                             PROFUNDIDAD = profundidad_actual
-                        if profundidad_actual == PROFUNDIDAD:
+                        elif profundidad_actual == PROFUNDIDAD:
                             if current_root.getFlightCode () > FLIGHT.getFlightCode():
                                 FLIGHT = current_root
                                 PROFUNDIDAD = profundidad_actual
@@ -444,7 +444,7 @@ class AVLTree(BinaryTree):
         vuelos = []
         self.__InsertionSave__ (self.root , vuelos)
         return {"tipo" : "INSERCION",
-                "limit:" : self.limit,
+                "limit" : self.limit,
                 "vuelos" : vuelos}
 
     def __InsertionSave__ (self , current_root: Node , resultado: list[dict]):
@@ -463,3 +463,18 @@ class AVLTree(BinaryTree):
             })
             self.__InsertionSave__ (current_root.getLeftSon() , resultado)
             self.__InsertionSave__ (current_root.getRightSon() , resultado)
+
+    def EditFligth (self , code: int , fligth: Flight):
+        self.__EditFligth__ (self.root , code , fligth)
+
+    def __EditFligth__ (self ,current_root: Node , code: int , fligth : Flight):
+            if current_root:
+                if current_root.getFlightCode () == code:
+                    current_root.setFlight (fligth)
+                    return
+                
+                if code < current_root.getFlightCode():
+                    self.__EditFligth__ (current_root.getLeftSon() , code , fligth)
+
+                if code > current_root.getFlightCode():
+                    self.__EditFligth__ (current_root.getRightSon() , code , fligth)
