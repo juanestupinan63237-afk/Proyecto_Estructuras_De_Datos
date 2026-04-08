@@ -9,6 +9,7 @@ from Classes.Cola import Cola
 
 app = Flask(__name__)
 tree = AVLTree()
+bst = BST ()
 reversion = Pila ()
 cola_vuelos = Cola()
 
@@ -19,7 +20,13 @@ tree.cargar_desde_dicc (data)
 @app.route("/")
 def home():
     grafico_svg = tree.Render ()
-    return render_template("index.html", grafico=grafico_svg)
+    bst_gr = bst.Render ()
+    return render_template("index.html", grafico=grafico_svg , bst_grafico = bst_gr)
+
+@app.route ("/Bst/visualization/")
+def RenderVisualizationBST(dicc: dict):
+    render = bst.Render ()
+    return Response(render, mimetype='image/svg+xml')
 
 @app.route ("/penalization" , methods= ["POST"])
 def penalization ():
@@ -40,8 +47,11 @@ def LoadJSON ():
     data = json.loads(contenido_texto)
     tree.cargar_desde_dicc (data)
     reversion.resetPila()
+    if data["tipo"] == "INSERCION":
+        bst.cargar_desde_dicc_inserccion (data["vuelos"])
     print ("Archivo cargado con exito...")
-    return jsonify ({"message" : "Exitoso"})
+    return jsonify ({"message" : "Exitoso" ,
+                     "tipo" : data["tipo"]})
 
 @app.route("/Metricas/Analiticas", methods=["GET"])
 def MetricasAnaliticas():

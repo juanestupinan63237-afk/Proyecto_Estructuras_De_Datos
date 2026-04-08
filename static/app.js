@@ -45,10 +45,18 @@ async function LoadJSON() {
         method: "POST",
         body: form
     });
+
+
  
     if (envio.ok) {
         await RefreshTree();
         await RefreshMetrics();
+        if ((data.tipo === "INSERCION")){
+            await BSTtreeInsertion();
+        }
+        else{
+            document.getElementById("bst-viewer").innerHTML = "";
+        }
     }
 }
  
@@ -256,4 +264,10 @@ async function GetVueloEditado() {
         await RefreshQueue();
         await RefreshMetrics();
     }
+}
+
+async function BSTtreeInsertion() {
+    const res = fetch("/Bst/visualization/");
+    const svg = await res.text();
+    document.getElementById("bst-viewer").innerHTML = svg;
 }

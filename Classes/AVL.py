@@ -320,11 +320,11 @@ class AVLTree(BinaryTree):
         return nodo
  
     def cargar_desde_dicc(self, dicc):
-        self.root = None
         if dicc["tipo"] == "Topology":
             self.root = self._dicc_a_nodo_topology(dicc["arbol"])
             self.BalanceAll()
         elif dicc["tipo"] == "INSERCION":
+            self.root = None
             self.cargar_desde_dicc_inserccion(dicc["vuelos"])
         self.setLimit (dicc["limit"])
  

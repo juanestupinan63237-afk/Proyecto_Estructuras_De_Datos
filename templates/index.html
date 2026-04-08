@@ -206,6 +206,9 @@
                     <button type="button" class = "btn-main" onclick="GetVueloEditado()">Edit Flights</button>
                 </div>
             </div>
+            <div id="bst-viewer" class="tree-viewer" style="margin-top: 20px; min-height: 300px;">
+                {{ bst_grafico|safe }}
+            </div>
     </div>
  
     <script src="{{ url_for('static', filename='app.js') }}"></script>

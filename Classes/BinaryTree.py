@@ -9,6 +9,9 @@ class BinaryTree:
     def __init__(self):
         self.root = None
 
+    def ResetTree (self):
+        self.root = None
+
     def countLeaves(self):
         numberLeaves = self.__countLeaves(self.root)
         return numberLeaves
@@ -145,11 +148,12 @@ class BinaryTree:
         return nodo
 
     def cargar_desde_dicc(self , dicc):
-        self.root = None
         if dicc["tipo"] == "Topology":
+            self.ResetTree ()
             self.root = self._dicc_a_nodo_topology(dicc["arbol"])
         elif dicc["tipo"] == "INSERCION":
             nodos = dicc["vuelos"]
+            self.ResetTree ()
             self.cargar_desde_dicc_inserccion (nodos)
 
     def cargar_desde_dicc_inserccion (self ,vuelos: list ):
