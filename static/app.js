@@ -49,17 +49,14 @@ async function LoadJSON() {
 
  
     if (envio.ok) {
-        await RefreshTree();
-        await RefreshMetrics();
-        if ((data.tipo === "INSERCION")){
-            await BSTtreeInsertion();
-        }
-        else{
-            document.getElementById("bst-viewer").innerHTML = "";
-        }
+        await RefreshTree(); 
+        const resBST = await fetch("/Bst/visualization/");
+        const svgBST = await resBST.text();
+        document.getElementById("bst-viewer").innerHTML = svgBST;
+        console.log("Archivo cargado y árboles actualizados");
     }
 }
- 
+
 async function obtenerDatos() {
     const respuesta = await fetch("/Descargar/Tree/Topology");
     const data = await respuesta.json();
@@ -264,10 +261,4 @@ async function GetVueloEditado() {
         await RefreshQueue();
         await RefreshMetrics();
     }
-}
-
-async function BSTtreeInsertion() {
-    const res = fetch("/Bst/visualization/");
-    const svg = await res.text();
-    document.getElementById("bst-viewer").innerHTML = svg;
 }

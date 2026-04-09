@@ -3,7 +3,18 @@
     "limit": 0,
     "vuelos": [
         {
-            "codigo": 3,
+            "codigo": 5,
+            "origen": "Madrid",
+            "destino": "Barcelona",
+            "horaSalida": "13:00",
+            "precioBase": 2000,
+            "pasajeros": 50,
+            "prioridad": 0,
+            "promocion": false,
+            "alerta": true
+        },
+        {
+            "codigo": 2,
             "origen": "Madrid",
             "destino": "Barcelona",
             "horaSalida": "01:00",
@@ -25,32 +36,10 @@
             "alerta": true
         },
         {
-            "codigo": 2,
+            "codigo": 3,
             "origen": "Madrid",
             "destino": "Barcelona",
             "horaSalida": "01:00",
-            "precioBase": 2000,
-            "pasajeros": 50,
-            "prioridad": 0,
-            "promocion": false,
-            "alerta": true
-        },
-        {
-            "codigo": 7,
-            "origen": "Madrid",
-            "destino": "Barcelona",
-            "horaSalida": "01:10",
-            "precioBase": 2000,
-            "pasajeros": 50,
-            "prioridad": 0,
-            "promocion": false,
-            "alerta": true
-        },
-        {
-            "codigo": 5,
-            "origen": "Madrid",
-            "destino": "Barcelona",
-            "horaSalida": "13:00",
             "precioBase": 2000,
             "pasajeros": 50,
             "prioridad": 0,
@@ -64,6 +53,17 @@
             "horaSalida": "10:00",
             "precioBase": 150000,
             "pasajeros": 120,
+            "prioridad": 0,
+            "promocion": false,
+            "alerta": true
+        },
+        {
+            "codigo": 7,
+            "origen": "Madrid",
+            "destino": "Barcelona",
+            "horaSalida": "01:10",
+            "precioBase": 2000,
+            "pasajeros": 50,
             "prioridad": 0,
             "promocion": false,
             "alerta": true

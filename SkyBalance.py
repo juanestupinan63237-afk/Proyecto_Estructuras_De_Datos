@@ -24,7 +24,7 @@ def home():
     return render_template("index.html", grafico=grafico_svg , bst_grafico = bst_gr)
 
 @app.route ("/Bst/visualization/")
-def RenderVisualizationBST(dicc: dict):
+def RenderVisualizationBST():
     render = bst.Render ()
     return Response(render, mimetype='image/svg+xml')
 
