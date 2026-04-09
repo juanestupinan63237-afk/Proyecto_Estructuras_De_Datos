@@ -179,7 +179,7 @@ def MassiveCancellation ():
     reversion.Apilar ({"tipo":"ADD_MULTIPLE", 
                        "vuelos" : tree.TourInsertion(int(id))})
     tree.massiveCancelation (int(id))
-    
+    tree.depthPenalization ()
 
     return jsonify({"message" : "ok"})
 
@@ -203,7 +203,7 @@ def DeleteFlgith ():
         "tipo" : "ADD",
         "vuelo" : data
     })
-    
+    tree.depthPenalization ()
     tree.DeleteFligthLessProfitable ()
     return jsonify ({"message" : "ok"})
 

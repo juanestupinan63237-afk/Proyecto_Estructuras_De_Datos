@@ -1,83 +1,17 @@
 {
     "tipo": "INSERCION",
-    "limit": 0,
+    "limit": 2,
     "vuelos": [
-        {
-            "codigo": 5,
-            "origen": "Madrid",
-            "destino": "Barcelona",
-            "horaSalida": "13:00",
-            "precioBase": 2000,
-            "pasajeros": 50,
-            "prioridad": 0,
-            "promocion": false,
-            "alerta": true
-        },
-        {
-            "codigo": 2,
-            "origen": "Madrid",
-            "destino": "Barcelona",
-            "horaSalida": "01:00",
-            "precioBase": 2000,
-            "pasajeros": 50,
-            "prioridad": 0,
-            "promocion": false,
-            "alerta": true
-        },
         {
             "codigo": 1,
             "origen": "Madrid",
             "destino": "Barcelona",
             "horaSalida": "01:00",
-            "precioBase": 2000,
-            "pasajeros": 50,
-            "prioridad": 0,
+            "precioBase": 2000.0,
+            "pasajeros": 1000,
+            "prioridad": false,
             "promocion": false,
-            "alerta": true
-        },
-        {
-            "codigo": 3,
-            "origen": "Madrid",
-            "destino": "Barcelona",
-            "horaSalida": "01:00",
-            "precioBase": 2000,
-            "pasajeros": 50,
-            "prioridad": 0,
-            "promocion": false,
-            "alerta": true
-        },
-        {
-            "codigo": 100,
-            "origen": "BOG",
-            "destino": "MED",
-            "horaSalida": "10:00",
-            "precioBase": 150000,
-            "pasajeros": 120,
-            "prioridad": 0,
-            "promocion": false,
-            "alerta": true
-        },
-        {
-            "codigo": 7,
-            "origen": "Madrid",
-            "destino": "Barcelona",
-            "horaSalida": "01:10",
-            "precioBase": 2000,
-            "pasajeros": 50,
-            "prioridad": 0,
-            "promocion": false,
-            "alerta": true
-        },
-        {
-            "codigo": 150,
-            "origen": "BOG",
-            "destino": "PEI",
-            "horaSalida": "15:00",
-            "precioBase": 100000,
-            "pasajeros": 50,
-            "prioridad": 0,
-            "promocion": false,
-            "alerta": true
+            "alerta": false
         }
     ]
 }
