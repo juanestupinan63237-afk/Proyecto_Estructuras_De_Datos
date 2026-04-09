@@ -341,6 +341,7 @@ class AVLTree(BinaryTree):
                 i["promocion"],
                 i["alerta"]
             ))
+    
     def Render (self):
         dot = Digraph()
         dot.attr('graph', bgcolor='transparent', ranksep='0.6', nodesep='0.4')
