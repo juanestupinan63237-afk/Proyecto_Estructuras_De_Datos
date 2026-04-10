@@ -30,6 +30,6 @@ class Cola:
                 "alert":            vuelo.getAlert(),
             })
         return result
- 
+
     def Size(self):
         return len(self.__datos__)

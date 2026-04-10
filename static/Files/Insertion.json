@@ -1,15 +1,59 @@
 {
     "tipo": "INSERCION",
-    "limit": 2,
+    "limit": 5,
     "vuelos": [
         {
             "codigo": 1,
             "origen": "Madrid",
             "destino": "Barcelona",
             "horaSalida": "01:00",
-            "precioBase": 2000.0,
+            "precioBase": 2000,
             "pasajeros": 1000,
-            "prioridad": false,
+            "prioridad": 0,
+            "promocion": false,
+            "alerta": false
+        },
+        {
+            "codigo": -1,
+            "origen": "Pereira",
+            "destino": "Bogot\u00e1",
+            "horaSalida": "07:00",
+            "precioBase": 65000,
+            "pasajeros": 90,
+            "prioridad": 0,
+            "promocion": false,
+            "alerta": false
+        },
+        {
+            "codigo": 101,
+            "origen": "Manizales",
+            "destino": "Yopal",
+            "horaSalida": "10:00",
+            "precioBase": 150000,
+            "pasajeros": 90,
+            "prioridad": 0,
+            "promocion": false,
+            "alerta": false
+        },
+        {
+            "codigo": 50,
+            "origen": "Cali",
+            "destino": "Medell\u00edn",
+            "horaSalida": "14:30",
+            "precioBase": 120000,
+            "pasajeros": 150,
+            "prioridad": 1,
+            "promocion": true,
+            "alerta": false
+        },
+        {
+            "codigo": 105,
+            "origen": "MZL",
+            "destino": "Pereira",
+            "horaSalida": "17:00",
+            "precioBase": 71000,
+            "pasajeros": 100,
+            "prioridad": 0,
             "promocion": false,
             "alerta": false
         }

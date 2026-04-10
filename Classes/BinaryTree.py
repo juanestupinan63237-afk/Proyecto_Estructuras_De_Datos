@@ -23,56 +23,6 @@ class BinaryTree:
             return 1
         return self.__countLeaves(node.getLeftSon())+ self.__countLeaves(node.getRightSon())
 
-    def showRoot(self):
-        if self.root:
-            print(f"The code for the first Flight we have registered in our database is: {self.root.getFlightCode()}")
-        else:
-            print(f"We currently have no flights registered in our database.\nPlease try again later or enter a Flight")
-
-
-
-    def widthTour(self):
-        if self.root is None:
-            return
-        queue = deque([self.root])
-        while queue:
-            pop = queue.popleft()
-            print(pop)
-            if pop.getLeftSon():
-                queue.append(pop.getLeftSon())
-            if pop.getRightSon():
-                queue.append(pop.getRightSon())
-
-    def preorderTour(self):
-        self.__preorderTour(self.root)
-
-    def __preorderTour(self, node):
-        if node is None:
-            return
-        print(node.getFlightCode())
-        self.__preorderTour(node.getLeftSon())
-        self.__preorderTour(node.getRightSon())
-
-    def inOrderTour(self):
-        self.__inOrderTour(self.root)
-
-    def __inOrderTour(self, node):
-        if node is None:
-            return
-        self.__inOrderTour(node.getLeftSon())
-        print(node.getFlightCode())
-        self.__inOrderTour(node.getRightSon())
-
-    def postOrderTour(self):
-        self.__postOrderTour(self.root)
-
-    def __postOrderTour(self, node):
-        if node is None:
-            return
-        self.__postOrderTour(node.getLeftSon())
-        self.__postOrderTour(node.getRightSon())
-        print(node.getFlightCode())
-
     def searchNode(self, code):
         nodeFound = self.__searchNode(self.root, code)
         return nodeFound
@@ -86,7 +36,7 @@ class BinaryTree:
             return self.__searchNode(node.getRightSon(), code)
         else:
             return node
-        
+
     def Render (self):
         dot = Digraph()
         dot.attr('graph', bgcolor='transparent', ranksep='0.6', nodesep='0.4')
@@ -122,9 +72,9 @@ class BinaryTree:
     
     def getHeight(self, current_root: Node):
         if current_root:
-            izq = self.getHeight(current_root.getLeftSon())
-            der = self.getHeight(current_root.getRightSon())
-            return max(izq, der) + 1
+            left = self.getHeight(current_root.getLeftSon())
+            right = self.getHeight(current_root.getRightSon())
+            return 1 + max(left, right)
         return 0
     
     def _dicc_a_nodo_topology(self, dicc: dict):
@@ -172,17 +122,17 @@ class BinaryTree:
 class BST(BinaryTree):
     def __init__(self):
         super().__init__()
-    def insertNode(self, value: Flight):
-        self.root = self.__insertNode(self.root, value)
+    def insertNode(self, flight: Flight):
+        self.root = self.__insertNode(self.root, flight)
 
-    def __insertNode(self, node : Node, value: Flight):
+    def __insertNode(self, node : Node, flight: Flight):
         if node is None:
-            node = Node(value)
+            node = Node(flight)
             return node
-        if value.getCode() < node.getFlightCode():
-            node.setLeftSon(self.__insertNode(node.getLeftSon(), value))
-        elif value.getCode() > node.getFlightCode():
-            node.setRightSon(self.__insertNode(node.getRightSon(), value))
+        if flight.getCode() < node.getFlightCode():
+            node.setLeftSon(self.__insertNode(node.getLeftSon(), flight))
+        elif flight.getCode() > node.getFlightCode():
+            node.setRightSon(self.__insertNode(node.getRightSon(), flight))
         else:
             raise Exception(f"This Node already exists in our AVL. Thanks for your attention")
         return node

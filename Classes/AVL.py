@@ -233,7 +233,7 @@ class AVLTree(BinaryTree):
                 "width":     self.__getWidthTour(),
             }
         }
- 
+
     def __getPreorder(self, node: Node) :
         if node is None:
             return []
@@ -241,7 +241,7 @@ class AVLTree(BinaryTree):
         result += self.__getPreorder(node.getLeftSon())
         result += self.__getPreorder(node.getRightSon())
         return result
- 
+
     def __getInorder(self, node: Node) :
         if node is None:
             return []
@@ -249,7 +249,7 @@ class AVLTree(BinaryTree):
         result += [node.getFlightCode()]
         result += self.__getInorder(node.getRightSon())
         return result
- 
+
     def __getPostorder(self, node: Node) :
         if node is None:
             return []
@@ -257,7 +257,7 @@ class AVLTree(BinaryTree):
         result += self.__getPostorder(node.getRightSon())
         result += [node.getFlightCode()]
         return result
- 
+
     def __getWidthTour(self) :
         if self.root is None:
             return []
@@ -271,14 +271,14 @@ class AVLTree(BinaryTree):
             if node.getRightSon():
                 queue.append(node.getRightSon())
         return result
- 
+
     def SaveTree(self) :
         return {
             "tipo": "Topology",
             "limit" : self.limit,
             "arbol": self.__serializeNode(self.root)
         }
- 
+
     def __serializeNode(self, node: Node):
         if node is None:
             return None
@@ -298,7 +298,7 @@ class AVLTree(BinaryTree):
             "izquierdo":  self.__serializeNode(node.getLeftSon()),
             "derecho":    self.__serializeNode(node.getRightSon()),
         }
- 
+
     def _dicc_a_nodo_topology(self, dicc: dict):
         if dicc is None:
             return None
@@ -318,7 +318,7 @@ class AVLTree(BinaryTree):
         nodo.setHeight(1 + max(self.getHeight(nodo.getLeftSon()),
                                self.getHeight(nodo.getRightSon())))
         return nodo
- 
+
     def cargar_desde_dicc(self, dicc):
         if dicc["tipo"] == "Topology":
             self.root = self._dicc_a_nodo_topology(dicc["arbol"])
@@ -327,7 +327,7 @@ class AVLTree(BinaryTree):
             self.root = None
             self.cargar_desde_dicc_inserccion(dicc["vuelos"])
         self.setLimit (dicc["limit"])
- 
+
     def cargar_desde_dicc_inserccion(self, vuelos: list):
         for i in vuelos:
             self.insertNodeAVL(Flight(
@@ -341,7 +341,7 @@ class AVLTree(BinaryTree):
                 i["promocion"],
                 i["alerta"]
             ))
-    
+
     def Render (self):
         dot = Digraph()
         dot.attr('graph', bgcolor='transparent', ranksep='0.6', nodesep='0.4')
@@ -392,13 +392,12 @@ class AVLTree(BinaryTree):
                     if n.getRightSon():
                         dot.edge(node_id, str(id(n.getRightSon())))
                         AddNode(n.getRightSon())
-                
 
         if self.root:
             AddNode(self.root)
         svg = dot.pipe(format='svg').decode("utf-8")
         return svg.replace('<svg ', '<svg width="100%" height="auto" ')
-    
+
     def FindNodeLessProfitable (self):
         FLIGHT = self.root
         PROFUNDIDAD = 0
@@ -440,7 +439,7 @@ class AVLTree(BinaryTree):
             self.__TourInsertion__ (current_root.getLeftSon())
             self.__TourInsertion__ (current_root.getRightSon())
         return resultado
-    
+
     def InsertionSave (self):
         vuelos = []
         self.__InsertionSave__ (self.root , vuelos)
@@ -473,9 +472,7 @@ class AVLTree(BinaryTree):
                 if current_root.getFlightCode () == code:
                     current_root.setFlight (fligth)
                     return
-                
                 if code < current_root.getFlightCode():
                     self.__EditFligth__ (current_root.getLeftSon() , code , fligth)
-
                 if code > current_root.getFlightCode():
                     self.__EditFligth__ (current_root.getRightSon() , code , fligth)
