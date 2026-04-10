@@ -431,7 +431,6 @@ class AVLTree(BinaryTree):
         nodo = self.FindNode (code)
         return self.__TourInsertion__ (nodo)
 
-
     def __TourInsertion__ (self, current_root: Node , resultado = []):
         if resultado is None:
             resultado = []
