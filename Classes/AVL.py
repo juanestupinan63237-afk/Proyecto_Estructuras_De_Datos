@@ -362,7 +362,7 @@ class AVLTree(BinaryTree):
             if n:
                 if self.balanceo_activado is False:
                     node_id = str(id(n))
-                    label_text = f"{n.getFlight().getCode()}\nBalance Factor : {self.getBalance(n)}"
+                    label_text = f"{n.getFlight().getCode()}\nBalance Factor : {self.getBalance(n)}\nOrigin: {n.getFlight().getOrigin()}\ndestination: {n.getFlight().getDestination()}\nTotal Price: {n.getFlight().getTotalPrice()}"
                     if n.getFlight().getAlert () is False:
                         dot.node(node_id, label=label_text)
                     else:
@@ -378,7 +378,7 @@ class AVLTree(BinaryTree):
                         AddNode(n.getRightSon())
                 else:
                     node_id = str(id(n))
-                    label_text = f"{n.getFlight().getCode()}"
+                    label_text = f"Origin: {n.getFlight().getOrigin()}\ndestination: {n.getFlight().getDestination()}\nTotal Price: {n.getFlight().getTotalPrice()}"
                     if n.getFlight().getAlert () is False:
                         dot.node(node_id, label=label_text)
                     else:
