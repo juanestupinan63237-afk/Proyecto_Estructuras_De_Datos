@@ -13,9 +13,12 @@ bst = BST ()
 reversion = Pila ()
 cola_vuelos = Cola()
 
-with open ("static/Files/Topology.json" , "r" , encoding="utf-8") as f:
-    data = json.load (f)
-tree.cargar_desde_dicc (data)
+try:
+    with open ("static/Files/Topology.json" , "r" , encoding="utf-8") as f:
+        data = json.load (f)
+    tree.cargar_desde_dicc (data)
+except:
+    print ("No se ha cargado un archivo anterior... Se crea un nuevo arbol")
 
 @app.route("/")
 def home():
