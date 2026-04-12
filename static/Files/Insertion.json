@@ -1,16 +1,16 @@
 {
     "tipo": "INSERCION",
-    "limit": null,
+    "limit": 11,
     "vuelos": [
         {
             "codigo": 104,
-            "origen": "BOG",
-            "destino": "PEI",
-            "horaSalida": "09:00",
-            "precioBase": 100000,
-            "pasajeros": 15,
+            "origen": "CALI",
+            "destino": "BOG",
+            "horaSalida": "01:00",
+            "precioBase": 100.0,
+            "pasajeros": 5000,
             "prioridad": false,
-            "promocion": true,
+            "promocion": false,
             "alerta": false
         },
         {
@@ -20,29 +20,7 @@
             "horaSalida": "07:30",
             "precioBase": 2500,
             "pasajeros": 42,
-            "prioridad": false,
-            "promocion": false,
-            "alerta": false
-        },
-        {
-            "codigo": 1,
-            "origen": "Madrid",
-            "destino": "Barcelona",
-            "horaSalida": "01:00",
-            "precioBase": 2000.0,
-            "pasajeros": 50,
-            "prioridad": false,
-            "promocion": false,
-            "alerta": false
-        },
-        {
-            "codigo": -1,
-            "origen": "Madrid",
-            "destino": "Barcelona",
-            "horaSalida": "13:59",
-            "precioBase": 2000.0,
-            "pasajeros": 50,
-            "prioridad": false,
+            "prioridad": 0,
             "promocion": false,
             "alerta": false
         },
@@ -53,7 +31,7 @@
             "horaSalida": "06:00",
             "precioBase": 2000,
             "pasajeros": 185,
-            "prioridad": false,
+            "prioridad": 1,
             "promocion": false,
             "alerta": false
         },
@@ -64,7 +42,7 @@
             "horaSalida": "08:15",
             "precioBase": 150000,
             "pasajeros": 210,
-            "prioridad": false,
+            "prioridad": 1,
             "promocion": false,
             "alerta": false
         },
@@ -75,7 +53,7 @@
             "horaSalida": "16:10",
             "precioBase": 120000,
             "pasajeros": 25,
-            "prioridad": false,
+            "prioridad": 0,
             "promocion": false,
             "alerta": false
         },
@@ -86,7 +64,7 @@
             "horaSalida": "12:00",
             "precioBase": 3200,
             "pasajeros": 5,
-            "prioridad": false,
+            "prioridad": 0,
             "promocion": true,
             "alerta": false
         },
@@ -97,7 +75,7 @@
             "horaSalida": "10:45",
             "precioBase": 4500,
             "pasajeros": 300,
-            "prioridad": false,
+            "prioridad": 1,
             "promocion": false,
             "alerta": false
         },
@@ -108,7 +86,7 @@
             "horaSalida": "14:20",
             "precioBase": 2800,
             "pasajeros": 190,
-            "prioridad": false,
+            "prioridad": 1,
             "promocion": false,
             "alerta": false
         },
@@ -119,7 +97,7 @@
             "horaSalida": "20:30",
             "precioBase": 3100,
             "pasajeros": 12,
-            "prioridad": false,
+            "prioridad": 0,
             "promocion": true,
             "alerta": false
         },
@@ -130,7 +108,7 @@
             "horaSalida": "18:00",
             "precioBase": 95000,
             "pasajeros": 240,
-            "prioridad": false,
+            "prioridad": 1,
             "promocion": false,
             "alerta": false
         },
@@ -141,7 +119,7 @@
             "horaSalida": "22:00",
             "precioBase": 5500,
             "pasajeros": 350,
-            "prioridad": false,
+            "prioridad": 1,
             "promocion": false,
             "alerta": false
         }

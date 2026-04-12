@@ -344,18 +344,21 @@ class AVLTree(BinaryTree):
 
     def Render (self):
         dot = Digraph()
-        dot.attr('graph', bgcolor='transparent', ranksep='0.6', nodesep='0.4')
+        dot.attr('graph', bgcolor='transparent', ranksep='1.5', nodesep='1.5' , dpi = "300")
         dot.attr('node',
-                shape='circle',     
-                style='filled',     
-                fillcolor='#1b212c',
-                color='#00f2ff',    
-                fontcolor='#00f2ff',
-                fontname='Arial Bold',
-                fontsize='12',
-                penwidth='2',     
-                width='0.6',        
-                height='0.6')
+            shape='circle',     
+            style='filled',     
+            fillcolor='#1b212c',
+            color='#00f2ff',    
+            fontcolor='#00f2ff',
+            fontname='Arial Bold',
+            fontsize='100',      # <--- Súbelo al doble (100-120)
+            penwidth='3',        # Un poco más grueso para que no se pierda el borde
+            width='1.5',         # Aumenta el ancho mínimo
+            height='1.5',        # Aumenta el alto mínimo
+            fixedsize='false'    # Mantenlo en false
+            )
+    
         dot.attr('edge', color='#444d5e', penwidth='1.5', arrowhead='vee', arrowsize='0.8')
 
         def AddNode(n: Node):
@@ -363,7 +366,7 @@ class AVLTree(BinaryTree):
                 if self.balanceo_activado is False:
                     node_id = str(id(n))
                     label_text = f"{n.getFlight().getCode()}\nBalance Factor : {self.getBalance(n)}\nOrigin: {n.getFlight().getOrigin()}\ndestination: {n.getFlight().getDestination()}\nTotal Price: {n.getFlight().getTotalPrice()}"
-                    if n.getFlight().getAlert () is False:
+                    if not n.getFlight().getAlert ():
                         dot.node(node_id, label=label_text)
                     else:
                         dot.node(node_id, label=label_text,
@@ -378,7 +381,7 @@ class AVLTree(BinaryTree):
                         AddNode(n.getRightSon())
                 else:
                     node_id = str(id(n))
-                    label_text = f"Origin: {n.getFlight().getOrigin()}\ndestination: {n.getFlight().getDestination()}\nTotal Price: {n.getFlight().getTotalPrice()}"
+                    label_text = f"Code: {n.getFlightCode()}\nOrigin: {n.getFlight().getOrigin()}\ndestination: {n.getFlight().getDestination()}\nTotal Price: {n.getFlight().getTotalPrice()}"
                     if n.getFlight().getAlert () is False:
                         dot.node(node_id, label=label_text)
                     else:
