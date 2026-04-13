@@ -1,5 +1,12 @@
 class Flight:
+    """
+    Represents a Flight entity with logistical and financial attributes.
+    """
+    
     def __init__(self, code, origin, destination, departureTime, basePrice, numberPassengers, priority, promotion, alert):
+        """
+        Initializes a new Flight instance.
+        """
         self.code = code
         self.origin = origin
         self.destination = destination
@@ -65,6 +72,15 @@ class Flight:
         self.alert = value
     
     def getTotalPrice (self):
+        """
+        Calculates the total revenue for the flight.
+        
+        Formula: (basePrice * numberPassengers)
+        If alert is True, adds a 25% surcharge.
+        
+        Returns:
+            float: The final calculated price.
+        """
         resultado = self.basePrice * self.numberPassengers
         if self.alert :
             resultado += resultado*0.25

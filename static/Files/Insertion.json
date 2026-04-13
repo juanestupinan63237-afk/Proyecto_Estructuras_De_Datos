@@ -4,11 +4,11 @@
     "vuelos": [
         {
             "codigo": 104,
-            "origen": "CALI",
-            "destino": "BOG",
+            "origen": "Manizales",
+            "destino": "Pereira",
             "horaSalida": "01:00",
-            "precioBase": 100.0,
-            "pasajeros": 5000,
+            "precioBase": 88000.0,
+            "pasajeros": 100,
             "prioridad": false,
             "promocion": false,
             "alerta": false
@@ -20,7 +20,7 @@
             "horaSalida": "07:30",
             "precioBase": 2500,
             "pasajeros": 42,
-            "prioridad": 0,
+            "prioridad": false,
             "promocion": false,
             "alerta": false
         },
@@ -31,7 +31,7 @@
             "horaSalida": "06:00",
             "precioBase": 2000,
             "pasajeros": 185,
-            "prioridad": 1,
+            "prioridad": false,
             "promocion": false,
             "alerta": false
         },
@@ -42,7 +42,7 @@
             "horaSalida": "08:15",
             "precioBase": 150000,
             "pasajeros": 210,
-            "prioridad": 1,
+            "prioridad": false,
             "promocion": false,
             "alerta": false
         },
@@ -53,7 +53,7 @@
             "horaSalida": "16:10",
             "precioBase": 120000,
             "pasajeros": 25,
-            "prioridad": 0,
+            "prioridad": false,
             "promocion": false,
             "alerta": false
         },
@@ -64,7 +64,7 @@
             "horaSalida": "12:00",
             "precioBase": 3200,
             "pasajeros": 5,
-            "prioridad": 0,
+            "prioridad": false,
             "promocion": true,
             "alerta": false
         },
@@ -75,7 +75,7 @@
             "horaSalida": "10:45",
             "precioBase": 4500,
             "pasajeros": 300,
-            "prioridad": 1,
+            "prioridad": false,
             "promocion": false,
             "alerta": false
         },
@@ -86,7 +86,7 @@
             "horaSalida": "14:20",
             "precioBase": 2800,
             "pasajeros": 190,
-            "prioridad": 1,
+            "prioridad": false,
             "promocion": false,
             "alerta": false
         },
@@ -97,7 +97,7 @@
             "horaSalida": "20:30",
             "precioBase": 3100,
             "pasajeros": 12,
-            "prioridad": 0,
+            "prioridad": false,
             "promocion": true,
             "alerta": false
         },
@@ -108,7 +108,7 @@
             "horaSalida": "18:00",
             "precioBase": 95000,
             "pasajeros": 240,
-            "prioridad": 1,
+            "prioridad": false,
             "promocion": false,
             "alerta": false
         },
@@ -119,7 +119,7 @@
             "horaSalida": "22:00",
             "precioBase": 5500,
             "pasajeros": 350,
-            "prioridad": 1,
+            "prioridad": false,
             "promocion": false,
             "alerta": false
         }
