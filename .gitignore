@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+__pycache__/
+*.pyc
+=======
 Classes/__pycache__
 static/Files
 .vscode
+>>>>>>> Terminado

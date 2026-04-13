@@ -41,13 +41,23 @@ def penalization ():
 
 @app.route ("/ImportarJSON" , methods = ["POST"])                               
 def LoadJSON ():
+
     file = request.files.get("archivo")
+
     if not file:
-        print ("Todavia no se ha ingresado un archvivo")
-        return jsonify ({"message" : "No cargado"})
+        return jsonify({"message": "No cargado"})
+
     contenido_binario = file.read()
     contenido_texto = contenido_binario.decode("utf-8")
     data = json.loads(contenido_texto)
+<<<<<<< HEAD
+
+    tree.ResetTree()
+    tree.cargar_desde_dicc(data)
+
+    print("Archivo cargado con exito...")
+    return jsonify({"message": "Exitoso"})
+=======
     tree.cargar_desde_dicc (data)
     reversion.resetPila()
     if data["tipo"] == "INSERCION":
@@ -83,6 +93,7 @@ def Desencolar():
         "size":    cola_vuelos.Size(),
         "vuelos":  cola_vuelos.GetAll()
     })
+>>>>>>> Temporal_good_proyect
 
 @app.route("/Sent/Node", methods=['POST'])
 def RecibirVuelo():
@@ -107,7 +118,22 @@ def RecibirVuelo():
             promotion=False,
             alert=False
         )
+<<<<<<< HEAD
+
+        if isinstance(tree, BST):
+            tree.insertNode (nuevo_vuelo)
+        else:
+            tree.insertNodeAVL (nuevo_vuelo)
+
+        reversion.Apilar ({
+            "tipo" : "REMOVE",
+            "codigo" : code
+        })
+
+
+=======
         cola_vuelos.Encolar(nuevo_vuelo)
+>>>>>>> Temporal_good_proyect
         return jsonify({
             "status": "success",
             "message": f"Vuelo {code} registrado correctamente"
@@ -117,6 +143,9 @@ def RecibirVuelo():
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 400
 
+<<<<<<< HEAD
+@app.route ("/Descargar/Tree/Topology")
+=======
 @app.route("/Render/Tree", methods=['GET'])
 def RenderTreeRoute():
     render = tree.Render ()
@@ -136,6 +165,7 @@ def ModoEstres ():
     return jsonify ({"message" : "Modo estres activado"})
 
 @app.route ("/Descargar/Tree")
+>>>>>>> Temporal_good_proyect
 def SendTree ():
     with open ("static/Files/Topology.json" , "w" , encoding= "utf-8") as f:
         json.dump (tree.SaveTree() , f , indent= 4)
@@ -143,11 +173,11 @@ def SendTree ():
         json.dump (tree.InsertionSave() , f , indent= 4)
     return jsonify ({"message" : "ok"})
 
-@app.route ("/Control/Pila")
-def ControlZ ():
-    if reversion.isEmpty() is False:
+@app.route("/Control/Pila")
+def ControlZ():
+    if not reversion.isEmpty():
         desapila = reversion.Desapilar()
-        if desapila ["tipo"] == "REMOVE":
+        if desapila["tipo"] == "REMOVE":
             tree.deleteNode(desapila["codigo"])
         elif desapila ["tipo"] == "ADD":
             v = desapila["vuelo"]
@@ -237,4 +267,12 @@ def EditFligth ():
         return jsonify ({"message" : "ok"})
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     app.run(debug=True)
+    data = tree.SaveTree ()
+    with open ("static/Files/Topology.json" , "w" , encoding= "utf-8") as f:
+        json.dump (data , f , indent= 4)
+    print ("Se ha guardado con exito")
+=======
+    app.run(debug=True)
+>>>>>>> Temporal_good_proyect

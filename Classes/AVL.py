@@ -1,12 +1,23 @@
 from Classes.NodeAVL import Node
 from Classes.BinaryTree import BinaryTree
 from Classes.FlightSB import Flight
+<<<<<<< HEAD
+from Classes.NodeAVL import Node
+from Classes.FlightSB import Flight
+
+from Classes.NodeAVL import Node
+from Classes.FlightSB import Flight
+=======
 from collections import deque
 from graphviz import Digraph
+>>>>>>> Temporal_good_proyect
 
 class AVLTree(BinaryTree):
  
     def __init__(self):
+<<<<<<< HEAD
+        self.root = None
+=======
         super().__init__()
         self.balanceo_activado = True
         self.analyticalMetrics = {
@@ -17,6 +28,7 @@ class AVLTree(BinaryTree):
             "massCancellations": 0
         }
         self.limit = None
+>>>>>>> Temporal_good_proyect
 
     def setLimit (self, limit: int):
         self.limit = limit
@@ -77,6 +89,27 @@ class AVLTree(BinaryTree):
         if self.balanceo_activado:
             return self.__rebalance(node)
         return node
+<<<<<<< HEAD
+
+    def getHeight(self, node : Node):
+        if node is None:
+            return 0
+        return node.getHeight()
+
+    def searchNode(self, code):
+        return self.__searchNode(self.root, code)
+
+    def __searchNode(self, node : Node, code):
+        if node is None:
+            return None
+        if code < (node.getFlightCode()):
+            return self.__searchNode(node.getLeftSon(), code)
+        elif code > node.getFlightCode():
+            return self.__searchNode(node.getRightSon(), code)
+        else:
+            return node
+
+=======
  
     def __rebalance(self, node: Node):
         if node is None:
@@ -106,6 +139,7 @@ class AVLTree(BinaryTree):
             return 0
         return node.getHeight()
  
+>>>>>>> Temporal_good_proyect
     def deleteNode(self, codeFlight):
         node = self.searchNode(codeFlight)
         if node is None:
@@ -130,6 +164,16 @@ class AVLTree(BinaryTree):
             else:
                 successor = self.__minValueNode(node.getRightSon())
                 node.setFlight(successor.getFlight())
+<<<<<<< HEAD
+                node.setRightSon(
+                    self.__deleteNode(
+                        node.getRightSon(),
+                        successor.getFlight().getCode()
+                    )
+                )
+        node.setHeight(1 + max(self.getHeight(node.getLeftSon()), self.getHeight(node.getRightSon())))
+        balance = self.getBalance(node)
+=======
                 node.setRightSon(self.__deleteNode(node.getRightSon(), successor.getFlight().getCode()))
         return self.__rebalance(node)
  
@@ -150,6 +194,7 @@ class AVLTree(BinaryTree):
  
     def CountChilds (self, current_root: Node):
         return self.__CountChild__ (current_root) 
+>>>>>>> Temporal_good_proyect
 
     def __CountChild__ (self ,current_root: Node):
         if current_root is not None:
@@ -209,6 +254,45 @@ class AVLTree(BinaryTree):
             self.__depthPenalizationAllFalse__ (current_root.getRightSon())
             self.__depthPenalizationAllFalse__ (current_root.getLeftSon())
 
+<<<<<<< HEAD
+    def FindNodeLessProfitable(self):
+        if self.root is None:
+            return None
+        FLIGHT: Node = self.root
+
+        def Find(temp_root: Node):
+            nonlocal FLIGHT
+            if temp_root is not None:
+                if temp_root.getFlight().getTotalPrice() < FLIGHT.getFlight().getTotalPrice():
+                    FLIGHT = temp_root
+                Find(temp_root.getLeftSon())
+                Find(temp_root.getRightSon())
+        Find(self.root)
+        return FLIGHT
+    
+    def _nodo_a_dicc (self , nodo: Node):
+        if nodo is None:
+            return None
+        return {
+            "codigo": nodo.flight.code,
+            "origen" : nodo.flight.getOrigin (),
+            "destino" : nodo.flight.getDestination(),
+            "horaSalida" : nodo.flight.getDepartureTime(),
+            "precioBase" : nodo.flight.getBasePrice(),
+            "pasajeros" : nodo.flight.getNumberPassengers(),
+            "promocion" : nodo.flight.getPromotion(),
+            "alerta" : nodo.flight.getAlert(),
+            "izquierdo": self._nodo_a_dicc(nodo.leftSon),
+            "derecho": self._nodo_a_dicc(nodo.rightSon)
+        }
+
+    def SaveTree(self):
+        return self._nodo_a_dicc(self.root)
+    
+    def _dicc_a_nodo(self, dicc: dict):
+        if dicc is None:
+            return None
+=======
     def getAnalyticalMetrics(self) :
         return {
             "height":            self.getHeight(self.root),
@@ -424,11 +508,20 @@ class AVLTree(BinaryTree):
                 __Find__ (current_root.getRightSon(), profundidad_actual+1) 
         __Find__ (self.root)
         return FLIGHT
+>>>>>>> Temporal_good_proyect
 
     def DeleteFligthLessProfitable (self):
         code = self.FindNodeLessProfitable ().getFlightCode ()
         self.deleteNode (code)
 
+<<<<<<< HEAD
+        nodo.setLeftSon(self._dicc_a_nodo(dicc["izquierdo"]))
+        nodo.setRightSon(self._dicc_a_nodo(dicc["derecho"]))
+        return nodo
+
+    def cargar_desde_dicc(self , dicc):
+        self.root = self._dicc_a_nodo(dicc)
+=======
     def TourInsertion (self , code: int):
         nodo = self.FindNode (code)
         return self.__TourInsertion__ (nodo)
@@ -441,6 +534,9 @@ class AVLTree(BinaryTree):
             self.__TourInsertion__ (current_root.getLeftSon())
             self.__TourInsertion__ (current_root.getRightSon())
         return resultado
+<<<<<<< HEAD
+>>>>>>> Temporal_good_proyect
+=======
 
     def InsertionSave (self):
         vuelos = []
@@ -478,3 +574,4 @@ class AVLTree(BinaryTree):
                     self.__EditFligth__ (current_root.getLeftSon() , code , fligth)
                 if code > current_root.getFlightCode():
                     self.__EditFligth__ (current_root.getRightSon() , code , fligth)
+>>>>>>> Terminado
