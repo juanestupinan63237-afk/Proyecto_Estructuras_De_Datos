@@ -5,8 +5,16 @@ from collections import deque
 from graphviz import Digraph
 
 class AVLTree(BinaryTree):
- 
+    """
+        An advanced Binary Search Tree that implements AVL self-balancing logic and performance tracking.
+
+        Attributes:
+            balanceo_activado (bool): Flag to enable or disable automatic tree balancing.
+            analyticalMetrics (dict): Counters for each type of rotation and specific tree events.
+            limit (int): Threshold value used for depth penalization or tree constraints.
+    """
     def __init__(self):
+        """Initializes the AVL tree with default metrics, balancing enabled, and no initial limit."""
         super().__init__()
         self.balanceo_activado = True
         self.analyticalMetrics = {
@@ -19,16 +27,50 @@ class AVLTree(BinaryTree):
         self.limit = None
 
     def setLimit (self, limit: int):
+        """
+        Sets a new threshold limit and triggers the depth penalization logic.
+
+        Args:
+            limit (int): The integer value to be set as the new tree limit.
+        """
         self.limit = limit
         self.depthPenalization ()
 
     def getLimit (self):
+        """
+        Retrieves the current threshold limit of the tree.
+
+        Returns:
+            int: The current limit value.
+        """
         return self.limit
 
     def FindNode (self , code: int):
+        """
+        Public interface to locate a node by its flight code using the recursive search helper.
+
+        Args:
+            code (int): The flight identification code to search for.
+
+        Returns:
+            Node: The found node object if the search is successful.
+        """
         return self.__FindNode__ (self.root , code)
 
     def __FindNode__ (self , current_root: Node , code: int):
+        """
+        Internal helper that recursively searches for a node based on BST properties.
+
+        Args:
+            current_root (Node): The starting node for the current search depth.
+            code (int): The flight code to compare against.
+
+        Returns:
+            Node: The matching node object.
+
+        Raises:
+            Exception: If the node is not found after traversing the relevant path.
+        """
         if current_root:
             if current_root.getFlightCode () == code:
                 return current_root
@@ -37,34 +79,75 @@ class AVLTree(BinaryTree):
             elif code > current_root.getFlightCode():
                 return self.__FindNode__ (current_root.getRightSon() , code)
         raise Exception ("No se ha encontrado el nodo...")
- 
+
     def isBalanceActive(self):
+        """
+        Checks the current status of the balancing mechanism.
+
+        Returns:
+            bool: True if automatic balancing is enabled, False otherwise.
+        """
         return self.balanceo_activado
- 
+
     def SwitchModoEstres(self):
+        """
+        Toggles the balancing mode; if re-enabled, it triggers a full tree rebalancing.
+        """
         self.balanceo_activado = not self.balanceo_activado
         if self.balanceo_activado:
             self.BalanceAll()
  
     def BalanceAll(self):
+        """
+        Triggers a full tree rebalancing by traversing all nodes and applying AVL rotations.
+        """
         self.root = self.__RecursiveBalance__(self.root)
  
     def __RecursiveBalance__(self, node: Node):
+        """
+        Recursively visits each node in post-order to update heights and restore AVL balance.
+
+        Args:
+            node (Node): The current node being processed in the recursive traversal.
+
+        Returns:
+            Node: The new root of the subtree after all descendant nodes have been rebalanced.
+        """
         if node is None:
             return None
         node.setLeftSon(self.__RecursiveBalance__(node.getLeftSon()))
         node.setRightSon(self.__RecursiveBalance__(node.getRightSon()))
-        node.setHeight(1 + max(self.getHeight(node.getLeftSon()),
-                               self.getHeight(node.getRightSon())))
+        node.setHeight(1 + max(self.getHeight(node.getLeftSon()), self.getHeight(node.getRightSon())))
         return self.__rebalance(node)
  
     def ResetTree(self):
+        """Clears the tree structure by removing the reference to the root node."""
+        self.root = None
         self.root = None
  
     def insertNodeAVL(self, value: Flight):
+        """
+        Public method to insert a new flight into the AVL tree; updates the root after insertion.
+
+        Args:
+            value (Flight): The flight data object to be added to the tree.
+        """
         self.root = self.__insertNodeAVL(self.root, value)
  
     def __insertNodeAVL(self, node: Node, value: Flight):
+        """
+        Performs a recursive BST insertion and conditionally balances the node if the flag is active.
+
+        Args:
+            node (Node): The current subtree root where the insertion is being evaluated.
+            value (Flight): The flight object containing the code and data to insert.
+
+        Returns:
+            Node: The resulting node for this position (new, existing, or rotated).
+
+        Raises:
+            Exception: If a flight with the same code is already present in the tree.
+        """
         if node is None:
             return Node(value)
         if value.getCode() < node.getFlightCode():
@@ -79,6 +162,15 @@ class AVLTree(BinaryTree):
         return node
  
     def __rebalance(self, node: Node):
+        """
+        Internal logic to detect imbalances and apply simple or double rotations (LL, RR, LR, RL).
+
+        Args:
+            node (Node): The node to evaluate for height deviation between its subtrees.
+
+        Returns:
+            Node: The potentially rotated node that maintains the AVL property.
+        """
         if node is None:
             return None
         node.setHeight(1 + max(self.__getHeight(node.getLeftSon()), self.__getHeight(node.getRightSon())))
@@ -102,11 +194,26 @@ class AVLTree(BinaryTree):
         return node
  
     def __getHeight(self, node: Node):
+        """
+        Safely retrieves the height of a node.
+
+        Args:
+            node (Node): The node to check.
+
+        Returns:
+            int: The height of the node, or 0 if the node is None.
+        """
         if node is None:
             return 0
         return node.getHeight()
  
     def deleteNode(self, codeFlight):
+        """
+        Searches for and removes a specific flight node from the tree by its code.
+
+        Args:
+            codeFlight (int): The identifier of the flight to be deleted.
+        """
         node = self.searchNode(codeFlight)
         if node is None:
             print(f"Node {codeFlight} not found, cannot delete.")
@@ -114,6 +221,16 @@ class AVLTree(BinaryTree):
         self.root = self.__deleteNode(self.root, codeFlight)
  
     def __deleteNode(self, node: Node, code):
+        """
+        Recursive helper that handles the three cases of BST deletion and rebalances the tree.
+
+        Args:
+            node (Node): The current node in the traversal.
+            code (int): The flight code to locate and remove.
+
+        Returns:
+            Node: The new subtree root after deletion and AVL rebalancing.
+        """
         if node is None:
             return node
         if code < node.getFlightCode():
@@ -134,9 +251,25 @@ class AVLTree(BinaryTree):
         return self.__rebalance(node)
  
     def massiveCancelation(self, flightCode):
+        """
+        Removes a node and all its descendants from the tree, logging the total count in metrics.
+
+        Args:
+            flightCode (int): The root code of the subtree to be cancelled.
+        """
         self.root = self.__massiveCancelation(self.root, flightCode)
  
     def __massiveCancelation(self, node: Node, flightCode):
+        """
+        Recursive helper that prunes an entire subtree and updates cancellation metrics.
+
+        Args:
+            node (Node): The current node being inspected.
+            flightCode (int): The code that triggers the mass cancellation.
+
+        Returns:
+            Node: The updated subtree root or None if the node was part of the cancelled subtree.
+        """
         if node is None:
             return None
         if flightCode < node.getFlightCode():
@@ -149,27 +282,72 @@ class AVLTree(BinaryTree):
         return self.__rebalance(node)
  
     def CountChilds (self, current_root: Node):
-        return self.__CountChild__ (current_root) 
+        """
+        Public method to calculate the total size of a subtree (including the root).
+
+        Args:
+            current_root (Node): The root of the subtree to count.
+
+        Returns:
+            int: The total number of nodes in the subtree.
+        """
+        return self.__CountChild__ (current_root)
 
     def __CountChild__ (self ,current_root: Node):
+        """
+        Recursive helper that counts all nodes in the given subtree using post-order traversal.
+
+        Args:
+            current_root (Node): The current node being counted.
+
+        Returns:
+            int: The sum of nodes in left and right subtrees plus one for the current node.
+        """
         if current_root is not None:
-            izq = self.__CountChild__ (current_root.getLeftSon())
-            der = self.__CountChild__ (current_root.getRightSon())
-            return izq + der +1
+            left = self.__CountChild__ (current_root.getLeftSon())
+            right = self.__CountChild__ (current_root.getRightSon())
+            return left + right +1
         return 0
 
     def __minValueNode(self, node: Node):
+        """
+        Locates the node with the lowest flight code value by traversing to the leftmost leaf.
+
+        Args:
+            node (Node): The starting node of the subtree to search.
+
+        Returns:
+            Node: The node containing the minimum value in that subtree.
+        """
         temporal = node
         while temporal.getLeftSon() is not None:
             temporal = temporal.getLeftSon()
         return temporal
  
     def getBalance(self, node: Node):
+        """
+        Calculates the balance factor of a specific node to determine if it is height-balanced.
+
+        Args:
+            node (Node): The node to evaluate.
+
+        Returns:
+            int: The difference between the height of the left and right subtrees.
+        """
         if node is None:
             return 0
         return self.__getHeight(node.getLeftSon()) - self.__getHeight(node.getRightSon())
  
     def rightRotate(self, node: Node):
+        """
+        Performs a single right rotation to balance a left-heavy subtree.
+
+        Args:
+            node (Node): The pivot node where the rotation starts (the unbalanced parent).
+
+        Returns:
+            Node: The new root of the rotated subtree.
+        """
         temporal1 = node.getLeftSon()
         temporal2 = temporal1.getRightSon()
         temporal1.setRightSon(node)
@@ -179,6 +357,15 @@ class AVLTree(BinaryTree):
         return temporal1
  
     def leftRotate(self, node: Node):
+        """
+        Performs a single left rotation to balance a right-heavy subtree.
+
+        Args:
+            node (Node): The pivot node where the rotation starts (the unbalanced parent).
+
+        Returns:
+            Node: The new root of the rotated subtree.
+        """
         temporal1 = node.getRightSon()
         temporal2 = temporal1.getLeftSon()
         temporal1.setLeftSon(node)
@@ -188,12 +375,22 @@ class AVLTree(BinaryTree):
         return temporal1
  
     def depthPenalization(self):
+        """
+        Evaluates the entire tree to apply or remove flight alerts based on the current depth limit.
+        """
         if self.limit is not None:
             self.__depthPenalization(self.root, 0)
         else:
             self.__depthPenalizationAllFalse__ (self.root)
  
     def __depthPenalization(self, node: Node, depth):
+        """
+        Recursively traverses the tree to mark flights with alerts if they exceed the depth limit.
+
+        Args:
+            node (Node): The current node being evaluated.
+            depth (int): The current depth level in the recursive traversal.
+        """
         if node is None:
             return
         if depth >= self.limit:
@@ -204,6 +401,12 @@ class AVLTree(BinaryTree):
         self.__depthPenalization(node.getRightSon(), depth + 1)
  
     def __depthPenalizationAllFalse__ (self , current_root: Node):
+        """
+        Traverses the tree to clear all active alerts from flight objects.
+
+        Args:
+            current_root (Node): The current node in the traversal where the alert will be disabled.
+        """
         if current_root is not None:
             current_root.getFlight().setAlert(False)
             self.__depthPenalizationAllFalse__ (current_root.getRightSon())
@@ -219,11 +422,11 @@ class AVLTree(BinaryTree):
                 "doubleLeft":    self.analyticalMetrics["doubleLeft"],
                 "doubleRight":   self.analyticalMetrics["doubleRight"],
                 "total":         sum([
-                                     self.analyticalMetrics["simpleLeft"],
-                                     self.analyticalMetrics["simpleRight"],
-                                     self.analyticalMetrics["doubleLeft"],
-                                     self.analyticalMetrics["doubleRight"],
-                                 ])
+                                    self.analyticalMetrics["simpleLeft"],
+                                    self.analyticalMetrics["simpleRight"],
+                                    self.analyticalMetrics["doubleLeft"],
+                                    self.analyticalMetrics["doubleRight"],
+                                ])
             },
             "massCancellations": self.analyticalMetrics["massCancellations"],
             "traversals": {
@@ -315,8 +518,7 @@ class AVLTree(BinaryTree):
         ))
         nodo.setLeftSon(self._dicc_a_nodo_topology(dicc["izquierdo"]))
         nodo.setRightSon(self._dicc_a_nodo_topology(dicc["derecho"]))
-        nodo.setHeight(1 + max(self.getHeight(nodo.getLeftSon()),
-                               self.getHeight(nodo.getRightSon())))
+        nodo.setHeight(1 + max(self.getHeight(nodo.getLeftSon()), self.getHeight(nodo.getRightSon())))
         return nodo
 
     def cargar_desde_dicc(self, dicc):
@@ -419,9 +621,9 @@ class AVLTree(BinaryTree):
                                 PROFUNDIDAD = profundidad_actual
                     else:
                         FLIGHT = current_root
-                        PROFUNDIDAD = profundidad_actual 
+                        PROFUNDIDAD = profundidad_actual
                 __Find__ (current_root.getLeftSon() , profundidad_actual+1)
-                __Find__ (current_root.getRightSon(), profundidad_actual+1) 
+                __Find__ (current_root.getRightSon(), profundidad_actual+1)
         __Find__ (self.root)
         return FLIGHT
 
@@ -461,7 +663,7 @@ class AVLTree(BinaryTree):
                 "pasajeros" : vuelo.getNumberPassengers(),
                 "prioridad" : vuelo.getPriority(),
                 "promocion" : vuelo.getPromotion(),
-                "alerta" : vuelo.getAlert()              
+                "alerta" : vuelo.getAlert()
             })
             self.__InsertionSave__ (current_root.getLeftSon() , resultado)
             self.__InsertionSave__ (current_root.getRightSon() , resultado)
