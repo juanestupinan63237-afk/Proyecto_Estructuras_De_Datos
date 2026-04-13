@@ -26,20 +26,6 @@ class BinaryTree:
             return 1
         return self.__countLeaves(node.getLeftSon())+ self.__countLeaves(node.getRightSon())
 
-    def searchNode(self, code):
-        nodeFound = self.__searchNode(self.root, code)
-        return nodeFound
-
-    def __searchNode(self, node : Node, code):
-        if node is None:
-            return None
-        if code < (node.getFlightCode()):
-            return self.__searchNode(node.getLeftSon(), code)
-        elif code > node.getFlightCode():
-            return self.__searchNode(node.getRightSon(), code)
-        else:
-            return node
-
     def Render (self):
         """
         Uses Graphviz to generate a styled SVG of the tree.
