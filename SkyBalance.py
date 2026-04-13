@@ -278,7 +278,7 @@ def ControlZ ():
         JSON: {"message": "ok"} if an action was reverted.
         JSON: {"message": "error"} if the stack is empty.
     """
-    if reversion.isEmpty() is False:
+    if not reversion.isEmpty() :
         desapila = reversion.Desapilar()
         if desapila ["tipo"] == "REMOVE":
             tree.deleteNode(desapila["codigo"])
