@@ -305,6 +305,8 @@ def ControlZ ():
             tree.SwitchModoEstres ()
         elif desapila["tipo"] == "penalization":
             tree.setLimit (desapila["limit"])
+        elif desapila["tipo"] == "EDIT":
+            tree.EditFligth (desapila["code"] , desapila["vuelo"])
         tree.depthPenalization ()
         return jsonify ({"message": "ok"})
     return jsonify ({"message" : "error"})
@@ -410,6 +412,12 @@ def EditFligth ():
             promotion=False,
             alert=False
         )
+        buscar_vuelo = tree.FindNode (int(data.get("code"))).getFlight()
+        reversion.Apilar ({
+            "tipo" : "EDIT",
+            "code" : int(data.get("code")),
+            "vuelo" : buscar_vuelo
+        })
         tree.EditFligth (code , nuevo_vuelo)
         tree.depthPenalization()
         return jsonify ({"message" : "ok"})
