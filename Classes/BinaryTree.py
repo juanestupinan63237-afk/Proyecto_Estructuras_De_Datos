@@ -5,6 +5,9 @@ from Classes.NodeAVL import Node
 from collections import deque
 
 class BinaryTree:
+    """
+    Base class for binary tree structures focused on visualization and navigation.
+    """
 
     def __init__(self):
         self.root = None
@@ -38,6 +41,13 @@ class BinaryTree:
             return node
 
     def Render (self):
+        """
+        Uses Graphviz to generate a styled SVG of the tree.
+        
+        Colors: Dark Background (#1b212c), Cyan Borders (#00f2ff).
+        Returns: 
+            str: SVG source code as a string.
+        """
         dot = Digraph()
         dot.attr('graph', bgcolor='transparent', ranksep='0.6', nodesep='0.4')
         dot.attr('node',
@@ -78,6 +88,10 @@ class BinaryTree:
         return 0
     
     def _dicc_a_nodo_topology(self, dicc: dict):
+        """
+        Recursively reconstructs a tree from a nested dictionary (Topology format).
+        Ensures height is correctly calculated during reconstruction.
+        """
         if dicc is None:
             return None
 
@@ -121,8 +135,18 @@ class BinaryTree:
 
 class BST(BinaryTree):
     def __init__(self):
+        """
+        Binary Search Tree implementation ensuring ordered data storage.
+        """
         super().__init__()
     def insertNode(self, flight: Flight):
+        """
+        Recursive helper to insert a flight based on its code.
+        
+        Complexity: 
+            Average: O(log n)
+            Worst: O(n) (If the tree becomes unbalanced)
+        """
         self.root = self.__insertNode(self.root, flight)
 
     def __insertNode(self, node : Node, flight: Flight):
