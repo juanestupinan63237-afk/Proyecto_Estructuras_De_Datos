@@ -32,8 +32,24 @@ async function RefreshTree() {
     const svg = await res.text();
     document.getElementById("treeContainer").innerHTML = svg;
 }
+<<<<<<< HEAD
+
+async function PrintPreOrderTour() {
+    const res = await fetch("/Print", { method: "POST" });
+    const data = await res.json();
+    alert("PreOrder: " + data.preorder.join(" -> "));
+}
+
+async function ControlZ (){
+    const res = await fetch ("/Control/Pila");
+    console.log ("Control-z");
+}
+
+async function LoadJSON (){
+=======
  
 async function LoadJSON() {
+>>>>>>> Temporal_good_proyect
     const filesLoad = document.getElementById("file-upload");
     const file = filesLoad.files[0];
     if (!file) return;
@@ -56,7 +72,20 @@ async function LoadJSON() {
         console.log("Archivo cargado y árboles actualizados");
     }
 }
+<<<<<<< HEAD
+<<<<<<< HEAD
 
+async function ModoEstresActivar () {
+    let request = await fetch ("/ModoEstres/Activar");
+}
+
+async function ModoEstresDesactivar (){
+    let request = await fetch ("/ModoEstres/Desactivar");
+=======
+ 
+=======
+
+>>>>>>> Terminado
 async function obtenerDatos() {
     const respuesta = await fetch("/Descargar/Tree/Topology");
     const data = await respuesta.json();
@@ -237,6 +266,9 @@ async function DeleteFligthLessProfitable (){
     let request = await fetch ("/DeleteFligthLessProfitable");
     console.log (request["message"]);
     RefreshTree ();
+<<<<<<< HEAD
+>>>>>>> Temporal_good_proyect
+=======
 }
 
 async function GetVueloEditado() {
@@ -261,4 +293,5 @@ async function GetVueloEditado() {
         await RefreshQueue();
         await RefreshMetrics();
     }
+>>>>>>> Terminado
 }
