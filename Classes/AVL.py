@@ -413,6 +413,13 @@ class AVLTree(BinaryTree):
             self.__depthPenalizationAllFalse__ (current_root.getLeftSon())
 
     def getAnalyticalMetrics(self) :
+        """
+        Gathers and returns a comprehensive report of the tree's current state and performance history.
+
+        Returns:
+            dict: A collection of data including tree height, leaf count, rotation statistics,
+                cancellation logs, and various traversal lists.
+        """
         return {
             "height":            self.getHeight(self.root),
             "leaves":            self.countLeaves(),
@@ -437,7 +444,16 @@ class AVLTree(BinaryTree):
             }
         }
 
-    def __getPreorder(self, node: Node) :
+    def __getPreorder(self, node: Node):
+        """
+        Generates a list of flight codes using a Pre-order traversal (Root, Left, Right).
+
+        Args:
+            node (Node): The starting node for the traversal.
+
+        Returns:
+            list: A list of flight codes in pre-order sequence.
+        """
         if node is None:
             return []
         result = [node.getFlightCode()]
@@ -445,7 +461,16 @@ class AVLTree(BinaryTree):
         result += self.__getPreorder(node.getRightSon())
         return result
 
-    def __getInorder(self, node: Node) :
+    def __getInorder(self, node: Node):
+        """
+        Generates a list of flight codes using an In-order traversal (Left, Root, Right).
+
+        Args:
+            node (Node): The starting node for the traversal.
+
+        Returns:
+            list: A list of flight codes sorted by their natural BST order.
+        """
         if node is None:
             return []
         result = self.__getInorder(node.getLeftSon())
@@ -453,7 +478,16 @@ class AVLTree(BinaryTree):
         result += self.__getInorder(node.getRightSon())
         return result
 
-    def __getPostorder(self, node: Node) :
+    def __getPostorder(self, node: Node):
+        """
+        Generates a list of flight codes using a Post-order traversal (Left, Right, Root).
+
+        Args:
+            node (Node): The starting node for the traversal.
+
+        Returns:
+            list: A list of flight codes in post-order sequence.
+        """
         if node is None:
             return []
         result = self.__getPostorder(node.getLeftSon())
@@ -462,6 +496,12 @@ class AVLTree(BinaryTree):
         return result
 
     def __getWidthTour(self) :
+        """
+        Executes a Level-order traversal (Breadth-First Search) using a queue.
+
+        Returns:
+            list: A list of flight codes visited level by level from top to bottom.
+        """
         if self.root is None:
             return []
         result = []
@@ -476,6 +516,12 @@ class AVLTree(BinaryTree):
         return result
 
     def SaveTree(self) :
+        """
+        Exports the entire tree structure into a dictionary format for storage or transmission.
+
+        Returns:
+            dict: A topological representation of the tree including the depth limit and all nested nodes.
+        """
         return {
             "tipo": "Topology",
             "limit" : self.limit,
@@ -483,6 +529,15 @@ class AVLTree(BinaryTree):
         }
 
     def __serializeNode(self, node: Node):
+        """
+        Recursively converts a Node and its Flight data into a nested dictionary structure.
+
+        Args:
+            node (Node): The current node to serialize.
+
+        Returns:
+            dict: A dictionary containing all flight attributes, node metrics, and children sub-trees.
+        """
         if node is None:
             return None
         f = node.getFlight()
@@ -503,6 +558,15 @@ class AVLTree(BinaryTree):
         }
 
     def _dicc_a_nodo_topology(self, dicc: dict):
+        """
+        Reconstructs a Node and its children from a dictionary (Hydration process).
+
+        Args:
+            dicc (dict): The dictionary source containing flight and tree structure data.
+
+        Returns:
+            Node: A fully reconstructed Node object with updated heights and child references.
+        """
         if dicc is None:
             return None
         nodo = Node(Flight(
@@ -522,6 +586,12 @@ class AVLTree(BinaryTree):
         return nodo
 
     def cargar_desde_dicc(self, dicc):
+        """
+        Loads the tree from a dictionary using either a fixed topology or a list of sequential insertions.
+
+        Args:
+            dicc (dict): The source dictionary containing the 'tipo' (Topology or INSERCION) and data.
+        """
         if dicc["tipo"] == "Topology":
             self.root = self._dicc_a_nodo_topology(dicc["arbol"])
             self.BalanceAll()
@@ -531,6 +601,12 @@ class AVLTree(BinaryTree):
         self.setLimit (dicc["limit"])
 
     def cargar_desde_dicc_inserccion(self, vuelos: list):
+        """
+        Rebuilds the tree by performing standard AVL insertions for each flight in a provided list.
+
+        Args:
+            vuelos (list): A list of dictionaries, where each entry represents a flight's data.
+        """
         for i in vuelos:
             self.insertNodeAVL(Flight(
                 int(i["codigo"]),
@@ -545,6 +621,12 @@ class AVLTree(BinaryTree):
             ))
 
     def Render (self):
+        """
+        Configures and initializes a Graphviz object to create a high-definition visual representation of the tree.
+
+        Returns:
+            Digraph: A Graphviz object styled with a transparent background and neon-cyan nodes.
+        """
         dot = Digraph()
         dot.attr('graph', bgcolor='transparent', ranksep='1.5', nodesep='1.5' , dpi = "300")
         dot.attr('node',
@@ -560,10 +642,19 @@ class AVLTree(BinaryTree):
             height='1.5',        # Aumenta el alto mínimo
             fixedsize='false'    # Mantenlo en false
             )
-    
+
         dot.attr('edge', color='#444d5e', penwidth='1.5', arrowhead='vee', arrowsize='0.8')
 
         def AddNode(n: Node):
+            """
+        Helper function for Render that recursively adds nodes and edges to the Graphviz object.
+
+        It applies conditional styling: if a flight has an active alert, the node is rendered 
+        in an orange/dark theme to highlight issues.
+
+        Args:
+            n (Node): The current node to be processed and added to the visual graph.
+        """
             if n:
                 if self.balanceo_activado is False:
                     node_id = str(id(n))
@@ -604,6 +695,15 @@ class AVLTree(BinaryTree):
         return svg.replace('<svg ', '<svg width="100%" height="auto" ')
 
     def FindNodeLessProfitable (self):
+        """
+        Identifies the flight with the lowest total price using a recursive search.
+
+        Tie-breaking logic: If prices are equal, it prefers the node at a greater depth.
+        If depths are also equal, it selects the node with the higher flight code.
+
+        Returns:
+            Node: The node identified as the least profitable based on the defined criteria.
+        """
         FLIGHT = self.root
         PROFUNDIDAD = 0
         def __Find__ (current_root: Node  , profundidad_actual = 0):
@@ -628,14 +728,36 @@ class AVLTree(BinaryTree):
         return FLIGHT
 
     def DeleteFligthLessProfitable (self):
+        """
+        Locates the least profitable flight in the tree and removes its node.
+        """
         code = self.FindNodeLessProfitable ().getFlightCode ()
         self.deleteNode (code)
 
     def TourInsertion (self , code: int):
+        """
+        Retrieves a list of all flight objects in the subtree starting from a specific flight code.
+
+        Args:
+            code (int): The flight code of the node to use as the root for the traversal.
+
+        Returns:
+            list[Flight]: A list of Flight objects found in the specified subtree.
+        """
         nodo = self.FindNode (code)
         return self.__TourInsertion__ (nodo)
 
     def __TourInsertion__ (self, current_root: Node , resultado = []):
+        """
+        Recursively collects Flight objects from a subtree using a pre-order approach.
+
+        Args:
+            current_root (Node): The current node in the traversal.
+            resultado (list, optional): The accumulator list for flight objects.
+
+        Returns:
+            list[Flight]: The accumulated list of flights.
+        """
         if resultado is None:
             resultado = []
         if current_root:
@@ -645,6 +767,12 @@ class AVLTree(BinaryTree):
         return resultado
 
     def InsertionSave (self):
+        """
+        Generates a serializable dictionary specifically formatted for the 'INSERCION' load mode.
+
+        Returns:
+            dict: A dictionary containing the tree type, depth limit, and a list of flight data.
+        """
         vuelos = []
         self.__InsertionSave__ (self.root , vuelos)
         return {"tipo" : "INSERCION",
@@ -652,6 +780,13 @@ class AVLTree(BinaryTree):
                 "vuelos" : vuelos}
 
     def __InsertionSave__ (self , current_root: Node , resultado: list[dict]):
+        """
+        Recursive helper that flattens the tree into a list of flight dictionaries.
+
+        Args:
+            current_root (Node): The current node being serialized.
+            resultado (list[dict]): The list where flight data dictionaries are appended.
+        """
         if current_root:
             vuelo = current_root.getFlight ()
             resultado.append ({
@@ -669,9 +804,24 @@ class AVLTree(BinaryTree):
             self.__InsertionSave__ (current_root.getRightSon() , resultado)
 
     def EditFligth (self , code: int , fligth: Flight):
+        """
+        Locates a node by its original code and updates its internal Flight object.
+
+        Args:
+            code (int): The current flight code of the node to be edited.
+            flight (Flight): The new Flight object to be assigned to the node.
+        """
         self.__EditFligth__ (self.root , code , fligth)
 
     def __EditFligth__ (self ,current_root: Node , code: int , fligth : Flight):
+            """
+        Recursive helper that navigates the BST to find the target node for editing.
+
+        Args:
+            current_root (Node): The current node in the search path.
+            code (int): The identifier to search for.
+            flight (Flight): The updated data to set if the code matches.
+        """
             if current_root:
                 if current_root.getFlightCode () == code:
                     current_root.setFlight (fligth)
